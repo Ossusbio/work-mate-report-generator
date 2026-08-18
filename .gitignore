@@ -1,0 +1,89 @@
+﻿# Root .gitignore for WORK MATE Operator Report Generator
+
+# ==========================================
+# SECURITY: Never commit secrets or credentials
+# ==========================================
+# Firebase service account (contains private keys)
+*firebase_service*.json
+firebase-service-account*.json
+*-firebase-adminsdk-*.json
+
+# Environment files with real values
+.env
+.env.local
+.env.production
+.env.staging
+
+# Google Cloud credentials
+gcloud-credentials.json
+application_default_credentials.json
+
+# ==========================================
+# Node.js & Package Managers
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+.yarn/
+.npm/
+
+# ==========================================
+# Build Outputs
+# ==========================================
+dist/
+dist-ssr/
+build/
+out/
+*.local
+
+# ==========================================
+# Frontend (Vite / React)
+# ==========================================
+client/dist/
+client/.firebase/
+client/.vite/
+
+# ==========================================
+# Backend (Node.js / Express)
+# ==========================================
+# Uploaded files (GCS handles this in production; local test uploads are ephemeral)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# ==========================================
+# IDE & Editor Files
+# ==========================================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Logs & Runtime
+# ==========================================
+*.log
+logs/
+npm-debug.log*
+
+# ==========================================
+# OS-Generated
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini

@@ -1,0 +1,21 @@
+{
+  "name": "report-generator-server",
+  "version": "1.0.0",
+  "description": "Backend API for Operator Report Generator Web Console",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^7.9.0",
+    "@google-cloud/storage": "^7.15.0",
+    "cors": "^2.8.5",
+    "csv-stringify": "^6.5.2",
+    "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.2",
+    "firebase-admin": "^13.0.1",
+    "multer": "^1.4.5-lts.1"
+  }
+}
