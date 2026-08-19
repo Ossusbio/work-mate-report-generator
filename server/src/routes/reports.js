@@ -214,6 +214,7 @@ router.post('/upload-image', upload.single('photo'), async (req, res) => {
     res.json({
       success: true,
       imageUrl: result.imageUrl,
+      filepath: result.filepath,
       filename: result.filename,
       uploadedAt: result.uploadedAt
     });
@@ -245,6 +246,32 @@ router.post('/upload-document', upload.single('document'), async (req, res) => {
   } catch (err) {
     console.error('Error uploading document:', err);
     res.status(500).json({ error: 'Failed to upload document' });
+  }
+});
+
+/**
+ * Delete a file from Cloud Storage (photos / documents)
+ */
+router.post('/delete-file', async (req, res) => {
+  try {
+    const { filepath, fileUrl } = req.body;
+    const target = filepath || fileUrl;
+    if (!target) {
+      return res.status(400).json({ error: 'No filepath or fileUrl provided' });
+    }
+
+    const cleanPath = extractGcsPath(target);
+    await deleteFromGCS(cleanPath);
+    console.log('[Storage] File deleted successfully:', cleanPath);
+
+    res.json({
+      success: true,
+      message: 'File deleted from storage',
+      deletedPath: cleanPath
+    });
+  } catch (err) {
+    console.error('Error deleting file from storage:', err);
+    res.status(500).json({ error: 'Failed to delete file from storage: ' + err.message });
   }
 });
 

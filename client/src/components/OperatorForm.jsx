@@ -10,7 +10,7 @@ import DataStreamSelector, { SITE_STREAM_CATALOG } from './DataStreamSelector';
 import DynamicSampleTable from './DynamicSampleTable';
 import ConfirmModal from './ConfirmModal';
 import InvalidParametersModal from './InvalidParametersModal';
-import { generateReport, uploadDocument, previewData, fetchReportHistory, fetchStreamMetadata } from '../services/api';
+import { generateReport, uploadDocument, deleteStorageFile, previewData, fetchReportHistory, fetchStreamMetadata } from '../services/api';
 import { buildUnifiedChartData, buildUnifiedChartOptions, getStreamMetadata } from '../utils/chartHelpers';
 import { Line, Bar } from 'react-chartjs-2';
 import {
@@ -1407,10 +1407,16 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
       <ConfirmModal
         open={deleteDocConfirm}
         title="Remove Attached Document"
-        message="Are you sure you want to remove the uploaded reference document? This will remove the attachment from this report."
+        message="Are you sure you want to remove the uploaded reference document? This will permanently delete the attachment from Cloud Storage."
         confirmLabel="Remove Document"
         danger={true}
         onConfirm={() => {
+          if (uploadedDoc) {
+            const target = uploadedDoc.filepath || uploadedDoc.documentUrl || uploadedDoc.url;
+            if (target) {
+              deleteStorageFile(target).catch(err => console.warn('[OperatorForm] Could not delete document from GCS:', err));
+            }
+          }
           setUploadedDoc(null);
           setDeleteDocConfirm(false);
         }}

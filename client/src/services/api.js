@@ -61,6 +61,23 @@ export async function uploadDocument(file, runId = null) {
   return await res.json();
 }
 
+export async function deleteStorageFile(filepathOrUrl) {
+  if (!filepathOrUrl) return { success: false };
+  const headers = await getAuthHeaders({ 'Content-Type': 'application/json' });
+  const res = await fetch(`${API_BASE}/delete-file`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ filepath: filepathOrUrl })
+  });
+
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    throw new Error(errData.error || 'File deletion failed');
+  }
+
+  return await res.json();
+}
+
 export async function previewData(params) {
   const headers = await getAuthHeaders({ 'Content-Type': 'application/json' });
   const res = await fetch(`${API_BASE}/preview-data`, {

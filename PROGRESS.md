@@ -77,9 +77,28 @@
 
 | Layer | Revision / Bundle |
 |---|---|
-| Frontend (Firebase Hosting) | index-C2C9UmQx.js / index-DI-QFPUQ.css |
-| Backend (Cloud Run asia-south1) | report-generator-server-00022-5tk |
-| Database | Firestore - 13 reports in /reports collection |
+### Phase 9 — GCS Run-Scoped Folder Upload (2026-08-19)
+- [x] **Run-Scoped GCS Subfolders**: `runs/{runId}/images/` and `runs/{runId}/documents/`
+- [x] **Backend Support**: `saveReferenceImage` & `saveReferenceDocument` in `storage.js`, `runId` handling in `reports.js`
+- [x] **Frontend Integration**: `runId` passed from `OperatorForm.jsx` and `CameraCapture.jsx` via `api.js`
+- [x] **Production Deployment**: Cloud Run revision `report-generator-server-00023-w6b` + Firebase Hosting deployed
+
+### Phase 10 — Automatic GCS File Deletion on Photo/Doc Removal (2026-08-19)
+- [x] **Backend GCS Deletion Endpoint**: `POST /api/reports/delete-file` with `extractGcsPath()` and `deleteFromGCS()`
+- [x] **Frontend API**: `deleteStorageFile()` in `client/src/services/api.js`
+- [x] **Photo Removal Cleanup**: `CameraCapture.jsx` triggers GCS deletion on photo removal confirmation
+- [x] **Document Removal Cleanup**: `OperatorForm.jsx` triggers GCS deletion on attached document removal confirmation
+- [x] **Local Verification**: 100% automated test pass verifying live object removal from `ossusbio-monthly-reports` bucket
+
+---
+
+## 🚀 Current Production Deployment Status
+
+| Layer | URL / Version |
+|---|---|
+| Frontend (Firebase Hosting) | https://grafana-494005.web.app |
+| Backend (Cloud Run asia-south1) | report-generator-server-00024-6ps |
+| Database | Firestore - `/reports` collection & `/user_roles` |
 
 - **Web App**: https://grafana-494005.web.app
 - **Backend API**: https://report-generator-server-983390035273.asia-south1.run.app
@@ -88,35 +107,6 @@
 
 ## 📋 Known Technical Debt & Notes
 - DeveloperPanel.jsx dynamic import of firebase.js causes Vite warning (cosmetic only, does not break functionality)
-- Bundle size 643kB / 192kB gzipped — consider lazy-loading DeveloperPanel in future
+- Bundle size ~644kB / 192kB gzipped — consider lazy-loading DeveloperPanel in future
 - multer@1.4.5-lts.2 has known vulnerabilities — plan upgrade to multer@2.x in maintenance window
-
----
-
-## 🔜 Phase 9 — GCS Run-Scoped Folder Upload (2026-08-19 — IN PLAN)
-
-**Goal**: Organize all uploaded images and documents into per-run subfolders inside the GCS bucket instead of the current flat folder structure.
-
-**New GCS structure:**
-```
-ossusbio-monthly-reports/
-└── runs/
-    └── {runId}/
-        ├── images/       ← photos uploaded for this run
-        └── documents/    ← PDFs/docs uploaded for this run
-```
-
-**Files to change (in order):**
-- [x] `server/src/services/storage.js` — add `runId` param to `saveReferenceImage` and `saveReferenceDocument`
-- [x] `server/src/routes/reports.js` — extract `runId` from request body and pass to storage service
-- [x] `client/src/services/api.js` — add `runId` param to `uploadPhoto` and `uploadDocument`
-- [x] `client/src/components/OperatorForm.jsx` — pass `autoRunId` into `uploadDocument` call and `CameraCapture` prop
-- [x] `client/src/components/CameraCapture.jsx` — accept and forward `runId` prop to `uploadPhoto`
-
-**Backward compatibility**: Old reports with `uploads/images/...` paths continue to work via the existing `streamGCSFile` fuzzy fallback. No file migration required.
-
-**Documentation created:**
-- [x] `AGENTS.md` — AI agent workspace rules, project structure quick reference, GCS layout docs, key patterns
-- [x] `PROGRESS.md` — This file, updated with Phase 9 plan
-- [x] `implementation_plan.md` — Detailed implementation plan (in AI artifact)
 
