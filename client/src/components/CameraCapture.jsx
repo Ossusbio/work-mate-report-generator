@@ -3,7 +3,7 @@ import ConfirmModal from './ConfirmModal';
 import { Camera, Upload, Check, RefreshCw, Image as ImageIcon, Link as LinkIcon, Trash2, Plus } from 'lucide-react';
 import { uploadPhoto } from '../services/api';
 
-export default function CameraCapture({ onImageCaptured, currentImage, disabled = false }) {
+export default function CameraCapture({ onImageCaptured, currentImage, disabled = false, runId = null }) {
   // Normalize initial currentImage prop to array (up to 3)
   const getInitialImages = () => {
     if (!currentImage) return [];
@@ -129,7 +129,7 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
   const handleUpload = async (payload) => {
     setUploading(true);
     try {
-      const res = await uploadPhoto(payload);
+      const res = await uploadPhoto(payload, runId);
       const newImgObj = {
         url: res.imageUrl,
         filename: res.filename,

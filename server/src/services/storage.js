@@ -105,11 +105,13 @@ async function uploadToGCS(fileData, destinationPath, contentType) {
 /**
  * Saves uploaded photo (base64 or file buffer) to GCS bucket and returns GCS path & signed URL
  */
-async function saveReferenceImage(fileData, fileNamePrefix = 'ref-img') {
+async function saveReferenceImage(fileData, fileNamePrefix = 'ref-img', runId = null) {
   try {
     const timestamp = Date.now();
     const filename = `${fileNamePrefix}-${timestamp}.jpg`;
-    const gcsPath = `uploads/images/${filename}`;
+    const gcsPath = runId
+      ? `runs/${runId}/images/${filename}`
+      : `uploads/images/${filename}`;
 
     let buffer;
     if (typeof fileData === 'string' && fileData.startsWith('data:image')) {
@@ -139,12 +141,14 @@ async function saveReferenceImage(fileData, fileNamePrefix = 'ref-img') {
 /**
  * Saves uploaded document (file buffer) to GCS bucket and returns GCS path & signed URL
  */
-async function saveReferenceDocument(buffer, originalName) {
+async function saveReferenceDocument(buffer, originalName, runId = null) {
   try {
     const timestamp = Date.now();
     const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, '_');
     const filename = `${timestamp}_${safeName}`;
-    const gcsPath = `uploads/documents/${filename}`;
+    const gcsPath = runId
+      ? `runs/${runId}/documents/${filename}`
+      : `uploads/documents/${filename}`;
 
     let contentType = 'application/octet-stream';
     if (originalName.endsWith('.pdf')) contentType = 'application/pdf';

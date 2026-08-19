@@ -201,11 +201,12 @@ router.post('/:id/export', handleExportReport);
  */
 router.post('/upload-image', upload.single('photo'), async (req, res) => {
   try {
+    const runId = req.body.runId || null;
     let result;
     if (req.file) {
-      result = await saveReferenceImage(req.file.buffer, 'operator-photo');
+      result = await saveReferenceImage(req.file.buffer, 'operator-photo', runId);
     } else if (req.body.base64Image) {
-      result = await saveReferenceImage(req.body.base64Image, 'operator-cam');
+      result = await saveReferenceImage(req.body.base64Image, 'operator-cam', runId);
     } else {
       return res.status(400).json({ error: 'No photo provided' });
     }
@@ -231,7 +232,8 @@ router.post('/upload-document', upload.single('document'), async (req, res) => {
       return res.status(400).json({ error: 'No document provided' });
     }
 
-    const result = await saveReferenceDocument(req.file.buffer, req.file.originalname);
+    const runId = req.body.runId || null;
+    const result = await saveReferenceDocument(req.file.buffer, req.file.originalname, runId);
     res.json({
       success: true,
       documentUrl: result.downloadUrl,
