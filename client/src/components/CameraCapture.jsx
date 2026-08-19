@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ConfirmModal from './ConfirmModal';
 import { Camera, Upload, Check, RefreshCw, Image as ImageIcon, Link as LinkIcon, Trash2, Plus } from 'lucide-react';
-import { uploadPhoto } from '../services/api';
+import { uploadPhoto, deleteStorageFile } from '../services/api';
 
 export default function CameraCapture({ onImageCaptured, currentImage, disabled = false, runId = null }) {
   // Normalize initial currentImage prop to array (up to 3)
@@ -132,6 +132,7 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
       const res = await uploadPhoto(payload, runId);
       const newImgObj = {
         url: res.imageUrl,
+        filepath: res.filepath,
         filename: res.filename,
         description: ''
       };
@@ -155,6 +156,13 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
 
   const confirmRemoveImage = () => {
     if (deleteIdx !== null) {
+      const imageToDelete = images[deleteIdx];
+      if (imageToDelete) {
+        const target = imageToDelete.filepath || imageToDelete.url;
+        if (target) {
+          deleteStorageFile(target).catch(err => console.warn('[CameraCapture] Could not delete image from GCS:', err));
+        }
+      }
       const updated = images.filter((_, i) => i !== deleteIdx);
       updateImagesList(updated);
       setDeleteIdx(null);

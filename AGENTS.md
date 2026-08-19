@@ -12,7 +12,8 @@
 2. **Never push directly to `main` branch.** All changes go through feature branches and Pull Requests.
 3. **Never remove the `cleanReportForStorage()` call in `reports.js`** before saving to Firestore. Signed URLs must be stripped before DB writes.
 4. **Never add fallback BigQuery queries.** BigQuery must strictly use `@startTs` and `@endTs` provided by the operator. No "latest 500 records" fallback. See `CHAT_CONTEXT.md` for details.
-5. **Never deploy directly.** Deployments are team lead only (see `README.md`).
+5. **Always test and verify locally first (`localhost:3000` / `localhost:5000`).**
+6. **MANDATORY: Always ask for explicit user permission before uploading/deploying to Cloud Run or Firebase servers.** Never execute `firebase deploy`, `gcloud builds submit`, or `gcloud run deploy` automatically without asking and receiving user approval first.
 
 ---
 
