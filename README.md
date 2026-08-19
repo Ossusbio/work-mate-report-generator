@@ -209,6 +209,7 @@ git push origin feature/your-feature-name
 |---|---|---|
 | Tech Lead / Cloud Admin | Parth | parth@ossusbio.com |
 | Operations Lead | Nagendra | nagendrak@ossusbio.com |
+| Software Developer | Thamunna | thamunna@ossusbio.com |
 
 ---
 
