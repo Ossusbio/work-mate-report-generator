@@ -1,6 +1,6 @@
-﻿# Project Progress Log — WORK MATE Operator Report Generator
+# Project Progress Log — WORK MATE Operator Report Generator
 
-> Last Updated: **2026-08-18** (View-Only Mode & Critical Bug Fixes Session)
+> Last Updated: **2026-08-19** (GCS Run-Scoped Folder Upload — Phase 9 Planned)
 
 ---
 
@@ -90,3 +90,33 @@
 - DeveloperPanel.jsx dynamic import of firebase.js causes Vite warning (cosmetic only, does not break functionality)
 - Bundle size 643kB / 192kB gzipped — consider lazy-loading DeveloperPanel in future
 - multer@1.4.5-lts.2 has known vulnerabilities — plan upgrade to multer@2.x in maintenance window
+
+---
+
+## 🔜 Phase 9 — GCS Run-Scoped Folder Upload (2026-08-19 — IN PLAN)
+
+**Goal**: Organize all uploaded images and documents into per-run subfolders inside the GCS bucket instead of the current flat folder structure.
+
+**New GCS structure:**
+```
+ossusbio-monthly-reports/
+└── runs/
+    └── {runId}/
+        ├── images/       ← photos uploaded for this run
+        └── documents/    ← PDFs/docs uploaded for this run
+```
+
+**Files to change (in order):**
+- [x] `server/src/services/storage.js` — add `runId` param to `saveReferenceImage` and `saveReferenceDocument`
+- [x] `server/src/routes/reports.js` — extract `runId` from request body and pass to storage service
+- [x] `client/src/services/api.js` — add `runId` param to `uploadPhoto` and `uploadDocument`
+- [x] `client/src/components/OperatorForm.jsx` — pass `autoRunId` into `uploadDocument` call and `CameraCapture` prop
+- [x] `client/src/components/CameraCapture.jsx` — accept and forward `runId` prop to `uploadPhoto`
+
+**Backward compatibility**: Old reports with `uploads/images/...` paths continue to work via the existing `streamGCSFile` fuzzy fallback. No file migration required.
+
+**Documentation created:**
+- [x] `AGENTS.md` — AI agent workspace rules, project structure quick reference, GCS layout docs, key patterns
+- [x] `PROGRESS.md` — This file, updated with Phase 9 plan
+- [x] `implementation_plan.md` — Detailed implementation plan (in AI artifact)
+

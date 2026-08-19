@@ -15,14 +15,15 @@ async function getAuthHeaders(extraHeaders = {}) {
   return headers;
 }
 
-export async function uploadPhoto(formDataOrBase64) {
+export async function uploadPhoto(formDataOrBase64, runId = null) {
   let body;
   let headers = await getAuthHeaders();
 
   if (formDataOrBase64 instanceof FormData) {
+    if (runId) formDataOrBase64.append('runId', runId);
     body = formDataOrBase64;
   } else {
-    body = JSON.stringify({ base64Image: formDataOrBase64 });
+    body = JSON.stringify({ base64Image: formDataOrBase64, ...(runId ? { runId } : {}) });
     headers['Content-Type'] = 'application/json';
   }
 
@@ -40,10 +41,11 @@ export async function uploadPhoto(formDataOrBase64) {
   return await res.json();
 }
 
-export async function uploadDocument(file) {
+export async function uploadDocument(file, runId = null) {
   const headers = await getAuthHeaders();
   const formData = new FormData();
   formData.append('document', file);
+  if (runId) formData.append('runId', runId);
 
   const res = await fetch(`${API_BASE}/upload-document`, {
     method: 'POST',

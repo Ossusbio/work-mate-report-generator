@@ -381,7 +381,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
     }
     setDocUploading(true);
     try {
-      const result = await uploadDocument(file);
+      const result = await uploadDocument(file, autoRunId);
       setUploadedDoc({
         name: file.name,
         url: result.documentUrl,
@@ -931,7 +931,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
           {activeTab === 'reference' && (
             <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               {/* Reference Image */}
-              <CameraCapture onImageCaptured={(imgObj) => setReferenceImage(imgObj)} currentImage={referenceImage} disabled={!canEdit} />
+              <CameraCapture onImageCaptured={(imgObj) => setReferenceImage(imgObj)} currentImage={referenceImage} disabled={!canEdit} runId={autoRunId} />
 
               {/* Document Upload */}
               <div className="glass-panel" style={{ padding: '24px' }}>
