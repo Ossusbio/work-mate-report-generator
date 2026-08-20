@@ -108,8 +108,9 @@ app.get('/api/health/detailed', async (req, res) => {
     } else {
       gcsClient = new Storage({ projectId: process.env.GCP_PROJECT_ID || 'grafana-494005' });
     }
-    const [exists] = await gcsClient.bucket('ossusbio-monthly-reports').exists();
-    results.gcs = { connected: exists, details: exists ? 'Bucket ossusbio-monthly-reports accessible' : 'Bucket not found' };
+    const targetBucket = process.env.GCS_BUCKET_NAME || 'ossusbio-workmate-reports';
+    const [exists] = await gcsClient.bucket(targetBucket).exists();
+    results.gcs = { connected: exists, details: exists ? `Bucket ${targetBucket} accessible` : `Bucket ${targetBucket} not found` };
   } catch (err) {
     results.gcs = { connected: false, details: err.message };
   }

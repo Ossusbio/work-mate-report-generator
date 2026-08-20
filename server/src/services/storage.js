@@ -4,7 +4,7 @@ const fs = require('fs');
 
 let storage = null;
 let bucket = null;
-const bucketName = 'ossusbio-monthly-reports';
+const bucketName = process.env.GCS_BUCKET_NAME || 'ossusbio-workmate-reports';
 
 try {
   const candidatePaths = [
