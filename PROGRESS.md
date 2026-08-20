@@ -103,7 +103,7 @@
 | Layer | URL / Version |
 |---|---|
 | Frontend (Firebase Hosting) | https://grafana-494005.web.app |
-| Backend (Cloud Run asia-south1) | report-generator-server-00024-6ps |
+| Backend (Cloud Run asia-south1) | report-generator-server-00025-zpq |
 | Database | Firestore - `/reports` collection & `/user_roles` |
 
 - **Web App**: https://grafana-494005.web.app
