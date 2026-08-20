@@ -1,4 +1,4 @@
-﻿# WORK MATE v3.0 — Task Checklist
+# WORK MATE v3.0 — Task Checklist
 
 ## Component 1: Login & Branding
 - [x] Update LoginPage.jsx — "WORK MATE" branding, remove Firebase badge
@@ -88,3 +88,11 @@
 - [x] Step 7 generate/save buttons replaced with view-only status indicator
 - [x] Prominent amber header banner: Lock View-Only Mode All Fields Locked
 - [x] Frontend redeployed: index-C2C9UmQx.js
+
+## Component 18: Mandatory Sampling Frequency & Descending UI (2026-08-20)
+- [x] Mandatory sampling frequency selection with default placeholder `-- Select Sampling Frequency --`
+- [x] Validation modal integration blocking report generation when frequency is missing
+- [x] "Fetch BigQuery Data" button disabled & amber warning banner displayed until frequency selected
+- [x] Frequency options ordered in descending order (1 Hour → 30 Min → 15 Min → 5 Min → 1 Min → All Rows / 1 Sec)
+- [x] Frontend bundle verified: `dist/assets/index-Bx5hg4dr.js`
+
