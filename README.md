@@ -82,10 +82,10 @@ work-mate-report-generator/
 
 ## 🗂️ Google Cloud Storage Layout
 
-Uploaded reference photos and documents are organized into **run-scoped subfolders** inside the `ossusbio-monthly-reports` bucket:
+Uploaded reference photos and documents are organized into **run-scoped subfolders** inside the `ossusbio-workmate-reports` bucket:
 
 ```
-ossusbio-monthly-reports/
+ossusbio-workmate-reports/
 └── runs/
     └── {runId}/
         ├── images/            # Photos uploaded / captured for this run

@@ -72,7 +72,7 @@ work-mate-report-generator/
 - **Databases**:
   - **Firestore**: Report documents (`/reports/{reportId}`) and user roles (`/user_roles/{email}`).
   - **BigQuery**: Time-series telemetry (`grafana-494005.Datas` — UCS, SDR, SMP_3RX_SKID tables).
-  - **GCS**: File storage (`ossusbio-monthly-reports` bucket).
+  - **GCS**: File storage (`ossusbio-workmate-reports` bucket).
 
 ---
 
@@ -80,7 +80,7 @@ work-mate-report-generator/
 
 ### New (Phase 9+) — Run-scoped folders
 ```
-ossusbio-monthly-reports/
+ossusbio-workmate-reports/
 └── runs/
     └── {runId}/
         ├── images/
@@ -89,7 +89,7 @@ ossusbio-monthly-reports/
 
 ### Legacy (Phases 1–8) — Flat folders
 ```
-ossusbio-monthly-reports/
+ossusbio-workmate-reports/
 ├── uploads/images/
 └── uploads/documents/
 ```

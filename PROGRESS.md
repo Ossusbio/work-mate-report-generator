@@ -88,7 +88,13 @@
 - [x] **Frontend API**: `deleteStorageFile()` in `client/src/services/api.js`
 - [x] **Photo Removal Cleanup**: `CameraCapture.jsx` triggers GCS deletion on photo removal confirmation
 - [x] **Document Removal Cleanup**: `OperatorForm.jsx` triggers GCS deletion on attached document removal confirmation
-- [x] **Local Verification**: 100% automated test pass verifying live object removal from `ossusbio-monthly-reports` bucket
+- [x] **Local Verification**: 100% automated test pass verifying live object removal from bucket
+
+### Phase 11 — GCS Bucket Migration to ossusbio-workmate-reports (2026-08-20)
+- [x] **New GCS Bucket Created**: `ossusbio-workmate-reports` created in region `asia-south1` (Mumbai)
+- [x] **Data Migration**: All 68 existing run files and historical reports copied from `ossusbio-monthly-reports` to `ossusbio-workmate-reports`
+- [x] **Code & Config Updated**: Default bucket configured to `process.env.GCS_BUCKET_NAME || 'ossusbio-workmate-reports'` in `storage.js` and `index.js`
+- [x] **Local Verification**: Local backend running and verified against new bucket `ossusbio-workmate-reports`
 
 ---
 
@@ -97,7 +103,7 @@
 | Layer | URL / Version |
 |---|---|
 | Frontend (Firebase Hosting) | https://grafana-494005.web.app |
-| Backend (Cloud Run asia-south1) | report-generator-server-00024-6ps |
+| Backend (Cloud Run asia-south1) | report-generator-server-00025-zpq |
 | Database | Firestore - `/reports` collection & `/user_roles` |
 
 - **Web App**: https://grafana-494005.web.app
