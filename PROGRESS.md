@@ -96,6 +96,13 @@
 - [x] **Code & Config Updated**: Default bucket configured to `process.env.GCS_BUCKET_NAME || 'ossusbio-workmate-reports'` in `storage.js` and `index.js`
 - [x] **Local Verification**: Local backend running and verified against new bucket `ossusbio-workmate-reports`
 
+### Phase 12 — Mandatory Sampling Frequency & Descending UI Order (2026-08-20)
+- [x] **Enforced Sampling Frequency Selection**: Dropdown defaults to `-- Select Sampling Frequency --` placeholder to require explicit operator selection
+- [x] **Pre-Generate Validation Modal Integration**: Validation blocks report generation on unselected frequency with step-specific message and `Fix →` button
+- [x] **Dynamic Button & Warning State**: "Fetch BigQuery Data" button is disabled and amber guide banner is shown until frequency is chosen
+- [x] **Descending Interval Ordering**: Frequency options arranged in descending order from Every 1 Hour down to All Rows (No Sampling / Every 1 Sec)
+- [x] **Local Verification & Build**: Verified via automated browser end-to-end test and Vite production build (`dist/assets/index-Bx5hg4dr.js`)
+
 ---
 
 ## 🚀 Current Production Deployment Status
@@ -113,6 +120,7 @@
 
 ## 📋 Known Technical Debt & Notes
 - DeveloperPanel.jsx dynamic import of firebase.js causes Vite warning (cosmetic only, does not break functionality)
-- Bundle size ~644kB / 192kB gzipped — consider lazy-loading DeveloperPanel in future
+- Bundle size ~645kB / 193kB gzipped — consider lazy-loading DeveloperPanel in future
 - multer@1.4.5-lts.2 has known vulnerabilities — plan upgrade to multer@2.x in maintenance window
+
 

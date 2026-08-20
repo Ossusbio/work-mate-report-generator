@@ -41,12 +41,13 @@ const TABS = [
 ];
 
 const FREQUENCY_OPTIONS = [
-  { value: 0, label: 'All Rows (No Sampling)' },
-  { value: 1, label: 'Every 1 Minute' },
-  { value: 5, label: 'Every 5 Minutes' },
-  { value: 15, label: 'Every 15 Minutes' },
-  { value: 30, label: 'Every 30 Minutes' },
+  { value: '', label: '-- Select Sampling Frequency --', disabled: true },
   { value: 60, label: 'Every 1 Hour' },
+  { value: 30, label: 'Every 30 Minutes' },
+  { value: 15, label: 'Every 15 Minutes' },
+  { value: 5, label: 'Every 5 Minutes' },
+  { value: 1, label: 'Every 1 Minute' },
+  { value: 0, label: 'All Rows (No Sampling / Every 1 Sec)' },
 ];
 
 export default function OperatorForm({ report, user, onReportGenerated, onCancel }) {
@@ -168,7 +169,12 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
   const [showValidationModal, setShowValidationModal] = useState(false);
 
   // 6. Raw Data
-  const [dataFrequency, setDataFrequency] = useState(getP('dataFrequency', 0));
+  // '' means not yet selected (force operator to choose explicitly)
+  const [dataFrequency, setDataFrequency] = useState(
+    report?.parameters?.dataFrequency !== undefined && report?.parameters?.dataFrequency !== null
+      ? report.parameters.dataFrequency
+      : getP('dataFrequency', '')
+  );
   const [rawData, setRawData] = useState(report?.editedData || report?.bigqueryData || []);
   const [fetchingData, setFetchingData] = useState(false);
 
@@ -251,7 +257,8 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
         setDocNote(doc.note || doc.description || getVal('docNote', ''));
       }
 
-      setDataFrequency(getVal('dataFrequency', 0));
+      const savedFreq = getVal('dataFrequency', null);
+      setDataFrequency(savedFreq !== null && savedFreq !== undefined ? savedFreq : '');
       setIncludeRawData(getVal('includeRawData', true));
       setInference(getVal('inference', ''));
       setAdditionalNotes(getVal('additionalNotes', ''));
@@ -501,7 +508,17 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
       });
     }
 
-    // 3. Datastream Selection
+    // 3. Raw Data Sampling Frequency
+    if (dataFrequency === '' || dataFrequency === null || dataFrequency === undefined) {
+      errors.push({
+        field: 'dataFrequency',
+        stepLabel: 'Step 6: Raw Data',
+        tabKey: 'rawdata',
+        message: 'Raw Data Sampling Frequency must be selected before generating the report.'
+      });
+    }
+
+    // 4. Datastream Selection
     const totalSelectedStreams = (selectedStreams.PT?.length || 0) + (selectedStreams.EPU?.length || 0) + (selectedStreams.Production?.length || 0);
     if (totalSelectedStreams === 0) {
       errors.push({
@@ -1029,18 +1046,26 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                     <select 
                       className="form-select" 
                       value={dataFrequency} 
-                      onChange={(e) => setDataFrequency(parseInt(e.target.value))}
-                      style={{ fontSize: '0.85rem' }}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setDataFrequency(val === '' ? '' : parseInt(val));
+                      }}
+                      style={{
+                        fontSize: '0.85rem',
+                        borderColor: dataFrequency === '' ? 'rgba(245,158,11,0.6)' : undefined,
+                        boxShadow: dataFrequency === '' ? '0 0 0 2px rgba(245,158,11,0.2)' : undefined
+                      }}
                     >
                       {FREQUENCY_OPTIONS.map(opt => (
-                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        <option key={opt.value} value={opt.value} disabled={opt.disabled}>{opt.label}</option>
                       ))}
                     </select>
                     <button
                       onClick={handleFetchRawData}
-                      disabled={fetchingData || bqColumns.length === 0}
+                      disabled={fetchingData || bqColumns.length === 0 || dataFrequency === ''}
                       className="btn btn-primary"
-                      style={{ padding: '8px 18px', fontSize: '0.85rem' }}
+                      title={dataFrequency === '' ? 'Please select a sampling frequency first' : ''}
+                      style={{ padding: '8px 18px', fontSize: '0.85rem', opacity: dataFrequency === '' ? 0.5 : 1 }}
                     >
                       <Database size={14} />
                       <span>{fetchingData ? 'Fetching...' : 'Fetch BigQuery Data'}</span>
@@ -1051,6 +1076,15 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                 {bqColumns.length === 0 && (
                   <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)', borderRadius: '12px', padding: '14px', color: '#f59e0b', fontSize: '0.85rem', marginBottom: '16px' }}>
                     ⚠️ Please select at least one datastream in Step 3 (Datastream Selection) first.
+                  </div>
+                )}
+
+                {bqColumns.length > 0 && dataFrequency === '' && (
+                  <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.4)', borderRadius: '12px', padding: '14px', color: '#f59e0b', fontSize: '0.85rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '1.1em' }}>⚠️</span>
+                    <span>
+                      <strong>Sampling frequency not selected.</strong> Please choose a frequency from the dropdown above (e.g. "Every 5 Minutes" or "All Rows") before fetching data or generating the report.
+                    </span>
                   </div>
                 )}
 
