@@ -36,7 +36,7 @@
            │
      ┌─────▼────────────────┐
      │ Google Cloud Storage │
-     │  (ossusbio-monthly-  │
+     │  (ossusbio-workmate- │
      │   reports bucket)    │
      └──────────────────────┘
 ```
