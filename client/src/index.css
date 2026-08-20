@@ -39,7 +39,7 @@
 html, body {
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-dark);
@@ -270,18 +270,58 @@ main {
 
 .wizard-layout {
   display: flex;
+  flex-direction: column;
   gap: 20px;
-  align-items: flex-start;
+  width: 100%;
 }
 
 .wizard-sidebar {
-  width: 220px;
-  min-width: 220px;
+  width: 100%;
+  min-width: 100%;
+  position: -webkit-sticky;
   position: sticky;
-  top: 100px;
+  top: 10px;
+  z-index: 1000;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 14px;
+  background: rgba(9, 13, 22, 0.94);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(59, 130, 246, 0.15);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.4) transparent;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.wizard-sidebar::-webkit-scrollbar {
+  height: 5px;
+}
+
+.wizard-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 9999px;
+}
+
+.wizard-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.35);
+  border-radius: 9999px;
+}
+
+.wizard-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.6);
+}
+
+.wizard-sidebar button {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .wizard-content {
@@ -392,15 +432,22 @@ main {
   .wizard-sidebar {
     width: 100% !important;
     min-width: 100% !important;
-    position: static !important;
-    top: 0 !important;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 6px !important;
+    z-index: 1000 !important;
     flex-direction: row !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
     -webkit-overflow-scrolling: touch;
     gap: 6px !important;
-    padding: 6px 8px !important;
+    padding: 8px 10px !important;
+    background: rgba(9, 13, 22, 0.96) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid rgba(59, 130, 246, 0.4) !important;
     border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7) !important;
     scrollbar-width: none;
   }
 

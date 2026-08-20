@@ -103,6 +103,13 @@
 - [x] **Descending Interval Ordering**: Frequency options arranged in descending order from Every 1 Hour down to All Rows (No Sampling / Every 1 Sec)
 - [x] **Local Verification & Build**: Verified via automated browser end-to-end test and Vite production build (`dist/assets/index-Bx5hg4dr.js`)
 
+### Phase 13 — Horizontal Wizard Stepper with Sticky Top Freeze (2026-08-20)
+- [x] **Horizontal Stepper Layout**: 7 wizard steps converted from vertical left sidebar to a full-width, horizontal scrolling stepper bar directly above the form canvas
+- [x] **Sticky Top Freezing**: Bar stays pinned at the top (`top: 10px; z-index: 1000`) with dark glassmorphism blur and shadow when operators scroll down long forms
+- [x] **Root Overflow Fix**: Replaced `overflow-x: hidden` with `overflow-x: clip` on `html, body` to eliminate sticky clipping issues
+- [x] **Full Canvas Expansion**: Form content expands to 100% full screen width, providing 220px extra horizontal space for electrode grids, sample tables, and BigQuery charts
+- [x] **Production Deployment**: Frontend bundle built (`dist/assets/index-Bush9cYn.css` + `dist/assets/index--WCSHExU.js`) and deployed to Firebase Hosting
+
 ---
 
 ## 🚀 Current Production Deployment Status
@@ -122,5 +129,6 @@
 - DeveloperPanel.jsx dynamic import of firebase.js causes Vite warning (cosmetic only, does not break functionality)
 - Bundle size ~645kB / 193kB gzipped — consider lazy-loading DeveloperPanel in future
 - multer@1.4.5-lts.2 has known vulnerabilities — plan upgrade to multer@2.x in maintenance window
+
 
 

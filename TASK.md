@@ -96,3 +96,11 @@
 - [x] Frequency options ordered in descending order (1 Hour → 30 Min → 15 Min → 5 Min → 1 Min → All Rows / 1 Sec)
 - [x] Frontend bundle verified: `dist/assets/index-Bx5hg4dr.js`
 
+## Component 19: Horizontal Wizard Stepper & Sticky Top Freezing (2026-08-20)
+- [x] Full-width horizontal scrolling stepper bar replacing vertical left sidebar
+- [x] Sticky top freezing (`top: 10px; z-index: 1000`) with dark glassmorphic blur and shadow
+- [x] Fixed root clipping (`overflow-x: clip;` on `html, body`) for cross-browser sticky support
+- [x] 220px reclaimed width for spacious electrode, datastream, and raw data tables
+- [x] Production bundle deployed: `dist/assets/index-Bush9cYn.css` + `dist/assets/index--WCSHExU.js`
+
+
