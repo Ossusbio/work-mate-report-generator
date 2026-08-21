@@ -110,6 +110,13 @@
 - [x] **Full Canvas Expansion**: Form content expands to 100% full screen width, providing 220px extra horizontal space for electrode grids, sample tables, and BigQuery charts
 - [x] **Production Deployment**: Frontend bundle built (`dist/assets/index-Bush9cYn.css` + `dist/assets/index--WCSHExU.js`) and deployed to Firebase Hosting
 
+### Phase 14 — PDF Graph Alignment, Anti-Split Tables & Storage Upload Resilience (2026-08-21)
+- [x] **Full-Height Chart & Axis Alignment**: Set `.chart-canvas-box` to 340px height with bottom layout padding (16px) so all graph lines, left/right Y-axes, and bottom X-axis timestamps stay inside card borders
+- [x] **Universal Anti-Split Protection**: Applied `page-break-inside: avoid !important` and locked all headings with `page-break-after: avoid !important` so tables, charts, and headings never break across page boundaries
+- [x] **Compact Side-by-Side Flex Layout**: Converted GC & Water sample tables into `.print-row-grid` (`display: flex !important; gap: 10px !important;`) eliminating wasted white space
+- [x] **Storage Upload Resilience**: Added automatic retry (1.5s delay) and safe local disk fallback in `uploadToGCS` to prevent ECONNRESET/ENOTFOUND network failures during file uploads
+- [x] **Production Deployment**: Frontend deployed to Firebase Hosting (`dist/assets/index-C5MnQhBp.css` + `dist/assets/index-D_22Ew6C.js`) and backend updated
+
 ---
 
 ## 🚀 Current Production Deployment Status

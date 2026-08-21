@@ -103,4 +103,13 @@
 - [x] 220px reclaimed width for spacious electrode, datastream, and raw data tables
 - [x] Production bundle deployed: `dist/assets/index-Bush9cYn.css` + `dist/assets/index--WCSHExU.js`
 
+## Component 20: PDF Graph Alignment, Anti-Split Tables & Upload Resilience (2026-08-21)
+- [x] Full-height chart canvas (340px) with bottom layout padding (16px) enclosing all graph lines and X/Y axes
+- [x] Universal anti-split rules (`page-break-inside: avoid !important;`) across all cards, panels, and tables
+- [x] Locked heading rules (`page-break-after: avoid !important;`) preventing orphaned table headers
+- [x] Compact side-by-side flex layout (`.print-row-grid`) for GC & Water sample tables
+- [x] Storage upload retry (1.5s) and safe local disk fallback in `uploadToGCS`
+- [x] Production build deployed: `dist/assets/index-C5MnQhBp.css` + `dist/assets/index-D_22Ew6C.js`
+
+
 

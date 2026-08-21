@@ -446,11 +446,19 @@ export function buildUnifiedChartOptions(config, streamMetadata = {}) {
   return {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: {
+        bottom: 16,
+        top: 6,
+        left: 8,
+        right: 8
+      }
+    },
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: {
         position: 'top',
-        labels: { color: '#e5e7eb', font: { size: 12, weight: 600, family: 'Outfit, sans-serif' } }
+        labels: { color: '#64748b', font: { size: 11, weight: 600, family: 'Outfit, sans-serif' } }
       },
       tooltip: {
         backgroundColor: '#0f172a',

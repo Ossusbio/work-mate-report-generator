@@ -89,7 +89,7 @@ async function uploadToGCS(fileData, destinationPath, contentType) {
     return `/${destinationPath}`;
   }
 
-  return new Promise((resolve, reject) => {
+  const uploadOnce = () => new Promise((resolve, reject) => {
     const file = bucket.file(destinationPath);
     const stream = file.createWriteStream({
       metadata: { contentType },
@@ -100,6 +100,25 @@ async function uploadToGCS(fileData, destinationPath, contentType) {
     stream.on('finish', () => resolve(destinationPath));
     stream.end(fileData);
   });
+
+  try {
+    return await uploadOnce();
+  } catch (err) {
+    console.warn(`[GCS Upload] Initial upload attempt failed (${err.message}). Retrying in 1.5s...`);
+    await new Promise(res => setTimeout(res, 1500));
+    try {
+      return await uploadOnce();
+    } catch (retryErr) {
+      console.warn(`[GCS Upload] GCS unreachable (${retryErr.message}). Saving to local disk fallback...`);
+      const localPath = path.join(__dirname, '../../', destinationPath);
+      const parentDir = path.dirname(localPath);
+      if (!fs.existsSync(parentDir)) {
+        fs.mkdirSync(parentDir, { recursive: true });
+      }
+      fs.writeFileSync(localPath, fileData);
+      return `/${destinationPath}`;
+    }
+  }
 }
 
 /**
