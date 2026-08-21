@@ -249,7 +249,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
       </div>
 
       {/* Operational Parameters Panel */}
-      <div className="glass-panel print-section-card" style={{ padding: '24px', marginBottom: '24px' }}>
+      <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
           <Info size={18} color="#3b82f6" />
           <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>
@@ -361,7 +361,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
 
       {/* Electrode Details Panel */}
       {hasElectrodeData && (
-        <div className="glass-panel print-section-card" style={{ padding: '24px', marginBottom: '24px' }}>
+        <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
             <Zap size={18} color="#f59e0b" />
             <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>
@@ -442,7 +442,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
 
       {/* Summary & Observations Panel */}
       {(totalMixedGasProduction || totalH2Production || inference || additionalNotes) && (
-        <div className="glass-panel print-section-card" style={{ padding: '24px', marginBottom: '24px' }}>
+        <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
             <Sparkles size={18} color="#f43f5e" />
             <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>
@@ -484,10 +484,10 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
       )}
 
       {/* Selected Datastreams & Reference Docs */}
-      <div className="print-compact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px', marginBottom: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px', marginBottom: '24px' }}>
         
         {/* Datastreams card */}
-        <div className="glass-panel print-section-card" style={{ padding: '20px' }}>
+        <div className="glass-panel" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <Database size={16} color="#8b5cf6" />
             <h4 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>Selected Data Columns</h4>
@@ -524,7 +524,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
         </div>
 
         {/* Reference visual & doc card */}
-        <div className="glass-panel print-section-card" style={{ padding: '20px' }}>
+        <div className="glass-panel" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <ImageIcon size={16} color="#06b6d4" />
             <h4 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>Reference Visuals & Attachments</h4>
@@ -638,10 +638,10 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
       </div>
 
       {/* GC & Water Sample Tables */}
-      <div className="print-compact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '20px', marginBottom: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '20px', marginBottom: '24px' }}>
         
         {/* GC Table */}
-        <div className="glass-panel print-section-card" style={{ padding: '20px' }}>
+        <div className="glass-panel" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <FlaskConical size={16} color="#06b6d4" />
             <h4 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>GC Gas Samples</h4>
@@ -671,7 +671,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
         </div>
 
         {/* Water Table */}
-        <div className="glass-panel print-section-card" style={{ padding: '20px' }}>
+        <div className="glass-panel" style={{ padding: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
             <Droplets size={16} color="#10b981" />
             <h4 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>Water Quality Samples</h4>
@@ -712,11 +712,11 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
             if (!data) return null;
             const options = buildChartOptions(gc);
             return (
-              <div key={gc.id} className="glass-panel print-chart-block" style={{ padding: '24px' }}>
+              <div key={gc.id} className="glass-panel" style={{ padding: '24px' }}>
                 <h4 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '16px', color: '#f3f4f6' }}>
                   {gc.title}
                 </h4>
-                <div className="chart-container-inner" style={{ height: '340px' }}>
+                <div style={{ height: '340px' }}>
                   {gc.xAxis === 'Date' ? (
                     <Bar data={data} options={options} />
                   ) : (

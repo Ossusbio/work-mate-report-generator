@@ -103,13 +103,4 @@
 - [x] 220px reclaimed width for spacious electrode, datastream, and raw data tables
 - [x] Production bundle deployed: `dist/assets/index-Bush9cYn.css` + `dist/assets/index--WCSHExU.js`
 
-## Component 20: PDF Graph & Sample Table Page-Break Optimization (2026-08-21)
-- [x] Dedicated `.print-chart-block` container preventing chart & title splits across page boundaries
-- [x] Anti-split protection (`page-break-inside: avoid !important;`) across all cards (`.glass-panel`, `.print-section-card`)
-- [x] Locked heading rules (`page-break-after: avoid !important;`) preventing orphaned table headings
-- [x] Compact print grid (`.print-compact-grid`) rendering GC & Water sample tables side-by-side
-- [x] Tightened print margins & capped chart height (240px) eliminating excessive white space
-- [x] Production bundle deployed: `dist/assets/index-DBSE28yn.css` + `dist/assets/index-nFwK7_Hk.js`
-
-
 

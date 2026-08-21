@@ -110,13 +110,6 @@
 - [x] **Full Canvas Expansion**: Form content expands to 100% full screen width, providing 220px extra horizontal space for electrode grids, sample tables, and BigQuery charts
 - [x] **Production Deployment**: Frontend bundle built (`dist/assets/index-Bush9cYn.css` + `dist/assets/index--WCSHExU.js`) and deployed to Firebase Hosting
 
-### Phase 14 — PDF Graph & Sample Table Page-Break Optimization (2026-08-20 / 2026-08-21)
-- [x] **Un-Splittable Chart Blocks**: Applied `.print-chart-block` with `page-break-inside: avoid !important` and `break-inside: avoid !important` to ensure graphs and titles never split across pages
-- [x] **Sample Table Anti-Split Protection**: Applied `page-break-inside: avoid !important` and locked all headings with `page-break-after: avoid !important` so GC & Water sample headings and tables remain bonded on the same page
-- [x] **Compact Print Grid Layout**: Wrapped sample tables in `.print-compact-grid` for clean side-by-side rendering in print mode, eliminating large white spaces
-- [x] **Tightened Print Geometry**: Standardized `@page { size: A4 portrait; margin: 8mm 10mm; }`, capped chart print height to 240px, and compacted table padding (3px 6px)
-- [x] **Production Deployment**: Frontend bundle built (`dist/assets/index-DBSE28yn.css` + `dist/assets/index-nFwK7_Hk.js`) and deployed to Firebase Hosting
-
 ---
 
 ## 🚀 Current Production Deployment Status
