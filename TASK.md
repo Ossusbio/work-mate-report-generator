@@ -111,5 +111,14 @@
 - [x] Storage upload retry (1.5s) and safe local disk fallback in `uploadToGCS`
 - [x] Production build deployed: `dist/assets/index-C5MnQhBp.css` + `dist/assets/index-D_22Ew6C.js`
 
+## Component 21: BigQuery Datastream Catalog Ingestion & Realignment (2026-08-24)
+- [x] All 24 Analog Inputs (`AI_1_0` to `AI_3_7`) listed under UCS PT (Pressure Transmitter)
+- [x] Shifted `TEMP_1`–`TEMP_9` and sensor voltage/current/density under UCS EPU
+- [x] Realigned SMP 3RX Skid: `ARCHIE_GAS` in PT, POVs removed, all reactor temps (`RX1_T*`, `RX2_T*`, `RX3_T*`) in EPU
+- [x] Realigned SDR: All reactor temps (`RX_T*`) in EPU, removed `TRIGGER_COUNT` from Production
+- [x] Renamed panel title to "PT (Pressure Transmitter)"
+- [x] Production build deployed to Firebase Hosting
+
+
 
 

@@ -117,6 +117,14 @@
 - [x] **Storage Upload Resilience**: Added automatic retry (1.5s delay) and safe local disk fallback in `uploadToGCS` to prevent ECONNRESET/ENOTFOUND network failures during file uploads
 - [x] **Production Deployment**: Frontend deployed to Firebase Hosting (`dist/assets/index-C5MnQhBp.css` + `dist/assets/index-D_22Ew6C.js`) and backend updated
 
+### Phase 15 — BigQuery Datastream Catalog Alignment & Categorization (2026-08-24)
+- [x] **Complete BigQuery Schema Ingestion**: Verified all 548 BigQuery columns across UCS (119 cols), SMP_3RX_SKID (309 cols), and SDR (120 cols).
+- [x] **UCS Catalog Realignment**: All 24 Analog Inputs (`AI_1_0` to `AI_3_7`) placed under PT (Pressure Transmitter). All temperature readings (`TEMP_1` to `TEMP_9`) and sensor voltage/current/density shifted under EPU. Removed unused DI and energy meter columns; streamlined Production to volume metrics only.
+- [x] **SMP 3RX Skid Realignment**: Placed `ARCHIE_GAS` under PT, removed POVs from PT, shifted all reactor temperatures (`RX1_MAX_TEMP`, `RX2_MAX_TEMP`, `RX3_MAX_TEMP`, `RX1_T1`–`RX1_T28`, `RX2_T1`–`RX2_T28`, `RX3_T1`–`RX3_T28`) under EPU.
+- [x] **SDR Realignment**: Shifted all reactor temperatures (`RX_MAX_TEMP`, `RX_T1`–`RX_T28`) under EPU. Removed `TRIGGER_COUNT` from Production.
+- [x] **Panel Title Update**: Renamed "PT (Pressure & Temperature)" panel to "PT (Pressure Transmitter)".
+- [x] **Production Deployment**: Frontend bundle deployed to Firebase Hosting.
+
 ---
 
 ## 🚀 Current Production Deployment Status
