@@ -10,6 +10,7 @@ import DataStreamSelector, { SITE_STREAM_CATALOG } from './DataStreamSelector';
 import DynamicSampleTable from './DynamicSampleTable';
 import ConfirmModal from './ConfirmModal';
 import InvalidParametersModal from './InvalidParametersModal';
+import BigQueryFetchAlertModal from './BigQueryFetchAlertModal';
 import { generateReport, uploadDocument, deleteStorageFile, previewData, fetchReportHistory, fetchStreamMetadata } from '../services/api';
 import { buildUnifiedChartData, buildUnifiedChartOptions, getStreamMetadata } from '../utils/chartHelpers';
 import { Line, Bar } from 'react-chartjs-2';
@@ -167,6 +168,8 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
   const [docNote, setDocNote] = useState(getP('docNote', uploadedDoc?.note || uploadedDoc?.description || ''));
   const [validationErrors, setValidationErrors] = useState([]);
   const [showValidationModal, setShowValidationModal] = useState(false);
+  const [showBigQueryAlert, setShowBigQueryAlert] = useState(false);
+  const [bigQueryAlertDetails, setBigQueryAlertDetails] = useState({});
 
   // 6. Raw Data
   // '' means not yet selected (force operator to choose explicitly)
@@ -407,6 +410,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
   const handleFetchRawData = async () => {
     setFetchingData(true);
     setError('');
+    const totalStreams = (selectedStreams.PT?.length || 0) + (selectedStreams.EPU?.length || 0) + (selectedStreams.Production?.length || 0);
     try {
       const payload = {
         site,
@@ -415,9 +419,27 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
         dataFrequency
       };
       const res = await previewData(payload);
-      setRawData(res.rows || []);
+      const rows = res.rows || [];
+      setRawData(rows);
+      if (rows.length === 0) {
+        setBigQueryAlertDetails({
+          site,
+          initialRunParams,
+          selectedStreamsCount: totalStreams,
+          dataFrequency
+        });
+        setShowBigQueryAlert(true);
+      }
     } catch (err) {
       setError('Failed to fetch data: ' + err.message);
+      setBigQueryAlertDetails({
+        site,
+        initialRunParams,
+        selectedStreamsCount: totalStreams,
+        dataFrequency,
+        errorMessage: err.message
+      });
+      setShowBigQueryAlert(true);
     } finally {
       setFetchingData(false);
     }
@@ -1455,6 +1477,21 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
           setDeleteDocConfirm(false);
         }}
         onCancel={() => setDeleteDocConfirm(false)}
+      />
+
+      {/* BigQuery Empty Data / Fetch Alert Modal */}
+      <BigQueryFetchAlertModal
+        open={showBigQueryAlert}
+        onClose={() => setShowBigQueryAlert(false)}
+        onNavigateTab={(tabKey) => {
+          setShowBigQueryAlert(false);
+          goToTab(tabKey);
+        }}
+        site={bigQueryAlertDetails.site || site}
+        initialRunParams={bigQueryAlertDetails.initialRunParams || initialRunParams}
+        selectedStreamsCount={bigQueryAlertDetails.selectedStreamsCount || 0}
+        dataFrequency={bigQueryAlertDetails.dataFrequency || dataFrequency}
+        errorMessage={bigQueryAlertDetails.errorMessage || ''}
       />
 
     </div>

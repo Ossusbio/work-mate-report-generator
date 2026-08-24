@@ -119,6 +119,15 @@
 - [x] Renamed panel title to "PT (Pressure Transmitter)"
 - [x] Production build deployed to Firebase Hosting
 
+## Component 22: BigQuery Empty Telemetry Alert Modal (2026-08-24)
+- [x] Created `BigQueryFetchAlertModal.jsx` popup component
+- [x] Displays site table name, exact queried time window, and break exclusion details
+- [x] Outlines 3 diagnostic reasons why BigQuery rows may be missing
+- [x] Added "Edit Date & Time (Step 1)" quick-navigation button
+- [x] Integrated into `OperatorForm.jsx` raw data preview and report generation
+- [x] Production build deployed to Firebase Hosting
+
+
 
 
 

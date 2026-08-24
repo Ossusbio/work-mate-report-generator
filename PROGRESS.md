@@ -125,6 +125,13 @@
 - [x] **Panel Title Update**: Renamed "PT (Pressure & Temperature)" panel to "PT (Pressure Transmitter)".
 - [x] **Production Deployment**: Frontend bundle deployed to Firebase Hosting.
 
+### Phase 16 — BigQuery Empty Telemetry Alert Modal (2026-08-24)
+- [x] **BigQueryFetchAlertModal Component**: Designed and built dedicated modal alerting operators when BigQuery returns 0 telemetry records for the requested date/time window.
+- [x] **Query Context & Diagnostics**: Displays exact site table queried (`Datas.<Site>`), queried time window (`startDate startTime → endDate endTime`), and breaks. Outlines 3 primary diagnostic reasons why records may be missing.
+- [x] **Quick Action Navigation**: Direct "Edit Date & Time (Step 1)" button switches the operator back to Step 1 to adjust time filters with 1 click.
+- [x] **Wizard Integration**: Integrated into `handleFetchRawData` (Step 6) and `handleSubmit` (Step 7) in `OperatorForm.jsx`.
+- [x] **Production Deployment**: Frontend bundle deployed to Firebase Hosting.
+
 ---
 
 ## 🚀 Current Production Deployment Status
