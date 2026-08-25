@@ -514,3 +514,199 @@ main {
     flex-direction: column !important;
   }
 }
+
+/* ==========================================================================
+   PRINT / PDF EXPORT STYLESHEET (window.print() / Download PDF)
+   Guarantees perfect alignment, classic clean white theme, and crisp charts/tables
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 12mm 12mm 12mm;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  html, body, #root {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #0f172a !important;
+    font-size: 9.5pt !important;
+    line-height: 1.4 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide interactive non-printable UI elements */
+  .no-print,
+  nav,
+  .navbar,
+  header,
+  button,
+  .btn,
+  .developer-panel,
+  .modal-backdrop-fixed,
+  .wizard-sidebar {
+    display: none !important;
+  }
+
+  /* Display printable only elements */
+  .print-only {
+    display: block !important;
+  }
+
+  /* Main report container */
+  .animate-fade-in {
+    animation: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Cards & Panels */
+  .glass-panel,
+  .print-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Section Headings */
+  h2 {
+    font-size: 16pt !important;
+    color: #0f172a !important;
+    margin: 0 0 6px 0 !important;
+    font-weight: 700 !important;
+  }
+
+  h3 {
+    font-size: 11.5pt !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+  }
+
+  h4 {
+    font-size: 10.5pt !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+  }
+
+  p, span, label {
+    color: #334155 !important;
+  }
+
+  /* Parameter Grid Alignment */
+  .glass-panel .print-card div[style*="gridTemplateColumns"],
+  div[style*="gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))'"],
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"] {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  div[style*="gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))'"],
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr))"] {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  /* Inner info boxes in parameter cards */
+  div[style*="background: 'rgba(239, 232, 216, 0.45)'"],
+  div[style*="background: rgba(239, 232, 216, 0.45)"] {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    padding: 8px 10px !important;
+  }
+
+  /* 2-Column Row Grids */
+  .print-row-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+    margin-bottom: 16px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Charts Container & Cards */
+  .charts-print-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .print-chart-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    margin-bottom: 20px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .chart-canvas-box {
+    height: 300px !important;
+    width: 100% !important;
+  }
+
+  .chart-canvas-box canvas {
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+
+  /* Tables in PDF */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 8.5pt !important;
+    background: #ffffff !important;
+  }
+
+  th {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 6px 8px !important;
+    text-align: left !important;
+  }
+
+  td {
+    border: 1px solid #e2e8f0 !important;
+    color: #0f172a !important;
+    padding: 5px 8px !important;
+  }
+
+  tr:nth-child(even) td {
+    background: #f8fafc !important;
+  }
+
+  /* Badges */
+  .badge {
+    border: 1px solid #cbd5e1 !important;
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+    font-weight: 600 !important;
+    padding: 2px 6px !important;
+  }
+}

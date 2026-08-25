@@ -130,14 +130,13 @@
 - [x] **Query Context & Diagnostics**: Displays exact site table queried (`Datas.<Site>`), queried time window (`startDate startTime → endDate endTime`), and breaks. Outlines 3 primary diagnostic reasons why records may be missing.
 - [x] **Quick Action Navigation**: Direct "Edit Date & Time (Step 1)" button switches the operator back to Step 1 to adjust time filters with 1 click.
 - [x] **Wizard Integration**: Integrated into `handleFetchRawData` (Step 6) and `handleSubmit` (Step 7) in `OperatorForm.jsx`.
-- [x] **Production Deployment**: Frontend bundle deployed to Firebase Hosting.
 
-### Phase 17 — Warm Beige & Cream Theme Overhaul & UI Refinements (2026-08-25)
-- [x] **Light Warm Beige & Cream Theme**: Completely overhauled UI theme from dark slate to cashmere cream (`#FAF6EE`), warm ivory cards (`#FFFDF9`), roasted hazelnut accents (`#7C5A3E`), caramel highlights (`#C4924F`), and high-contrast espresso charcoal typography (`#2E2219`).
-- [x] **Datastream & Sample Table Harmonization**: Converted Step 3 (Datastream Selection) and Step 4 (GC & Water Sample tables) from cyan/blue to warm hazelnut and sage tones with ivory card surfaces.
-- [x] **Custom Graph Plotting Y-Axis Text Visibility**: Fixed light text invisibility in the multi-select Y-Axis dropdown by applying crisp high-contrast colors and beige floating menu surfaces.
-- [x] **Operator Report History Owner Email**: Changed owner/creator email styling from neon green to theme-matched roasted hazelnut (`#7C5A3E`).
-- [x] **Production Bundle**: Successfully built production assets (`dist/assets/index-C1gzY_Az.css` + `dist/assets/index-CqPM_g2m.js`).
+### Phase 17 — Warm Beige & Cream Theme Overhaul & High-Contrast PDF Engine (2026-08-25)
+- [x] **Warm Beige & Cream Palette**: Complete design system transition (`#FAF6EE` cashmere background, `#FFFDF9` ivory cards, `#EFE8D8` latte headers, `#7C5A3E` roasted hazelnut accents, `#C4924F` caramel, `#5E7A60` sage olive).
+- [x] **High-Contrast Text Readability**: Enforced solid dark black/charcoal text (`#2E2219`) across all data tables, telemetry rows, custom graph dropdowns, and generated report parameter cards.
+- [x] **Diagnostic Modal Theme Harmonization**: Updated `BigQueryFetchAlertModal.jsx` with high-contrast text and warm warning accents.
+- [x] **Report History Card Theming**: Changed owner email indicators from neon green to roasted hazelnut (`#7C5A3E`) and ivory popup dropdowns.
+- [x] **Pixel-Perfect PDF Print Engine**: Added dedicated `@media print` rules in `index.css` preserving clean pure white print background, 4-column parameter alignment, 2-column side-by-side sample tables, and full-width multi-axis graph cards without splitting across pages.
 
 ---
 

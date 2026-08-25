@@ -1059,10 +1059,10 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
           {activeTab === 'rawdata' && (
             <div className="animate-fade-in">
               <div className="glass-panel" style={{ padding: '24px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Table2 size={18} color="#ec4899" />
-                    <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>BigQuery Process Telemetry Data</h3>
+                    <Table2 size={18} color="#7C5A3E" />
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>BigQuery Process Telemetry Data</h3>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <select 
@@ -1074,8 +1074,8 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                       }}
                       style={{
                         fontSize: '0.85rem',
-                        borderColor: dataFrequency === '' ? 'rgba(245,158,11,0.6)' : undefined,
-                        boxShadow: dataFrequency === '' ? '0 0 0 2px rgba(245,158,11,0.2)' : undefined
+                        borderColor: dataFrequency === '' ? 'rgba(196,146,79,0.6)' : undefined,
+                        boxShadow: dataFrequency === '' ? '0 0 0 2px rgba(196,146,79,0.2)' : undefined
                       }}
                     >
                       {FREQUENCY_OPTIONS.map(opt => (
@@ -1096,16 +1096,16 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                 </div>
 
                 {bqColumns.length === 0 && (
-                  <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)', borderRadius: '12px', padding: '14px', color: '#f59e0b', fontSize: '0.85rem', marginBottom: '16px' }}>
+                  <div style={{ background: 'rgba(196, 146, 79, 0.1)', border: '1px solid rgba(196, 146, 79, 0.3)', borderRadius: '12px', padding: '14px', color: '#7C5A3E', fontSize: '0.85rem', marginBottom: '16px', fontWeight: 600 }}>
                     ⚠️ Please select at least one datastream in Step 3 (Datastream Selection) first.
                   </div>
                 )}
 
                 {bqColumns.length > 0 && dataFrequency === '' && (
-                  <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.4)', borderRadius: '12px', padding: '14px', color: '#f59e0b', fontSize: '0.85rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ background: 'rgba(196, 146, 79, 0.1)', border: '1px solid rgba(196, 146, 79, 0.4)', borderRadius: '12px', padding: '14px', color: '#7C5A3E', fontSize: '0.85rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '1.1em' }}>⚠️</span>
                     <span>
-                      <strong>Sampling frequency not selected.</strong> Please choose a frequency from the dropdown above (e.g. "Every 5 Minutes" or "All Rows") before fetching data or generating the report.
+                      <strong style={{ color: '#2E2219' }}>Sampling frequency not selected.</strong> Please choose a frequency from the dropdown above (e.g. "Every 5 Minutes" or "All Rows") before fetching data or generating the report.
                     </span>
                   </div>
                 )}
@@ -1113,15 +1113,15 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                 {/* Data Table */}
                 {rawData.length > 0 && (
                   <div>
-                    <div style={{ fontSize: '0.82rem', color: '#9ca3af', marginBottom: '10px' }}>
-                      Showing <strong style={{ color: '#f3f4f6' }}>{rawData.length}</strong> rows
+                    <div style={{ fontSize: '0.82rem', color: '#6E5A4B', marginBottom: '10px' }}>
+                      Showing <strong style={{ color: '#2E2219' }}>{rawData.length}</strong> rows
                     </div>
-                    <div style={{ maxHeight: '500px', overflow: 'auto', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
+                    <div style={{ maxHeight: '500px', overflow: 'auto', borderRadius: '12px', border: '1px solid var(--color-warm-border)', background: '#FFFDF9' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
                         <thead>
-                          <tr style={{ background: 'rgba(15, 23, 42, 0.8)', position: 'sticky', top: 0, zIndex: 1 }}>
+                          <tr style={{ background: '#EFE8D8', position: 'sticky', top: 0, zIndex: 1 }}>
                             {Object.keys(rawData[0]).map(col => (
-                              <th key={col} style={{ padding: '10px 12px', textAlign: 'left', color: '#9ca3af', fontWeight: 600, borderBottom: '1px solid rgba(255,255,255,0.1)', whiteSpace: 'nowrap' }}>
+                              <th key={col} style={{ padding: '10px 12px', textAlign: 'left', color: '#2E2219', fontWeight: 700, borderBottom: '1px solid var(--color-warm-border)', whiteSpace: 'nowrap' }}>
                                 {col}
                               </th>
                             ))}
@@ -1129,9 +1129,9 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                         </thead>
                         <tbody>
                           {rawData.map((row, idx) => (
-                            <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: idx % 2 === 0 ? 'rgba(17, 24, 39, 0.4)' : 'transparent' }}>
+                            <tr key={idx} style={{ borderBottom: '1px solid var(--color-warm-border)', background: idx % 2 === 0 ? 'rgba(239, 232, 216, 0.35)' : '#FFFDF9' }}>
                               {Object.values(row).map((val, ci) => (
-                                <td key={ci} style={{ padding: '8px 12px', color: '#d1d5db', whiteSpace: 'nowrap', fontFamily: 'JetBrains Mono', fontSize: '0.78rem' }}>
+                                <td key={ci} style={{ padding: '8px 12px', color: '#2E2219', fontWeight: 500, whiteSpace: 'nowrap', fontFamily: 'JetBrains Mono', fontSize: '0.8rem' }}>
                                   {val !== null && val !== undefined ? String(val) : '—'}
                                 </td>
                               ))}
