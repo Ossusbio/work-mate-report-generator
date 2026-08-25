@@ -132,6 +132,13 @@
 - [x] **Wizard Integration**: Integrated into `handleFetchRawData` (Step 6) and `handleSubmit` (Step 7) in `OperatorForm.jsx`.
 - [x] **Production Deployment**: Frontend bundle deployed to Firebase Hosting.
 
+### Phase 17 — Warm Beige & Cream Theme Overhaul & UI Refinements (2026-08-25)
+- [x] **Light Warm Beige & Cream Theme**: Completely overhauled UI theme from dark slate to cashmere cream (`#FAF6EE`), warm ivory cards (`#FFFDF9`), roasted hazelnut accents (`#7C5A3E`), caramel highlights (`#C4924F`), and high-contrast espresso charcoal typography (`#2E2219`).
+- [x] **Datastream & Sample Table Harmonization**: Converted Step 3 (Datastream Selection) and Step 4 (GC & Water Sample tables) from cyan/blue to warm hazelnut and sage tones with ivory card surfaces.
+- [x] **Custom Graph Plotting Y-Axis Text Visibility**: Fixed light text invisibility in the multi-select Y-Axis dropdown by applying crisp high-contrast colors and beige floating menu surfaces.
+- [x] **Operator Report History Owner Email**: Changed owner/creator email styling from neon green to theme-matched roasted hazelnut (`#7C5A3E`).
+- [x] **Production Bundle**: Successfully built production assets (`dist/assets/index-C1gzY_Az.css` + `dist/assets/index-CqPM_g2m.js`).
+
 ---
 
 ## 🚀 Current Production Deployment Status

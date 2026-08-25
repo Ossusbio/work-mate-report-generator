@@ -199,8 +199,8 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
             </h2>
             
             {/* Audit log trail */}
-            <p style={{ fontSize: '0.8rem', color: '#9ca3af', marginTop: '6px' }}>
-              Created by <strong style={{ color: '#38bdf8' }}>{report.createdBy || 'parth@ossusbio.com'}</strong> &bull; Last updated on {formatToIST(report.lastEditedAt || report.updatedAt || report.createdAt)}
+            <p style={{ fontSize: '0.8rem', color: '#cdbeaf', marginTop: '6px' }}>
+              Created by <strong style={{ color: '#F9D2BA' }}>{report.createdBy || 'parth@ossusbio.com'}</strong> &bull; Last updated on {formatToIST(report.lastEditedAt || report.updatedAt || report.createdAt)}
             </p>
           </div>
           
@@ -212,19 +212,20 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                 style={{ 
                   padding: '10px 20px', 
                   borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-                  boxShadow: '0 0 15px rgba(59, 130, 246, 0.4)',
+                  background: 'linear-gradient(135deg, #1D4533 0%, #2a634a 50%, #5E3122 100%)',
+                  border: '1px solid rgba(249, 210, 186, 0.4)',
+                  boxShadow: '0 0 15px rgba(29, 69, 51, 0.5)',
                   gap: '8px'
                 }}
               >
-                <Edit size={16} />
+                <Edit size={16} color="#F9D2BA" />
                 <span>Edit Report</span>
               </button>
             )}
 
             {rows.length === 0 && canEdit && (
               <button onClick={handleFetchTelemetry} disabled={fetching} className="btn btn-secondary" style={{ gap: '8px' }}>
-                <Play size={16} /> <span>{fetching ? 'Fetching...' : 'Fetch Live Telemetry'}</span>
+                <Play size={16} color="#F9D2BA" /> <span>{fetching ? 'Fetching...' : 'Fetch Live Telemetry'}</span>
               </button>
             )}
 
@@ -237,12 +238,13 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
               style={{ 
                 padding: '10px 20px', 
                 borderRadius: '12px',
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                boxShadow: '0 0 15px rgba(16, 185, 129, 0.4)',
+                background: 'linear-gradient(135deg, #2e7d58 0%, #1D4533 100%)',
+                border: '1px solid rgba(118, 173, 143, 0.4)',
+                boxShadow: '0 0 15px rgba(46, 125, 88, 0.4)',
                 gap: '8px'
               }}
             >
-              <FileText size={16} /> <span>Download PDF</span>
+              <FileText size={16} color="#F7EAE0" /> <span>Download PDF</span>
             </button>
           </div>
         </div>
@@ -250,9 +252,9 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
 
       {/* Operational Parameters Panel */}
       <div className="glass-panel print-card" style={{ padding: '24px', marginBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-          <Info size={18} color="#3b82f6" />
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(247, 234, 224, 0.1)' }}>
+          <Info size={18} color="#F9D2BA" />
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0, color: '#F7EAE0' }}>
             Operational Run Parameters
           </h3>
         </div>
@@ -264,9 +266,9 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
             <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e5e7eb' }}>{runName || '-'}</span>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Run Owner</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#38bdf8' }}>{runOwner || report.createdBy || '-'}</span>
+          <div style={{ background: 'rgba(247, 234, 224, 0.03)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(247, 234, 224, 0.06)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#cdbeaf', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Run Owner</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#F9D2BA' }}>{runOwner || report.createdBy || '-'}</span>
           </div>
 
           <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
@@ -574,15 +576,15 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                 return (
                   <div>
                     {/* Web UI View */}
-                    <div className="no-print" style={{ background: 'rgba(255,255,255,0.02)', padding: '10px 14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div className="no-print" style={{ background: 'rgba(247, 234, 224, 0.03)', padding: '10px 14px', borderRadius: '8px', border: '1px solid rgba(247, 234, 224, 0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <File size={16} color="#3b82f6" />
+                        <File size={16} color="#F9D2BA" />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontSize: '0.85rem', color: '#e5e7eb', fontWeight: 600 }}>
+                          <span style={{ fontSize: '0.85rem', color: '#F7EAE0', fontWeight: 600 }}>
                             {filename}
                           </span>
                           {(docObj?.note || docObj?.description || p?.docNote) && (
-                            <span style={{ fontSize: '0.78rem', color: '#9ca3af', fontStyle: 'italic' }}>
+                            <span style={{ fontSize: '0.78rem', color: '#cdbeaf', fontStyle: 'italic' }}>
                               Note: {docObj?.note || docObj?.description || p?.docNote}
                             </span>
                           )}
@@ -593,7 +595,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="btn btn-secondary" 
-                        style={{ padding: '6px 14px', fontSize: '0.78rem', gap: '6px', textDecoration: 'none', color: '#38bdf8', borderColor: 'rgba(56, 189, 248, 0.3)' }}
+                        style={{ padding: '6px 14px', fontSize: '0.78rem', gap: '6px', textDecoration: 'none', color: '#F9D2BA', borderColor: 'rgba(249, 210, 186, 0.35)' }}
                       >
                         <span>Open Document</span>
                         <ExternalLink size={13} />

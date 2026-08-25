@@ -171,21 +171,22 @@ export default function App() {
                   <div className="glass-panel" style={{ 
                     padding: '36px', 
                     marginBottom: '32px', 
-                    borderLeft: '4px solid #3b82f6',
-                    background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(30, 41, 55, 0.6) 100%)'
+                    borderLeft: '4px solid #7C5A3E',
+                    background: 'linear-gradient(135deg, rgba(255, 253, 249, 0.98) 0%, rgba(239, 232, 216, 0.85) 100%)',
+                    boxShadow: '0 10px 30px -8px rgba(120, 95, 70, 0.1), 0 0 20px rgba(228, 216, 196, 0.4)'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
                       <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                          <Sparkles size={20} color="#f59e0b" />
-                          <span style={{ fontSize: '0.85rem', color: '#f59e0b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          <Sparkles size={20} color="#7C5A3E" />
+                          <span style={{ fontSize: '0.85rem', color: '#7C5A3E', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                             Dashboard
                           </span>
                         </div>
-                        <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '6px', letterSpacing: '-0.02em' }}>
+                        <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '6px', letterSpacing: '-0.02em', color: '#2E2219' }}>
                           Welcome, <span className="gradient-text">{user?.displayName || user?.email?.split('@')[0]}</span>
                         </h2>
-                        <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: 1.6 }}>
+                        <p style={{ color: '#6E5A4B', fontSize: '0.95rem', lineHeight: 1.6 }}>
                           Create a new run report or browse your past reports below.
                         </p>
                       </div>
@@ -197,8 +198,9 @@ export default function App() {
                           padding: '16px 32px', 
                           fontSize: '1.1rem', 
                           borderRadius: '16px',
-                          boxShadow: '0 0 30px rgba(59, 130, 246, 0.5)',
-                          background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+                          boxShadow: '0 6px 20px rgba(124, 90, 62, 0.35)',
+                          background: 'linear-gradient(135deg, #7C5A3E 0%, #A37A55 100%)',
+                          border: '1px solid rgba(255, 255, 255, 0.6)',
                           gap: '10px'
                         }}
                       >

@@ -259,27 +259,27 @@ export default function ReportHistory({ onSelectReport, user }) {
                     </span>
                   </div>
 
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '6px' }}>
+                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '6px', color: '#2E2219' }}>
                     {p.runName || 'Run Report'}
                   </h3>
 
-                  <div style={{ fontSize: '0.82rem', color: '#9ca3af', display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '14px' }}>
+                  <div style={{ fontSize: '0.82rem', color: '#6E5A4B', display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '14px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <MapPin size={13} color="#3b82f6" />
-                      <span>{p.site}</span>
+                      <MapPin size={13} color="#7C5A3E" />
+                      <span style={{ color: '#2E2219' }}>{p.site}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Calendar size={13} color="#8b5cf6" />
-                      <span>Duration: {p.runDuration || 'N/A'}</span>
+                      <Calendar size={13} color="#A37A55" />
+                      <span style={{ color: '#2E2219' }}>Duration: {p.runDuration || 'N/A'}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <User size={13} color="#10b981" />
-                      <span style={{ fontSize: '0.78rem', color: '#6ee7b7' }}>Owner: {p.runOwner ? `${p.runOwner} (${creator})` : creator}</span>
+                      <User size={13} color="#7C5A3E" />
+                      <span style={{ fontSize: '0.78rem', color: '#7C5A3E', fontWeight: 600 }}>Owner: {p.runOwner ? `${p.runOwner} (${creator})` : creator}</span>
                     </div>
                   </div>
                 </div>
 
-                <div style={{ paddingTop: '12px', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <div style={{ paddingTop: '12px', borderTop: '1px solid var(--color-warm-border)' }}>
                   {deleteTarget?.reportId === r.reportId ? (
                     <div className="animate-fade-in" style={{
                       background: 'rgba(239, 68, 68, 0.14)',
@@ -348,32 +348,32 @@ export default function ReportHistory({ onSelectReport, user }) {
                           <button
                             onClick={() => onSelectReport(r)}
                             className="btn btn-secondary"
-                            style={{ flex: 1.2, fontSize: '0.8rem', padding: '8px 12px', borderColor: 'rgba(245, 158, 11, 0.4)', gap: '6px' }}
+                            style={{ flex: 1.2, fontSize: '0.8rem', padding: '8px 12px', borderColor: 'var(--color-warm-border)', gap: '6px', color: '#C4924F' }}
                             title="Edit Draft parameters"
                           >
-                            <Edit3 size={14} color="#f59e0b" />
-                            <span style={{ color: '#f59e0b' }}>Edit Draft</span>
+                            <Edit3 size={14} color="#C4924F" />
+                            <span style={{ color: '#C4924F', fontWeight: 600 }}>Edit Draft</span>
                           </button>
                         ) : (
                           <button
                             onClick={() => onSelectReport(r)}
                             className="btn btn-secondary"
-                            style={{ flex: 1.2, fontSize: '0.8rem', padding: '8px 12px', borderColor: 'rgba(107, 114, 128, 0.4)', gap: '6px' }}
+                            style={{ flex: 1.2, fontSize: '0.8rem', padding: '8px 12px', borderColor: 'var(--color-warm-border)', gap: '6px', color: '#6E5A4B' }}
                             title="View Draft (Read Only)"
                           >
-                            <Eye size={14} color="#9ca3af" />
-                            <span style={{ color: '#9ca3af' }}>View Draft</span>
+                            <Eye size={14} color="#6E5A4B" />
+                            <span style={{ color: '#6E5A4B', fontWeight: 600 }}>View Draft</span>
                           </button>
                         )
                       ) : (
                         <button
                           onClick={() => onSelectReport(r)}
                           className="btn btn-secondary"
-                          style={{ flex: 1.2, fontSize: '0.8rem', padding: '8px 12px', borderColor: 'rgba(59, 130, 246, 0.4)', gap: '6px' }}
+                          style={{ flex: 1.2, fontSize: '0.8rem', padding: '8px 12px', borderColor: 'var(--color-warm-border)', gap: '6px', color: '#7C5A3E' }}
                           title={canEdit ? "View & Edit Report details" : "View Report"}
                         >
-                          <Eye size={14} color="#3b82f6" />
-                          <span style={{ color: '#3b82f6' }}>{canEdit ? 'View / Edit' : 'View'}</span>
+                          <Eye size={14} color="#7C5A3E" />
+                          <span style={{ color: '#7C5A3E', fontWeight: 600 }}>{canEdit ? 'View / Edit' : 'View'}</span>
                         </button>
                       )}
 
@@ -387,18 +387,19 @@ export default function ReportHistory({ onSelectReport, user }) {
                             width: '100%',
                             fontSize: '0.8rem',
                             padding: '8px 10px',
-                            borderColor: 'rgba(16, 185, 129, 0.4)',
-                            color: '#10b981',
+                            borderColor: 'var(--color-warm-border)',
+                            color: '#7C5A3E',
                             gap: '6px',
-                            justifyContent: 'space-between'
+                            justifyContent: 'space-between',
+                            fontWeight: 600
                           }}
                           title="Download Report (Excel / PDF / CSV)"
                         >
                           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <Download size={14} color="#10b981" />
+                            <Download size={14} color="#7C5A3E" />
                             <span>Download</span>
                           </div>
-                          <ChevronDown size={12} color="#10b981" />
+                          <ChevronDown size={12} color="#7C5A3E" />
                         </button>
 
                         {/* Download Menu Popup */}
@@ -413,11 +414,11 @@ export default function ReportHistory({ onSelectReport, user }) {
                               bottom: 'calc(100% + 6px)',
                               right: 0,
                               minWidth: '180px',
-                              background: '#1e293b',
-                              border: '1px solid rgba(255, 255, 255, 0.15)',
+                              background: '#FFFDF9',
+                              border: '1px solid var(--color-warm-border)',
                               borderRadius: '10px',
                               padding: '6px',
-                              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.6)',
+                              boxShadow: '0 10px 25px -5px rgba(120, 95, 70, 0.22)',
                               zIndex: 999,
                               display: 'flex',
                               flexDirection: 'column',
@@ -435,17 +436,18 @@ export default function ReportHistory({ onSelectReport, user }) {
                                   background: 'transparent',
                                   border: 'none',
                                   borderRadius: '6px',
-                                  color: '#e2e8f0',
+                                  color: '#2E2219',
                                   fontSize: '0.82rem',
+                                  fontWeight: 500,
                                   cursor: 'pointer',
                                   textAlign: 'left',
                                   width: '100%',
                                   transition: 'background 0.2s'
                                 }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(16, 185, 129, 0.15)'}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(124, 90, 62, 0.12)'}
                                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                               >
-                                <FileSpreadsheet size={15} color="#10b981" />
+                                <FileSpreadsheet size={15} color="#7C5A3E" />
                                 <span>{downloadingId === `${r.reportId}-excel` ? 'Exporting...' : 'Excel Workbook (.xlsx)'}</span>
                               </button>
 
@@ -461,17 +463,18 @@ export default function ReportHistory({ onSelectReport, user }) {
                                   background: 'transparent',
                                   border: 'none',
                                   borderRadius: '6px',
-                                  color: '#e2e8f0',
+                                  color: '#2E2219',
                                   fontSize: '0.82rem',
+                                  fontWeight: 500,
                                   cursor: 'pointer',
                                   textAlign: 'left',
                                   width: '100%',
                                   transition: 'background 0.2s'
                                 }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(56, 189, 248, 0.15)'}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(196, 146, 79, 0.15)'}
                                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                               >
-                                <FileText size={15} color="#38bdf8" />
+                                <FileText size={15} color="#C4924F" />
                                 <span>PDF Report (.pdf)</span>
                               </button>
 
@@ -487,17 +490,18 @@ export default function ReportHistory({ onSelectReport, user }) {
                                   background: 'transparent',
                                   border: 'none',
                                   borderRadius: '6px',
-                                  color: '#e2e8f0',
+                                  color: '#2E2219',
                                   fontSize: '0.82rem',
+                                  fontWeight: 500,
                                   cursor: 'pointer',
                                   textAlign: 'left',
                                   width: '100%',
                                   transition: 'background 0.2s'
                                 }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(245, 158, 11, 0.15)'}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(94, 122, 96, 0.15)'}
                                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                               >
-                                <FileText size={15} color="#f59e0b" />
+                                <FileText size={15} color="#5E7A60" />
                                 <span>{downloadingId === `${r.reportId}-csv` ? 'Exporting...' : 'Raw Telemetry (.csv)'}</span>
                               </button>
                             </div>
