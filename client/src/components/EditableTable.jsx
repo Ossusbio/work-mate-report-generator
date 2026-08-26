@@ -190,17 +190,17 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
               <span className={`badge ${isDraft ? 'badge-draft' : 'badge-success'}`}>
                 {isDraft ? 'Draft Report' : 'Completed Run Report'}
               </span>
-              <span style={{ fontSize: '0.85rem', color: '#9ca3af', fontFamily: 'JetBrains Mono' }}>
+              <span style={{ fontSize: '0.85rem', color: '#6E5A4B', fontFamily: 'JetBrains Mono' }}>
                 {report.reportId}
               </span>
             </div>
-            <h2 style={{ fontSize: '1.6rem', fontWeight: 700 }}>
+            <h2 style={{ fontSize: '1.6rem', fontWeight: 700, color: '#2E2219' }}>
               {runName || report.runId}
             </h2>
             
             {/* Audit log trail */}
-            <p style={{ fontSize: '0.8rem', color: '#9ca3af', marginTop: '6px' }}>
-              Created by <strong style={{ color: '#38bdf8' }}>{report.createdBy || 'parth@ossusbio.com'}</strong> &bull; Last updated on {formatToIST(report.lastEditedAt || report.updatedAt || report.createdAt)}
+            <p style={{ fontSize: '0.8rem', color: '#6E5A4B', marginTop: '6px' }}>
+              Created by <strong style={{ color: '#7C5A3E' }}>{report.createdBy || 'parth@ossusbio.com'}</strong> &bull; Last updated on {formatToIST(report.lastEditedAt || report.updatedAt || report.createdAt)}
             </p>
           </div>
           
@@ -212,19 +212,21 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                 style={{ 
                   padding: '10px 20px', 
                   borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
-                  boxShadow: '0 0 15px rgba(59, 130, 246, 0.4)',
-                  gap: '8px'
+                  background: 'linear-gradient(135deg, #7C5A3E 0%, #A37A55 100%)',
+                  border: 'none',
+                  color: '#ffffff',
+                  gap: '8px',
+                  fontWeight: 600
                 }}
               >
-                <Edit size={16} />
+                <Edit size={16} color="#ffffff" />
                 <span>Edit Report</span>
               </button>
             )}
 
             {rows.length === 0 && canEdit && (
-              <button onClick={handleFetchTelemetry} disabled={fetching} className="btn btn-secondary" style={{ gap: '8px' }}>
-                <Play size={16} /> <span>{fetching ? 'Fetching...' : 'Fetch Live Telemetry'}</span>
+              <button onClick={handleFetchTelemetry} disabled={fetching} className="btn btn-secondary" style={{ gap: '8px', color: '#7C5A3E', borderColor: 'var(--color-warm-border)' }}>
+                <Play size={16} color="#7C5A3E" /> <span>{fetching ? 'Fetching...' : 'Fetch Live Telemetry'}</span>
               </button>
             )}
 
@@ -237,12 +239,14 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
               style={{ 
                 padding: '10px 20px', 
                 borderRadius: '12px',
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                boxShadow: '0 0 15px rgba(16, 185, 129, 0.4)',
-                gap: '8px'
+                background: 'linear-gradient(135deg, #5E7A60 0%, #466048 100%)',
+                border: 'none',
+                color: '#ffffff',
+                gap: '8px',
+                fontWeight: 600
               }}
             >
-              <FileText size={16} /> <span>Download PDF</span>
+              <FileText size={16} color="#ffffff" /> <span>Download PDF</span>
             </button>
           </div>
         </div>
@@ -250,81 +254,81 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
 
       {/* Operational Parameters Panel */}
       <div className="glass-panel print-card" style={{ padding: '24px', marginBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-          <Info size={18} color="#3b82f6" />
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
+          <Info size={18} color="#7C5A3E" />
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>
             Operational Run Parameters
           </h3>
         </div>
 
         {/* Details Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Run Name</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e5e7eb' }}>{runName || '-'}</span>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '14px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Run Name</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#2E2219' }}>{runName || '-'}</span>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Run Owner</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#38bdf8' }}>{runOwner || report.createdBy || '-'}</span>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '14px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Run Owner</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#7C5A3E' }}>{runOwner || report.createdBy || '-'}</span>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Site Selection</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#10b981' }}>{site}</span>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '14px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Site Selection</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#5E7A60' }}>{site}</span>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Run Duration</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e5e7eb' }}>{runDuration || '-'}</span>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '14px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Run Duration</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#2E2219' }}>{runDuration || '-'}</span>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Effluent Type</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e5e7eb' }}>{effluent || '-'}</span>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '14px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Effluent Type</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#2E2219' }}>{effluent || '-'}</span>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Effluent Volume</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e5e7eb' }}>{effluentVolume ? `${effluentVolume} L` : '-'}</span>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '14px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Effluent Volume</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#2E2219' }}>{effluentVolume ? `${effluentVolume} L` : '-'}</span>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Inoculation</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e5e7eb' }}>{inoculation || '-'}</span>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '14px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Inoculation</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#2E2219' }}>{inoculation || '-'}</span>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.02)', padding: '14px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Run ID</span>
-            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e5e7eb', fontFamily: 'JetBrains Mono' }}>{autoRunId}</span>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '14px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '4px', fontWeight: 600 }}>Run ID</span>
+            <span style={{ fontSize: '0.95rem', fontWeight: 700, color: '#2E2219', fontFamily: 'JetBrains Mono' }}>{autoRunId}</span>
           </div>
         </div>
 
         {runDescription && (
-          <div style={{ background: 'rgba(255,255,255,0.01)', padding: '16px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)', marginBottom: '24px' }}>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', textTransform: 'uppercase', marginBottom: '6px' }}>Run Description</span>
-            <p style={{ margin: 0, fontSize: '0.92rem', color: '#d1d5db', lineHeight: 1.6, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{runDescription}</p>
+          <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '16px', borderRadius: '10px', border: '1px solid var(--color-warm-border)', marginBottom: '24px' }}>
+            <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', textTransform: 'uppercase', marginBottom: '6px', fontWeight: 600 }}>Run Description</span>
+            <p style={{ margin: 0, fontSize: '0.92rem', color: '#2E2219', lineHeight: 1.6, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{runDescription}</p>
           </div>
         )}
 
         {/* Timings Display */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
           {/* Run start/end */}
-          <div style={{ background: 'rgba(16, 185, 129, 0.03)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(16, 185, 129, 0.1)' }}>
+          <div style={{ background: 'rgba(94, 122, 96, 0.08)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(94, 122, 96, 0.25)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-              <Clock size={16} color="#10b981" />
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#10b981' }}>Run Duration Timings</span>
+              <Clock size={16} color="#5E7A60" />
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#5E7A60' }}>Run Duration Timings</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>Start Time</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 500 }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>Start Time</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>
                   {initialRunParams.startDate} {formatTimeAMPM(initialRunParams.startTime)}
                 </span>
               </div>
               <div>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>End Time</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 500 }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>End Time</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>
                   {initialRunParams.endDate} {formatTimeAMPM(initialRunParams.endTime)}
                 </span>
               </div>
@@ -332,23 +336,23 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
           </div>
 
           {/* Break exclusion window */}
-          <div style={{ background: 'rgba(245, 158, 11, 0.03)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(245, 158, 11, 0.1)' }}>
+          <div style={{ background: 'rgba(196, 146, 79, 0.08)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(196, 146, 79, 0.25)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-              <Clock size={16} color="#f59e0b" />
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#f59e0b' }}>Break Exclusion Window</span>
+              <Clock size={16} color="#C4924F" />
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#C4924F' }}>Break Exclusion Window</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>Break Start</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 500 }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>Break Start</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>
                   {initialRunParams.breakStartDate && initialRunParams.breakStartTime 
                     ? `${initialRunParams.breakStartDate} ${formatTimeAMPM(initialRunParams.breakStartTime)}` 
                     : 'None Configured'}
                 </span>
               </div>
               <div>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>Break End</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 500 }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>Break End</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>
                   {initialRunParams.breakEndDate && initialRunParams.breakEndTime 
                     ? `${initialRunParams.breakEndDate} ${formatTimeAMPM(initialRunParams.breakEndTime)}` 
                     : 'None Configured'}
@@ -362,78 +366,78 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
       {/* Electrode Details Panel */}
       {hasElectrodeData && (
         <div className="glass-panel print-card" style={{ padding: '24px', marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-            <Zap size={18} color="#f59e0b" />
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
+            <Zap size={18} color="#7C5A3E" />
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>
               Electrode & Cell Specifications
             </h3>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px' }}>
             {electrode.electrodeType && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>Type of Electrode</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.electrodeType}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>Type of Electrode</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.electrodeType}</span>
               </div>
             )}
             {electrode.electricalConnection && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>Connection</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.electricalConnection}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>Connection</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.electricalConnection}</span>
               </div>
             )}
             {electrode.numElectrodes && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>No. of Electrodes</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.numElectrodes}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>No. of Electrodes</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.numElectrodes}</span>
               </div>
             )}
             {electrode.coatingType && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>Coating</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.coatingType}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>Coating</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.coatingType}</span>
               </div>
             )}
             {electrode.currentDensityM2 && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>A/m²</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.currentDensityM2}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>A/m²</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.currentDensityM2}</span>
               </div>
             )}
             {electrode.currentDensityM3 && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>A/m³</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.currentDensityM3}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>A/m³</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.currentDensityM3}</span>
               </div>
             )}
             {electrode.anodeArea && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>Anode m²</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.anodeArea}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>Anode m²</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.anodeArea}</span>
               </div>
             )}
             {electrode.cathodeArea && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>Cathode m²</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.cathodeArea}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>Cathode m²</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.cathodeArea}</span>
               </div>
             )}
             {electrode.areaPerVolume && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>m²/m³</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.areaPerVolume}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>m²/m³</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.areaPerVolume}</span>
               </div>
             )}
             {electrode.kwhr && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>KWhr</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.kwhr}</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>KWhr</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.kwhr}</span>
               </div>
             )}
             {electrode.faradaicEfficiency && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: '8px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#9ca3af', display: 'block' }}>FE%</span>
-                <span style={{ fontSize: '0.88rem', color: '#e5e7eb', fontWeight: 600 }}>{electrode.faradaicEfficiency}%</span>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '12px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.72rem', color: '#6E5A4B', display: 'block', fontWeight: 600 }}>FE%</span>
+                <span style={{ fontSize: '0.88rem', color: '#2E2219', fontWeight: 700 }}>{electrode.faradaicEfficiency}%</span>
               </div>
             )}
           </div>
@@ -443,9 +447,9 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
       {/* Summary & Observations Panel */}
       {(totalMixedGasProduction || totalH2Production || inference || additionalNotes) && (
         <div className="glass-panel print-card" style={{ padding: '24px', marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-            <Sparkles size={18} color="#f43f5e" />
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
+            <Sparkles size={18} color="#7C5A3E" />
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>
               Run Summary & Technical Observations
             </h3>
           </div>
@@ -453,30 +457,30 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
               {totalMixedGasProduction && (
-                <div style={{ background: 'rgba(168, 85, 247, 0.08)', padding: '14px 18px', borderRadius: '10px', border: '1px solid rgba(168, 85, 247, 0.25)' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#c084fc', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '4px' }}>Total Mixed Gas Production</span>
-                  <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#f3e8ff' }}>{totalMixedGasProduction} Litres</span>
+                <div style={{ background: 'rgba(196, 146, 79, 0.1)', padding: '14px 18px', borderRadius: '10px', border: '1px solid rgba(196, 146, 79, 0.35)' }}>
+                  <span style={{ fontSize: '0.75rem', color: '#C4924F', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '4px' }}>Total Mixed Gas Production</span>
+                  <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#2E2219' }}>{totalMixedGasProduction} Litres</span>
                 </div>
               )}
               {totalH2Production && (
-                <div style={{ background: 'rgba(6, 182, 212, 0.08)', padding: '14px 18px', borderRadius: '10px', border: '1px solid rgba(6, 182, 212, 0.25)' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#38bdf8', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '4px' }}>Total H₂ Production</span>
-                  <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#e0f2fe' }}>{totalH2Production} Litres</span>
+                <div style={{ background: 'rgba(94, 122, 96, 0.1)', padding: '14px 18px', borderRadius: '10px', border: '1px solid rgba(94, 122, 96, 0.35)' }}>
+                  <span style={{ fontSize: '0.75rem', color: '#5E7A60', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '4px' }}>Total H₂ Production</span>
+                  <span style={{ fontSize: '1.2rem', fontWeight: 700, color: '#2E2219' }}>{totalH2Production} Litres</span>
                 </div>
               )}
             </div>
 
             {inference && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ fontSize: '0.75rem', color: '#38bdf8', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '6px' }}>Inference from Operator</span>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: '#d1d5db', lineHeight: 1.6, whiteSpace: 'pre-line' }}>{inference}</p>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '16px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.75rem', color: '#7C5A3E', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '6px' }}>Inference from Operator</span>
+                <p style={{ margin: 0, fontSize: '0.9rem', color: '#2E2219', lineHeight: 1.6, whiteSpace: 'pre-line' }}>{inference}</p>
               </div>
             )}
 
             {additionalNotes && (
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.04)' }}>
-                <span style={{ fontSize: '0.75rem', color: '#f59e0b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '6px' }}>Additional Operational Notes</span>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: '#d1d5db', lineHeight: 1.6, whiteSpace: 'pre-line' }}>{additionalNotes}</p>
+              <div style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '16px', borderRadius: '10px', border: '1px solid var(--color-warm-border)' }}>
+                <span style={{ fontSize: '0.75rem', color: '#C4924F', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '6px' }}>Additional Operational Notes</span>
+                <p style={{ margin: 0, fontSize: '0.9rem', color: '#2E2219', lineHeight: 1.6, whiteSpace: 'pre-line' }}>{additionalNotes}</p>
               </div>
             )}
           </div>
@@ -488,36 +492,36 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
         
         {/* Datastreams card */}
         <div className="glass-panel print-card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <Database size={16} color="#8b5cf6" />
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>Selected Data Columns</h4>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', paddingBottom: '8px', borderBottom: '1px solid var(--color-warm-border)' }}>
+            <Database size={16} color="#7C5A3E" />
+            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>Selected Data Columns</h4>
           </div>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div>
-              <span style={{ fontSize: '0.75rem', color: '#8b5cf6', fontWeight: 600, display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>PT Columns</span>
+              <span style={{ fontSize: '0.75rem', color: '#7C5A3E', fontWeight: 700, display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>PT Columns</span>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {selectedStreams.PT && selectedStreams.PT.length > 0 ? selectedStreams.PT.map(s => (
-                  <span key={s} className="badge badge-info" style={{ fontSize: '0.75rem', padding: '4px 8px' }}>{s}</span>
-                )) : <span style={{ fontSize: '0.82rem', color: '#6b7280' }}>None Selected</span>}
+                  <span key={s} className="badge" style={{ fontSize: '0.75rem', padding: '4px 8px', background: 'rgba(124, 90, 62, 0.12)', color: '#7C5A3E', border: '1px solid rgba(124, 90, 62, 0.3)', fontWeight: 600 }}>{s}</span>
+                )) : <span style={{ fontSize: '0.82rem', color: '#6E5A4B' }}>None Selected</span>}
               </div>
             </div>
 
             <div>
-              <span style={{ fontSize: '0.75rem', color: '#10b981', fontWeight: 600, display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>EPU Columns</span>
+              <span style={{ fontSize: '0.75rem', color: '#C4924F', fontWeight: 700, display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>EPU Columns</span>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {selectedStreams.EPU && selectedStreams.EPU.length > 0 ? selectedStreams.EPU.map(s => (
-                  <span key={s} className="badge badge-success" style={{ fontSize: '0.75rem', padding: '4px 8px' }}>{s}</span>
-                )) : <span style={{ fontSize: '0.82rem', color: '#6b7280' }}>None Selected</span>}
+                  <span key={s} className="badge" style={{ fontSize: '0.75rem', padding: '4px 8px', background: 'rgba(196, 146, 79, 0.12)', color: '#C4924F', border: '1px solid rgba(196, 146, 79, 0.3)', fontWeight: 600 }}>{s}</span>
+                )) : <span style={{ fontSize: '0.82rem', color: '#6E5A4B' }}>None Selected</span>}
               </div>
             </div>
 
             <div>
-              <span style={{ fontSize: '0.75rem', color: '#f59e0b', fontWeight: 600, display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Production Columns</span>
+              <span style={{ fontSize: '0.75rem', color: '#5E7A60', fontWeight: 700, display: 'block', textTransform: 'uppercase', marginBottom: '4px' }}>Production Columns</span>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {selectedStreams.Production && selectedStreams.Production.length > 0 ? selectedStreams.Production.map(s => (
-                  <span key={s} className="badge badge-draft" style={{ fontSize: '0.75rem', padding: '4px 8px' }}>{s}</span>
-                )) : <span style={{ fontSize: '0.82rem', color: '#6b7280' }}>None Selected</span>}
+                  <span key={s} className="badge" style={{ fontSize: '0.75rem', padding: '4px 8px', background: 'rgba(94, 122, 96, 0.12)', color: '#5E7A60', border: '1px solid rgba(94, 122, 96, 0.3)', fontWeight: 600 }}>{s}</span>
+                )) : <span style={{ fontSize: '0.82rem', color: '#6E5A4B' }}>None Selected</span>}
               </div>
             </div>
           </div>
@@ -525,30 +529,30 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
 
         {/* Reference visual & doc card */}
         <div className="glass-panel print-card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <ImageIcon size={16} color="#06b6d4" />
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>Reference Visuals & Attachments</h4>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', paddingBottom: '8px', borderBottom: '1px solid var(--color-warm-border)' }}>
+            <ImageIcon size={16} color="#7C5A3E" />
+            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>Reference Visuals & Attachments</h4>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {/* Snapshots */}
             <div>
-              <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', marginBottom: '8px', textTransform: 'uppercase', fontWeight: 600 }}>
                 Run Snapshots ({imagesList.length}/3)
               </span>
               {imagesList.length > 0 ? (
                 <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(140px, 1fr))`, gap: '12px' }}>
                   {imagesList.map((img, idx) => (
-                    <div key={idx} style={{ background: 'rgba(0,0,0,0.3)', padding: '8px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                      <div style={{ width: '100%', height: '90px', borderRadius: '6px', overflow: 'hidden', background: '#000', marginBottom: '6px' }}>
+                    <div key={idx} style={{ background: '#FFFDF9', padding: '8px', borderRadius: '8px', border: '1px solid var(--color-warm-border)' }}>
+                      <div style={{ width: '100%', height: '90px', borderRadius: '6px', overflow: 'hidden', background: '#FAF6EE', marginBottom: '6px' }}>
                         <img src={img.url} alt={`Snapshot ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                       </div>
-                      <a href={img.url} target="_blank" rel="noreferrer" style={{ fontSize: '0.72rem', color: '#38bdf8', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '4px' }}>
+                      <a href={img.url} target="_blank" rel="noreferrer" style={{ fontSize: '0.72rem', color: '#7C5A3E', textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '4px', fontWeight: 600 }}>
                         <span>Open Image #{idx + 1}</span>
                         <ExternalLink size={10} />
                       </a>
                       {img.description && (
-                        <p style={{ margin: 0, fontSize: '0.72rem', color: '#9ca3af', fontStyle: 'italic' }}>
+                        <p style={{ margin: 0, fontSize: '0.72rem', color: '#6E5A4B', fontStyle: 'italic' }}>
                           "{img.description}"
                         </p>
                       )}
@@ -556,7 +560,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                   ))}
                 </div>
               ) : (
-                <div style={{ border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '8px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6b7280', fontSize: '0.8rem' }}>
+                <div style={{ border: '1px dashed var(--color-warm-border)', borderRadius: '8px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6E5A4B', fontSize: '0.8rem' }}>
                   No Visuals Attached
                 </div>
               )}
@@ -564,7 +568,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
 
             {/* Document attachment */}
             <div>
-              <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', marginBottom: '6px', textTransform: 'uppercase' }}>Attached PDF/Document</span>
+              <span style={{ fontSize: '0.75rem', color: '#6E5A4B', display: 'block', marginBottom: '6px', textTransform: 'uppercase', fontWeight: 600 }}>Attached PDF/Document</span>
               {(p.uploadedDoc || report.uploadedDoc) ? (() => {
                 const docObj = p.uploadedDoc || report.uploadedDoc;
                 // Always use our backend streaming proxy URL to avoid raw GCS NoSuchKey XML errors
@@ -574,15 +578,15 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                 return (
                   <div>
                     {/* Web UI View */}
-                    <div className="no-print" style={{ background: 'rgba(255,255,255,0.02)', padding: '10px 14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div className="no-print" style={{ background: 'rgba(239, 232, 216, 0.45)', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--color-warm-border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <File size={16} color="#3b82f6" />
+                        <File size={16} color="#7C5A3E" />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontSize: '0.85rem', color: '#e5e7eb', fontWeight: 600 }}>
+                          <span style={{ fontSize: '0.85rem', color: '#2E2219', fontWeight: 600 }}>
                             {filename}
                           </span>
                           {(docObj?.note || docObj?.description || p?.docNote) && (
-                            <span style={{ fontSize: '0.78rem', color: '#9ca3af', fontStyle: 'italic' }}>
+                            <span style={{ fontSize: '0.78rem', color: '#6E5A4B', fontStyle: 'italic' }}>
                               Note: {docObj?.note || docObj?.description || p?.docNote}
                             </span>
                           )}
@@ -593,7 +597,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="btn btn-secondary" 
-                        style={{ padding: '6px 14px', fontSize: '0.78rem', gap: '6px', textDecoration: 'none', color: '#38bdf8', borderColor: 'rgba(56, 189, 248, 0.3)' }}
+                        style={{ padding: '6px 14px', fontSize: '0.78rem', gap: '6px', textDecoration: 'none', color: '#7C5A3E', borderColor: 'var(--color-warm-border)', fontWeight: 600 }}
                       >
                         <span>Open Document</span>
                         <ExternalLink size={13} />
@@ -627,7 +631,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                   </div>
                 );
               })() : (
-                <div style={{ border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '8px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6b7280', fontSize: '0.8rem' }}>
+                <div style={{ border: '1px dashed var(--color-warm-border)', borderRadius: '8px', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6E5A4B', fontSize: '0.8rem' }}>
                   No Document Attached
                 </div>
               )}
@@ -642,27 +646,27 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
         
         {/* GC Table */}
         <div className="glass-panel print-card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <FlaskConical size={16} color="#06b6d4" />
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>GC Gas Samples</h4>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', paddingBottom: '8px', borderBottom: '1px solid var(--color-warm-border)' }}>
+            <FlaskConical size={16} color="#7C5A3E" />
+            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>GC Gas Samples</h4>
           </div>
-          <div style={{ overflowX: 'auto' }}>
+          <div style={{ overflowX: 'auto', border: '1px solid var(--color-warm-border)', borderRadius: '8px' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
-                <tr style={{ background: 'rgba(6, 182, 212, 0.1)' }}>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#06b6d4' }}>Run</th>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#06b6d4' }}>Time</th>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#06b6d4' }}>H₂ (%)</th>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#06b6d4' }}>CO₂ (%)</th>
+                <tr style={{ background: 'rgba(124, 90, 62, 0.12)' }}>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#7C5A3E', fontWeight: 700 }}>Run</th>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#7C5A3E', fontWeight: 700 }}>Time</th>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#7C5A3E', fontWeight: 700 }}>H₂ (%)</th>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#7C5A3E', fontWeight: 700 }}>CO₂ (%)</th>
                 </tr>
               </thead>
               <tbody>
                 {gcEntries.map((e, idx) => (
-                  <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <td style={{ padding: '8px', fontWeight: 600, color: '#38bdf8' }}>{e.label}</td>
-                    <td style={{ padding: '8px', color: '#d1d5db' }}>{formatTimeAMPM(e.sampleTime)}</td>
-                    <td style={{ padding: '8px', color: '#d1d5db' }}>{e.h2Pct || '-'}</td>
-                    <td style={{ padding: '8px', color: '#d1d5db' }}>{e.co2Pct || '-'}</td>
+                  <tr key={idx} style={{ borderBottom: '1px solid var(--color-warm-border)', background: idx % 2 === 0 ? 'rgba(239, 232, 216, 0.35)' : '#FFFDF9' }}>
+                    <td style={{ padding: '8px 10px', fontWeight: 700, color: '#7C5A3E' }}>{e.label}</td>
+                    <td style={{ padding: '8px 10px', color: '#2E2219', fontWeight: 500 }}>{formatTimeAMPM(e.sampleTime)}</td>
+                    <td style={{ padding: '8px 10px', color: '#2E2219', fontWeight: 500 }}>{e.h2Pct || '-'}</td>
+                    <td style={{ padding: '8px 10px', color: '#2E2219', fontWeight: 500 }}>{e.co2Pct || '-'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -672,29 +676,29 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
 
         {/* Water Table */}
         <div className="glass-panel print-card" style={{ padding: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', paddingBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <Droplets size={16} color="#10b981" />
-            <h4 style={{ fontSize: '0.95rem', fontWeight: 600, margin: 0 }}>Water Quality Samples</h4>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px', paddingBottom: '8px', borderBottom: '1px solid var(--color-warm-border)' }}>
+            <Droplets size={16} color="#5E7A60" />
+            <h4 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>Water Quality Samples</h4>
           </div>
-          <div style={{ overflowX: 'auto' }}>
+          <div style={{ overflowX: 'auto', border: '1px solid var(--color-warm-border)', borderRadius: '8px' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
-                <tr style={{ background: 'rgba(16, 185, 129, 0.1)' }}>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#10b981' }}>Run</th>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#10b981' }}>Time</th>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#10b981' }}>pH</th>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#10b981' }}>TDS (ppm)</th>
-                  <th style={{ padding: '8px', textAlign: 'left', color: '#10b981' }}>EC (mS/cm)</th>
+                <tr style={{ background: 'rgba(94, 122, 96, 0.12)' }}>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#5E7A60', fontWeight: 700 }}>Run</th>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#5E7A60', fontWeight: 700 }}>Time</th>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#5E7A60', fontWeight: 700 }}>pH</th>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#5E7A60', fontWeight: 700 }}>TDS (ppm)</th>
+                  <th style={{ padding: '8px 10px', textAlign: 'left', color: '#5E7A60', fontWeight: 700 }}>EC (mS/cm)</th>
                 </tr>
               </thead>
               <tbody>
                 {waterEntries.map((e, idx) => (
-                  <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                    <td style={{ padding: '8px', fontWeight: 600, color: '#34d399' }}>{e.label}</td>
-                    <td style={{ padding: '8px', color: '#d1d5db' }}>{formatTimeAMPM(e.sampleTime)}</td>
-                    <td style={{ padding: '8px', color: '#d1d5db' }}>{e.ph || '-'}</td>
-                    <td style={{ padding: '8px', color: '#d1d5db' }}>{e.tds || '-'}</td>
-                    <td style={{ padding: '8px', color: '#d1d5db' }}>{e.ec || '-'}</td>
+                  <tr key={idx} style={{ borderBottom: '1px solid var(--color-warm-border)', background: idx % 2 === 0 ? 'rgba(239, 232, 216, 0.35)' : '#FFFDF9' }}>
+                    <td style={{ padding: '8px 10px', fontWeight: 700, color: '#5E7A60' }}>{e.label}</td>
+                    <td style={{ padding: '8px 10px', color: '#2E2219', fontWeight: 500 }}>{formatTimeAMPM(e.sampleTime)}</td>
+                    <td style={{ padding: '8px 10px', color: '#2E2219', fontWeight: 500 }}>{e.ph || '-'}</td>
+                    <td style={{ padding: '8px 10px', color: '#2E2219', fontWeight: 500 }}>{e.tds || '-'}</td>
+                    <td style={{ padding: '8px 10px', color: '#2E2219', fontWeight: 500 }}>{e.ec || '-'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -713,7 +717,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
             const options = buildChartOptions(gc);
             return (
               <div key={gc.id} className="glass-panel print-chart-card" style={{ padding: '24px' }}>
-                <h4 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '16px', color: '#f3f4f6' }}>
+                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '16px', color: '#2E2219' }}>
                   {gc.title}
                 </h4>
                 <div className="chart-canvas-box" style={{ height: '340px' }}>
@@ -729,7 +733,7 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
         </div>
       )}
 
-            {/* Raw Run Telemetry Data Section */}
+      {/* Raw Run Telemetry Data Section */}
       {rows.length > 0 && (
         <div className="glass-panel" style={{ padding: '24px' }}>
           
@@ -737,8 +741,8 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
           <div className="no-print">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', marginBottom: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Database size={18} color="#ec4899" />
-                <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>
+                <Database size={18} color="#7C5A3E" />
+                <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>
                   Raw Telemetry Data ({filteredRows.length} data points)
                 </h3>
               </div>
@@ -747,29 +751,29 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                   href={`/api/reports/${report.reportId}/export?format=csv`} 
                   download={`${report.runId || 'report'}_raw_data.csv`}
                   className="btn btn-secondary" 
-                  style={{ fontSize: '0.8rem', padding: '6px 14px', gap: '6px', textDecoration: 'none', color: '#38bdf8', borderColor: 'rgba(56, 189, 248, 0.4)' }}
+                  style={{ fontSize: '0.8rem', padding: '6px 14px', gap: '6px', textDecoration: 'none', color: '#7C5A3E', borderColor: 'var(--color-warm-border)', fontWeight: 600 }}
                 >
-                  <FileText size={14} color="#38bdf8" />
+                  <FileText size={14} color="#7C5A3E" />
                   <span>Download Raw CSV</span>
                 </a>
                 <a 
                   href={`/api/reports/${report.reportId}/export?format=excel`} 
                   download={`${report.runId || 'report'}.xlsx`}
                   className="btn btn-secondary" 
-                  style={{ fontSize: '0.8rem', padding: '6px 14px', gap: '6px', textDecoration: 'none', color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.4)' }}
+                  style={{ fontSize: '0.8rem', padding: '6px 14px', gap: '6px', textDecoration: 'none', color: '#5E7A60', borderColor: 'var(--color-warm-border)', fontWeight: 600 }}
                 >
-                  <FileSpreadsheet size={14} color="#10b981" />
+                  <FileSpreadsheet size={14} color="#5E7A60" />
                   <span>Export Excel</span>
                 </a>
               </div>
             </div>
 
-            <div style={{ maxHeight: '450px', overflow: 'auto', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.78rem' }}>
+            <div style={{ maxHeight: '450px', overflow: 'auto', borderRadius: '8px', border: '1px solid var(--color-warm-border)', background: '#FFFDF9' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
                 <thead>
-                  <tr style={{ background: 'rgba(15,23,42,0.8)', position: 'sticky', top: 0, zIndex: 1 }}>
+                  <tr style={{ background: '#EFE8D8', position: 'sticky', top: 0, zIndex: 1 }}>
                     {columns.map(col => (
-                      <th key={col} style={{ padding: '8px 12px', textAlign: 'left', color: '#9ca3af', borderBottom: '1px solid rgba(255,255,255,0.1)', whiteSpace: 'nowrap' }}>
+                      <th key={col} style={{ padding: '10px 12px', textAlign: 'left', color: '#2E2219', fontWeight: 700, borderBottom: '1px solid var(--color-warm-border)', whiteSpace: 'nowrap' }}>
                         {col}
                       </th>
                     ))}
@@ -777,9 +781,9 @@ export default function EditableTable({ report, user, onEditReport, onUpdateSucc
                 </thead>
                 <tbody>
                   {filteredRows.map((row, idx) => (
-                    <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)', background: idx % 2 === 0 ? 'rgba(17,24,39,0.3)' : 'transparent' }}>
+                    <tr key={idx} style={{ borderBottom: '1px solid var(--color-warm-border)', background: idx % 2 === 0 ? 'rgba(239, 232, 216, 0.35)' : '#FFFDF9' }}>
                       {columns.map((col, ci) => (
-                        <td key={ci} style={{ padding: '6px 12px', color: '#d1d5db', whiteSpace: 'nowrap', fontFamily: 'JetBrains Mono' }}>
+                        <td key={ci} style={{ padding: '8px 12px', color: '#2E2219', fontWeight: 500, whiteSpace: 'nowrap', fontFamily: 'JetBrains Mono', fontSize: '0.8rem' }}>
                           {row[col] !== null && row[col] !== undefined ? String(row[col]) : '-'}
                         </td>
                       ))}

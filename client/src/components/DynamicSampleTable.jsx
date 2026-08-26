@@ -10,7 +10,8 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
   const isGC = type === 'gc';
   const title = isGC ? 'Gas Chromatography (GC) Samples' : 'Water Quality Samples';
   const Icon = isGC ? FlaskConical : Droplets;
-  const accentColor = isGC ? '#06b6d4' : '#10b981';
+  // Beige and Cream accent tones: Warm Roasted Hazelnut for GC, Warm Sage for Water
+  const accentColor = isGC ? '#7C5A3E' : '#5E7A60';
 
   // Columns config
   const columns = isGC
@@ -54,9 +55,10 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
 
   return (
     <div style={{
-      background: 'rgba(15, 23, 42, 0.5)',
+      background: '#FFFDF9',
       borderRadius: '14px',
-      border: `1px solid ${accentColor}25`,
+      border: '1px solid var(--color-warm-border)',
+      boxShadow: '0 4px 16px rgba(120, 95, 70, 0.05)',
       overflow: 'hidden'
     }}>
       {/* Header */}
@@ -65,17 +67,18 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-        background: `${accentColor}08`
+        borderBottom: '1px solid var(--color-warm-border)',
+        background: 'rgba(239, 232, 216, 0.4)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <Icon size={18} color={accentColor} />
-          <h4 style={{ fontSize: '1rem', fontWeight: 600, margin: 0 }}>{title}</h4>
+          <h4 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>{title}</h4>
           <span className="badge" style={{
-            background: `${accentColor}20`,
+            background: isGC ? 'rgba(124, 90, 62, 0.12)' : 'rgba(94, 122, 96, 0.14)',
             color: accentColor,
             border: `1px solid ${accentColor}40`,
-            fontSize: '0.7rem'
+            fontSize: '0.72rem',
+            fontWeight: 700
           }}>
             {entries.length} {entries.length === 1 ? 'sample' : 'samples'} logged
           </span>
@@ -89,8 +92,8 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
             padding: '6px 14px',
             fontSize: '0.8rem',
             color: accentColor,
-            borderColor: `${accentColor}40`,
-            background: `${accentColor}10`
+            borderColor: `${accentColor}50`,
+            background: '#ffffff'
           }}
         >
           <Plus size={14} />
@@ -102,7 +105,7 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
       <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
         <table style={{ width: '100%', minWidth: isGC ? '520px' : '640px', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
           <thead>
-            <tr style={{ background: 'rgba(15, 23, 42, 0.8)' }}>
+            <tr style={{ background: 'rgba(239, 232, 216, 0.65)' }}>
               <th style={{
                 padding: '10px 16px',
                 color: accentColor,
@@ -118,10 +121,10 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
               {columns.map(col => (
                 <th key={col.key} style={{
                   padding: '10px 14px',
-                  color: '#9ca3af',
+                  color: '#6E5A4B',
                   fontSize: '0.75rem',
                   textTransform: 'uppercase',
-                  fontWeight: 600,
+                  fontWeight: 700,
                   letterSpacing: '0.04em',
                   textAlign: 'left'
                 }}>
@@ -136,10 +139,10 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
               <tr
                 key={entry.id || idx}
                 style={{
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+                  borderBottom: '1px solid rgba(196, 179, 156, 0.25)',
                   transition: 'background 0.15s ease'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(239, 232, 216, 0.25)'}
                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
                 {/* T-Label (T1, T2, T3...) */}
@@ -151,7 +154,7 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
                     width: '36px',
                     height: '36px',
                     borderRadius: '10px',
-                    background: `${accentColor}20`,
+                    background: isGC ? 'rgba(124, 90, 62, 0.12)' : 'rgba(94, 122, 96, 0.12)',
                     color: accentColor,
                     fontWeight: 700,
                     fontSize: '0.85rem',
@@ -174,8 +177,9 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
                       style={{
                         padding: '8px 12px',
                         fontSize: '0.85rem',
-                        background: entry[col.key] ? 'rgba(15, 23, 42, 0.8)' : 'rgba(15, 23, 42, 0.4)',
-                        borderColor: entry[col.key] ? `${accentColor}30` : 'rgba(255, 255, 255, 0.08)'
+                        background: '#ffffff',
+                        borderColor: entry[col.key] ? `${accentColor}60` : 'var(--color-warm-border)',
+                        color: '#2E2219'
                       }}
                     />
                   </td>
@@ -191,14 +195,14 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
                       background: 'transparent',
                       border: 'none',
                       cursor: entries.length <= 1 ? 'not-allowed' : 'pointer',
-                      color: entries.length <= 1 ? '#374151' : '#f43f5e',
-                      opacity: entries.length <= 1 ? 0.3 : 0.6,
+                      color: entries.length <= 1 ? '#c4b5a3' : '#B56147',
+                      opacity: entries.length <= 1 ? 0.3 : 0.7,
                       padding: '6px',
                       borderRadius: '8px',
                       transition: 'all 0.15s ease'
                     }}
                     onMouseEnter={(e) => { if (entries.length > 1) e.currentTarget.style.opacity = 1; }}
-                    onMouseLeave={(e) => { if (entries.length > 1) e.currentTarget.style.opacity = 0.6; }}
+                    onMouseLeave={(e) => { if (entries.length > 1) e.currentTarget.style.opacity = 0.7; }}
                     title="Remove this sample entry"
                   >
                     <Trash2 size={16} />
@@ -219,25 +223,26 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
         return (
           <div style={{
             padding: '10px 20px',
-            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-            background: `${accentColor}05`,
+            borderTop: '1px solid var(--color-warm-border)',
+            background: 'rgba(239, 232, 216, 0.35)',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
             fontSize: '0.8rem',
-            color: '#9ca3af'
+            color: '#6E5A4B'
           }}>
             <Eye size={14} color={accentColor} />
-            <span style={{ fontWeight: 500, color: accentColor }}>Last entry ({last.label}):</span>
+            <span style={{ fontWeight: 600, color: accentColor }}>Last entry ({last.label}):</span>
             {columns.map(col => (
               last[col.key] ? (
                 <span key={col.key} style={{
-                  background: 'rgba(255, 255, 255, 0.06)',
+                  background: '#ffffff',
+                  border: '1px solid var(--color-warm-border)',
                   padding: '2px 8px',
                   borderRadius: '6px',
                   fontSize: '0.78rem'
                 }}>
-                  {col.label}: <strong style={{ color: '#e5e7eb' }}>{last[col.key]}</strong>
+                  {col.label}: <strong style={{ color: '#2E2219' }}>{last[col.key]}</strong>
                 </span>
               ) : null
             ))}

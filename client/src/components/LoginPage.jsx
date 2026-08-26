@@ -63,19 +63,20 @@ export default function LoginPage({ onLoginSuccess }) {
             width: '68px',
             height: '68px',
             borderRadius: '18px',
-            background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+            background: 'linear-gradient(135deg, #7C5A3E 0%, #A37A55 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.7)',
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 30px rgba(59, 130, 246, 0.4)',
+            boxShadow: '0 8px 24px rgba(124, 90, 62, 0.3)',
             marginBottom: '16px'
           }}>
-            <Briefcase size={34} color="#fff" />
+            <Briefcase size={34} color="#ffffff" />
           </div>
           <h2 style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: '-0.03em' }} className="gradient-text">
             WORK MATE
           </h2>
-          <p style={{ fontSize: '0.85rem', color: '#9ca3af', marginTop: '6px' }}>
+          <p style={{ fontSize: '0.85rem', color: '#6E5A4B', marginTop: '6px' }}>
             Operator Report Management System
           </p>
         </div>
@@ -83,9 +84,9 @@ export default function LoginPage({ onLoginSuccess }) {
         {/* Alert Messages */}
         {error && (
           <div style={{
-            background: 'rgba(244, 63, 94, 0.15)',
-            border: '1px solid rgba(244, 63, 94, 0.3)',
-            color: '#f43f5e',
+            background: 'rgba(181, 97, 71, 0.12)',
+            border: '1px solid rgba(181, 97, 71, 0.35)',
+            color: '#B56147',
             padding: '12px 14px',
             borderRadius: '12px',
             fontSize: '0.85rem',
@@ -94,7 +95,7 @@ export default function LoginPage({ onLoginSuccess }) {
             alignItems: 'flex-start',
             gap: '8px'
           }}>
-            <AlertCircle size={16} style={{ flexShrink: 0, marginTop: '2px' }} />
+            <AlertCircle size={16} color="#B56147" style={{ flexShrink: 0, marginTop: '2px' }} />
             <span>{error}</span>
           </div>
         )}
@@ -114,10 +115,10 @@ export default function LoginPage({ onLoginSuccess }) {
             gap: '12px',
             fontSize: '1rem',
             marginBottom: '20px',
-            boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)'
+            boxShadow: '0 4px 16px rgba(124, 90, 62, 0.35)'
           }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" style={{ filter: 'brightness(1.5)' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" style={{ filter: 'brightness(1.05)' }}>
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
@@ -126,8 +127,8 @@ export default function LoginPage({ onLoginSuccess }) {
           <span>{loading ? 'Logging you in...' : 'Sign in with Google'}</span>
         </button>
 
-        <p style={{ textAlign: 'center', fontSize: '0.8rem', color: '#6b7280', margin: '20px 0 0 0', lineHeight: 1.5 }}>
-          Authorized operator access strictly restricted to <strong style={{ color: '#38bdf8' }}>@ossusbio.com</strong> domain accounts.
+        <p style={{ textAlign: 'center', fontSize: '0.8rem', color: '#9E8B7C', margin: '20px 0 0 0', lineHeight: 1.5 }}>
+          Authorized operator access strictly restricted to <strong style={{ color: '#7C5A3E' }}>@ossusbio.com</strong> domain accounts.
         </p>
 
       </div>

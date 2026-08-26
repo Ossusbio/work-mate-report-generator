@@ -2050,9 +2050,9 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
   const siteCatalog = SITE_STREAM_CATALOG[catalogKey];
 
   const categories = [
-    { key: 'PT', label: 'PT (Pressure Transmitter)', icon: Activity, color: '#8b5cf6' },
-    { key: 'EPU', label: 'EPU (Electrical Power Unit)', icon: Zap, color: '#f59e0b' },
-    { key: 'Production', label: 'Production Data', icon: Factory, color: '#10b981' }
+    { key: 'PT', label: 'PT (Pressure Transmitter)', icon: Activity, color: '#7C5A3E' },
+    { key: 'EPU', label: 'EPU (Electrical Power Unit)', icon: Zap, color: '#C4924F' },
+    { key: 'Production', label: 'Production Data', icon: Factory, color: '#5E7A60' }
   ];
 
   // Dropdown open states and search queries
@@ -2094,9 +2094,9 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
 
   return (
     <div>
-      <div style={{ fontSize: '0.8rem', color: '#9ca3af', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+      <div style={{ fontSize: '0.8rem', color: '#6E5A4B', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
         <span>Selected Table Schema:</span>
-        <strong style={{ color: '#38bdf8' }}>{siteCatalog.displayName}</strong>
+        <strong style={{ color: '#7C5A3E' }}>{siteCatalog.displayName}</strong>
       </div>
 
       {/* Global transparent backdrop overlay to dismiss dropdowns on outside clicks */}
@@ -2129,9 +2129,10 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
 
           return (
             <div key={catKey} style={{
-              background: 'rgba(15, 23, 42, 0.5)',
+              background: '#FFFDF9',
               borderRadius: '14px',
-              border: `1px solid ${selectedList.length > 0 ? color + '40' : 'rgba(255, 255, 255, 0.08)'}`,
+              border: `1px solid ${selectedList.length > 0 ? color + '60' : 'var(--color-warm-border)'}`,
+              boxShadow: '0 4px 14px rgba(120, 95, 70, 0.05)',
               padding: '18px',
               position: 'relative',
               display: 'flex',
@@ -2144,7 +2145,7 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                   width: '32px',
                   height: '32px',
                   borderRadius: '8px',
-                  background: `${color}20`,
+                  background: `${color}18`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
@@ -2152,8 +2153,8 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                   <Icon size={16} color={color} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{label}</div>
-                  <div style={{ fontSize: '0.72rem', color: '#6b7280' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#2E2219' }}>{label}</div>
+                  <div style={{ fontSize: '0.72rem', color: '#6E5A4B' }}>
                     {options.length} columns available for {siteCatalog.tableName}
                   </div>
                 </div>
@@ -2169,18 +2170,18 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                     padding: '10px 14px',
                     paddingRight: '36px',
                     textAlign: 'left',
-                    background: selectedList.length > 0
-                      ? `rgba(15, 23, 42, 0.8)`
-                      : 'rgba(15, 23, 42, 0.5)',
-                    border: `1px solid ${selectedList.length > 0 ? color + '50' : 'rgba(255, 255, 255, 0.1)'}`,
+                    background: '#ffffff',
+                    border: `1px solid ${selectedList.length > 0 ? color + '80' : 'var(--color-warm-border)'}`,
                     borderRadius: '12px',
-                    color: selectedList.length > 0 ? '#e5e7eb' : '#6b7280',
+                    color: selectedList.length > 0 ? '#2E2219' : '#6E5A4B',
+                    fontWeight: selectedList.length > 0 ? 600 : 400,
                     cursor: 'pointer',
                     fontSize: '0.9rem',
                     outline: 'none',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
                   }}
                 >
                   <span style={{
@@ -2195,7 +2196,7 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                   </span>
                   <ChevronDown
                     size={16}
-                    color={selectedList.length > 0 ? color : '#6b7280'}
+                    color={selectedList.length > 0 ? color : '#6E5A4B'}
                     style={{
                       transform: isDropdownOpen ? 'rotate(180deg)' : 'none',
                       transition: 'transform 0.2s'
@@ -2210,10 +2211,10 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                     top: 'calc(100% + 6px)',
                     left: 0,
                     right: 0,
-                    background: '#0d131f',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
+                    background: '#FFFDF9',
+                    border: '1px solid var(--color-warm-border)',
                     borderRadius: '12px',
-                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.7), 0 0 15px rgba(59, 130, 246, 0.15)',
+                    boxShadow: '0 12px 28px -5px rgba(120, 95, 70, 0.18)',
                     padding: '12px',
                     maxHeight: '300px',
                     display: 'flex',
@@ -2231,7 +2232,9 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                       style={{
                         padding: '6px 10px',
                         fontSize: '0.85rem',
-                        background: 'rgba(255,255,255,0.03)',
+                        background: '#ffffff',
+                        border: '1px solid var(--color-warm-border)',
+                        color: '#2E2219',
                         borderRadius: '8px'
                       }}
                     />
@@ -2262,7 +2265,7 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                                 background: isChecked ? `${color}15` : 'transparent',
                                 transition: 'background 0.15s',
                                 fontSize: '0.85rem',
-                                color: isChecked ? '#fff' : '#9ca3af'
+                                color: isChecked ? '#2E2219' : '#6E5A4B'
                               }}
                             >
                               <input
@@ -2275,14 +2278,14 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                                 }}
                               />
                               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <span style={{ fontWeight: isChecked ? 600 : 400 }}>{opt.name}</span>
-                                <span style={{ fontSize: '0.7rem', color: '#6b7280', fontFamily: 'JetBrains Mono' }}>{opt.id}</span>
+                                <span style={{ fontWeight: isChecked ? 700 : 400 }}>{opt.name}</span>
+                                <span style={{ fontSize: '0.7rem', color: '#9E8B7C', fontFamily: 'JetBrains Mono' }}>{opt.id}</span>
                               </div>
                             </label>
                           );
                         })
                       ) : (
-                        <div style={{ fontSize: '0.8rem', color: '#6b7280', textAlign: 'center', padding: '12px' }}>
+                        <div style={{ fontSize: '0.8rem', color: '#6E5A4B', textAlign: 'center', padding: '12px' }}>
                           No columns match filter
                         </div>
                       )}
@@ -2298,13 +2301,13 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                 <div style={{
                   marginTop: '14px',
                   paddingTop: '12px',
-                  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderTop: '1px solid var(--color-warm-border)',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '8px'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: '0.78rem', color: '#9ca3af', fontWeight: 600 }}>
+                    <span style={{ fontSize: '0.78rem', color: '#6E5A4B', fontWeight: 700 }}>
                       Selected ({selectedList.length}):
                     </span>
                     <button
@@ -2314,13 +2317,13 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '4px',
-                        background: 'rgba(239, 68, 68, 0.12)',
-                        border: '1px solid rgba(239, 68, 68, 0.3)',
+                        background: 'rgba(181, 97, 71, 0.12)',
+                        border: '1px solid rgba(181, 97, 71, 0.35)',
                         borderRadius: '6px',
-                        color: '#f87171',
+                        color: '#B56147',
                         padding: '3px 8px',
                         fontSize: '0.72rem',
-                        fontWeight: 600,
+                        fontWeight: 700,
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}
@@ -2343,14 +2346,14 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                           display: 'inline-flex',
                           alignItems: 'center',
                           gap: '6px',
-                          background: `${color}18`,
+                          background: `${color}15`,
                           color,
                           padding: '3px 8px',
                           borderRadius: '6px',
-                          border: `1px solid ${color}35`,
+                          border: `1px solid ${color}45`,
                           fontFamily: 'JetBrains Mono',
                           fontSize: '0.75rem',
-                          fontWeight: 500
+                          fontWeight: 600
                         }}
                       >
                         <span>{id}</span>
@@ -2368,7 +2371,7 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
                             padding: 0,
                             display: 'flex',
                             alignItems: 'center',
-                            opacity: 0.8
+                            opacity: 0.85
                           }}
                           title={`Remove ${id}`}
                         >
