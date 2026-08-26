@@ -32,13 +32,13 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 const DEV_EMAILS = ['parth@ossusbio.com'];
 
 const TABS = [
-  { key: 'basic', label: 'Basic Run Details', icon: Settings2, color: '#7C5A3E' },
-  { key: 'electrode', label: 'Electrode Details', icon: Zap, color: '#C4924F' },
-  { key: 'streams', label: 'Datastream Selection', icon: Database, color: '#5E7A60' },
-  { key: 'samples', label: 'GC & Water Samples', icon: FlaskConical, color: '#8C735E' },
-  { key: 'reference', label: 'Reference Doc', icon: ImageIcon, color: '#A37A55' },
-  { key: 'rawdata', label: 'Raw Data', icon: Table2, color: '#B56147' },
-  { key: 'generate', label: 'Report Generation', icon: BarChart3, color: '#7C5A3E' },
+  { key: 'basic', label: 'Basic Run Details', icon: Settings2, color: '#0284C7' },
+  { key: 'electrode', label: 'Electrode Details', icon: Zap, color: '#0284C7' },
+  { key: 'streams', label: 'Datastream Selection', icon: Database, color: '#059669' },
+  { key: 'samples', label: 'GC & Water Samples', icon: FlaskConical, color: '#0284C7' },
+  { key: 'reference', label: 'Reference Doc', icon: ImageIcon, color: '#0284C7' },
+  { key: 'rawdata', label: 'Raw Data', icon: Table2, color: '#0284C7' },
+  { key: 'generate', label: 'Report Generation', icon: BarChart3, color: '#0284C7' },
 ];
 
 const FREQUENCY_OPTIONS = [
@@ -680,7 +680,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{
-              background: 'linear-gradient(135deg, #7C5A3E, #A37A55)',
+              background: 'linear-gradient(135deg, #0284C7, #38BDF8)',
               color: '#ffffff',
               padding: '3px 8px',
               borderRadius: '6px',
@@ -695,18 +695,18 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
             </strong>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '0.75rem', color: '#6E5A4B' }}>
+            <span style={{ fontSize: '0.75rem', color: '#64748B' }}>
               {Math.round((currentStep / totalSteps) * 100)}% Completed
             </span>
           </div>
         </div>
 
         {/* Dynamic Animated Progress Bar */}
-        <div style={{ width: '100%', height: '5px', background: 'rgba(196, 179, 156, 0.2)', borderRadius: '9999px', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '5px', background: 'rgba(2, 132, 199, 0.15)', borderRadius: '9999px', overflow: 'hidden' }}>
           <div style={{
             width: `${(currentStep / totalSteps) * 100}%`,
             height: '100%',
-            background: 'linear-gradient(90deg, #7C5A3E 0%, #A37A55 50%, #C4924F 100%)',
+            background: 'linear-gradient(90deg, #38BDF8 0%, #60A5FA 50%, #0284C7 100%)',
             transition: 'width 0.35s ease-out',
             borderRadius: '9999px'
           }} />
@@ -733,9 +733,9 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                   gap: '8px',
                   padding: '10px 14px',
                   borderRadius: '10px',
-                  border: isActive ? '1px solid #7C5A3E' : '1px solid var(--color-warm-border)',
-                  background: isActive ? 'rgba(124, 90, 62, 0.12)' : isCompleted ? 'rgba(94, 122, 96, 0.12)' : 'transparent',
-                  color: isActive ? '#7C5A3E' : isCompleted ? '#3F5E42' : '#6E5A4B',
+                  border: isActive ? '1px solid #0284C7' : '1px solid var(--color-warm-border)',
+                  background: isActive ? 'rgba(2, 132, 199, 0.12)' : isCompleted ? 'rgba(5, 150, 105, 0.12)' : 'transparent',
+                  color: isActive ? '#0284C7' : isCompleted ? '#059669' : '#64748B',
                   fontWeight: isActive ? 700 : 500,
                   fontSize: '0.85rem',
                   cursor: 'pointer',
@@ -748,7 +748,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                   width: '20px',
                   height: '20px',
                   borderRadius: '50%',
-                  background: isActive ? '#7C5A3E' : isCompleted ? '#5E7A60' : 'rgba(196, 179, 156, 0.3)',
+                  background: isActive ? '#0284C7' : isCompleted ? '#059669' : 'rgba(2, 132, 199, 0.18)',
                   color: '#ffffff',
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -758,7 +758,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                 }}>
                   {idx + 1}
                 </span>
-                <Icon size={15} color={isActive ? tab.color : isCompleted ? '#5E7A60' : '#6E5A4B'} />
+                <Icon size={15} color={isActive ? '#0284C7' : isCompleted ? '#059669' : '#64748B'} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -947,10 +947,10 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
             <div className="animate-fade-in">
               <div className="glass-panel" style={{ padding: '24px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
-                  <Database size={18} color="#7C5A3E" />
+                  <Database size={18} color="#0284C7" />
                   <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>Data Streams to Record from BigQuery</h3>
                 </div>
-                <p style={{ fontSize: '0.82rem', color: '#6E5A4B', marginBottom: '16px', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '0.82rem', color: '#64748B', marginBottom: '16px', lineHeight: 1.5 }}>
                   Select which PT, EPU, and Production data streams to include. Data will be fetched from BigQuery for the selected time window.
                 </p>
                 <DataStreamSelector site={site} selectedStreams={selectedStreams} onChange={setSelectedStreams} />
@@ -1061,7 +1061,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
               <div className="glass-panel" style={{ padding: '24px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Table2 size={18} color="#7C5A3E" />
+                    <Table2 size={18} color="#0284C7" />
                     <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>BigQuery Process Telemetry Data</h3>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -1074,8 +1074,8 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                       }}
                       style={{
                         fontSize: '0.85rem',
-                        borderColor: dataFrequency === '' ? 'rgba(196,146,79,0.6)' : undefined,
-                        boxShadow: dataFrequency === '' ? '0 0 0 2px rgba(196,146,79,0.2)' : undefined
+                        borderColor: dataFrequency === '' ? 'rgba(217, 119, 6, 0.6)' : undefined,
+                        boxShadow: dataFrequency === '' ? '0 0 0 2px rgba(217, 119, 6, 0.2)' : undefined
                       }}
                     >
                       {FREQUENCY_OPTIONS.map(opt => (
@@ -1087,7 +1087,16 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                       disabled={fetchingData || bqColumns.length === 0 || dataFrequency === ''}
                       className="btn btn-primary"
                       title={dataFrequency === '' ? 'Please select a sampling frequency first' : ''}
-                      style={{ padding: '8px 18px', fontSize: '0.85rem', opacity: dataFrequency === '' ? 0.5 : 1 }}
+                      style={{ 
+                        padding: '8px 18px', 
+                        fontSize: '0.85rem', 
+                        opacity: dataFrequency === '' ? 0.5 : 1,
+                        background: 'linear-gradient(135deg, #0284C7 0%, #38BDF8 100%)',
+                        border: 'none',
+                        color: '#ffffff',
+                        boxShadow: '0 4px 14px rgba(2, 132, 199, 0.25)',
+                        fontWeight: 600
+                      }}
                     >
                       <Database size={14} />
                       <span>{fetchingData ? 'Fetching...' : 'Fetch BigQuery Data'}</span>
@@ -1096,13 +1105,13 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                 </div>
 
                 {bqColumns.length === 0 && (
-                  <div style={{ background: 'rgba(196, 146, 79, 0.1)', border: '1px solid rgba(196, 146, 79, 0.3)', borderRadius: '12px', padding: '14px', color: '#7C5A3E', fontSize: '0.85rem', marginBottom: '16px', fontWeight: 600 }}>
+                  <div style={{ background: 'rgba(217, 119, 6, 0.1)', border: '1px solid rgba(217, 119, 6, 0.3)', borderRadius: '12px', padding: '14px', color: '#B45309', fontSize: '0.85rem', marginBottom: '16px', fontWeight: 600 }}>
                     ⚠️ Please select at least one datastream in Step 3 (Datastream Selection) first.
                   </div>
                 )}
 
                 {bqColumns.length > 0 && dataFrequency === '' && (
-                  <div style={{ background: 'rgba(196, 146, 79, 0.1)', border: '1px solid rgba(196, 146, 79, 0.4)', borderRadius: '12px', padding: '14px', color: '#7C5A3E', fontSize: '0.85rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ background: 'rgba(217, 119, 6, 0.1)', border: '1px solid rgba(217, 119, 6, 0.4)', borderRadius: '12px', padding: '14px', color: '#B45309', fontSize: '0.85rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ fontSize: '1.1em' }}>⚠️</span>
                     <span>
                       <strong style={{ color: '#2E2219' }}>Sampling frequency not selected.</strong> Please choose a frequency from the dropdown above (e.g. "Every 5 Minutes" or "All Rows") before fetching data or generating the report.
@@ -1113,15 +1122,15 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                 {/* Data Table */}
                 {rawData.length > 0 && (
                   <div>
-                    <div style={{ fontSize: '0.82rem', color: '#6E5A4B', marginBottom: '10px' }}>
-                      Showing <strong style={{ color: '#2E2219' }}>{rawData.length}</strong> rows
+                    <div style={{ fontSize: '0.82rem', color: '#64748B', marginBottom: '10px' }}>
+                      Showing <strong style={{ color: '#0284C7' }}>{rawData.length}</strong> rows
                     </div>
                     <div style={{ maxHeight: '500px', overflow: 'auto', borderRadius: '12px', border: '1px solid var(--color-warm-border)', background: '#FFFDF9' }}>
                       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
                         <thead>
-                          <tr style={{ background: '#EFE8D8', position: 'sticky', top: 0, zIndex: 1 }}>
+                          <tr style={{ background: '#EBF3FC', position: 'sticky', top: 0, zIndex: 1 }}>
                             {Object.keys(rawData[0]).map(col => (
-                              <th key={col} style={{ padding: '10px 12px', textAlign: 'left', color: '#2E2219', fontWeight: 700, borderBottom: '1px solid var(--color-warm-border)', whiteSpace: 'nowrap' }}>
+                              <th key={col} style={{ padding: '10px 12px', textAlign: 'left', color: '#0284C7', fontWeight: 700, borderBottom: '1px solid rgba(2, 132, 199, 0.2)', whiteSpace: 'nowrap' }}>
                                 {col}
                               </th>
                             ))}
@@ -1129,7 +1138,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                         </thead>
                         <tbody>
                           {rawData.map((row, idx) => (
-                            <tr key={idx} style={{ borderBottom: '1px solid var(--color-warm-border)', background: idx % 2 === 0 ? 'rgba(239, 232, 216, 0.35)' : '#FFFDF9' }}>
+                            <tr key={idx} style={{ borderBottom: '1px solid var(--color-warm-border)', background: idx % 2 === 0 ? 'rgba(235, 243, 254, 0.45)' : '#FFFDF9' }}>
                               {Object.values(row).map((val, ci) => (
                                 <td key={ci} style={{ padding: '8px 12px', color: '#2E2219', fontWeight: 500, whiteSpace: 'nowrap', fontFamily: 'JetBrains Mono', fontSize: '0.8rem' }}>
                                   {val !== null && val !== undefined ? String(val) : '—'}
@@ -1152,9 +1161,9 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
               
               {/* User Inference & Summary Parameters */}
               <div className="glass-panel" style={{ padding: '24px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)' }}>
-                  <Sparkles size={18} color="#f43f5e" />
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0 }}>Report Summary & Observations</h3>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
+                  <Sparkles size={18} color="#DC2626" />
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0, color: '#2E2219' }}>Report Summary & Observations</h3>
                 </div>
 
                 <div className="responsive-grid-2" style={{ gap: '16px', marginBottom: '16px' }}>
@@ -1211,10 +1220,10 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
               <div className="glass-panel" style={{ padding: '24px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <BarChart3 size={18} color="#7C5A3E" />
+                    <BarChart3 size={18} color="#2563EB" />
                     <h3 style={{ fontSize: '1.05rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>Custom Graph Plotting</h3>
                   </div>
-                  <button onClick={addGraph} className="btn btn-secondary" style={{ padding: '6px 14px', fontSize: '0.8rem', gap: '4px', color: '#7C5A3E', borderColor: 'var(--color-warm-border)' }}>
+                  <button onClick={addGraph} className="btn btn-secondary" style={{ padding: '6px 14px', fontSize: '0.8rem', gap: '4px', color: '#2563EB', borderColor: 'var(--color-warm-border)' }}>
                     <span>+ Add Graph</span>
                   </button>
                 </div>
@@ -1224,7 +1233,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                   {graphConfigs.map((gc, idx) => (
                     <div key={gc.id} className="graph-config-row">
                       <div className="form-group" style={{ margin: 0 }}>
-                        <label className="form-label" style={{ fontSize: '0.75rem', color: '#6E5A4B', fontWeight: 600 }}>Graph Title</label>
+                        <label className="form-label" style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600 }}>Graph Title</label>
                         <input
                           type="text"
                           className="form-input"
@@ -1235,7 +1244,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                         />
                       </div>
                       <div className="form-group" style={{ margin: 0 }}>
-                        <label className="form-label" style={{ fontSize: '0.75rem', color: '#6E5A4B', fontWeight: 600 }}>X-Axis</label>
+                        <label className="form-label" style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600 }}>X-Axis</label>
                         <select
                           className="form-select"
                           value={gc.xAxis}
@@ -1250,7 +1259,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                         </select>
                       </div>
                       <div className="form-group" style={{ margin: 0, position: 'relative' }}>
-                        <label className="form-label" style={{ fontSize: '0.75rem', color: '#6E5A4B', fontWeight: 600 }}>Y-Axis (Select Multiple, Max 3)</label>
+                        <label className="form-label" style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600 }}>Y-Axis (Select Multiple, Max 3)</label>
                         <button
                           type="button"
                           className="form-select"
@@ -1258,7 +1267,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                             fontSize: '0.85rem',
                             textAlign: 'left',
                             background: '#ffffff',
-                            color: ((gc.yAxes && gc.yAxes.length > 0) || gc.yAxis) ? '#2E2219' : '#8C735E',
+                            color: ((gc.yAxes && gc.yAxes.length > 0) || gc.yAxis) ? '#2E2219' : '#64748B',
                             fontWeight: ((gc.yAxes && gc.yAxes.length > 0) || gc.yAxis) ? 600 : 400,
                             border: '1px solid var(--color-warm-border)',
                             cursor: 'pointer',
@@ -1275,7 +1284,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                               ? gc.yAxes.join(', ')
                               : (gc.yAxis ? gc.yAxis : '-- Select Columns --')}
                           </span>
-                          <span style={{ fontSize: '0.65rem', color: '#7C5A3E' }}>▼</span>
+                          <span style={{ fontSize: '0.65rem', color: '#2563EB' }}>▼</span>
                         </button>
                         
                         {openDropdownIdx === idx && (
@@ -1297,7 +1306,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                               overflowY: 'auto',
                               zIndex: 999,
                               padding: '8px',
-                              boxShadow: '0 10px 25px -5px rgba(120, 95, 70, 0.2)'
+                              boxShadow: '0 10px 25px -5px rgba(37, 99, 235, 0.15)'
                             }}>
                               {allSelectedColumns.map(col => {
                                 const currentAxes = gc.yAxes || (gc.yAxis ? [gc.yAxis] : []);
@@ -1316,8 +1325,8 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                                       opacity: isMax ? 0.4 : 1,
                                       borderRadius: '6px',
                                       fontSize: '0.82rem',
-                                      background: isChecked ? 'rgba(124, 90, 62, 0.12)' : 'transparent',
-                                      color: isChecked ? '#7C5A3E' : '#2E2219',
+                                      background: isChecked ? 'rgba(37, 99, 235, 0.12)' : 'transparent',
+                                      color: isChecked ? '#1D4ED8' : '#2E2219',
                                       fontWeight: isChecked ? 700 : 500
                                     }}
                                   >
@@ -1325,7 +1334,7 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                                       type="checkbox"
                                       disabled={isMax}
                                       checked={isChecked}
-                                      style={{ accentColor: '#7C5A3E' }}
+                                      style={{ accentColor: '#2563EB' }}
                                       onChange={() => {
                                         let updatedAxes;
                                         if (isChecked) {
@@ -1347,10 +1356,10 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                                       }}
                                     />
                                     <span>{(() => {
-      const meta = getStreamMetadata(col, streamMetadata);
-      const unit = meta.unit ? ` (${meta.unit})` : '';
-      return `${col}${unit}`;
-    })()}</span>
+                                      const meta = getStreamMetadata(col, streamMetadata);
+                                      const unit = meta.unit ? ` (${meta.unit})` : '';
+                                      return `${col}${unit}`;
+                                    })()}</span>
                                   </label>
                                 );
                               })}
@@ -1428,11 +1437,12 @@ export default function OperatorForm({ report, user, onReportGenerated, onCancel
                     style={{
                       padding: '14px 36px',
                       fontSize: '1.05rem',
-                      boxShadow: '0 4px 18px rgba(124, 90, 62, 0.35)',
-                      background: 'linear-gradient(135deg, #7C5A3E 0%, #A37A55 100%)',
+                      boxShadow: '0 4px 18px rgba(2, 132, 199, 0.35)',
+                      background: 'linear-gradient(135deg, #0284C7 0%, #0369A1 100%)',
                       border: '1px solid rgba(255, 255, 255, 0.5)',
                       color: '#ffffff',
-                      gap: '10px'
+                      gap: '10px',
+                      fontWeight: 600
                     }}
                   >
                     <Sparkles size={20} color="#ffffff" />

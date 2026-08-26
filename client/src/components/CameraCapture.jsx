@@ -170,14 +170,14 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
   };
 
   return (
-    <div style={{ background: 'rgba(15, 23, 42, 0.5)', padding: '20px', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+    <div className="glass-panel" style={{ padding: '24px' }}>
       
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--color-warm-border)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Camera size={18} color="#06b6d4" />
-          <h4 style={{ fontSize: '1rem', fontWeight: 600, margin: 0 }}>
+          <Camera size={18} color="#0284C7" />
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 600, margin: 0, color: '#2E2219' }}>
             Parameter 11: Reference Images & Notes ({images.length}/3)
-          </h4>
+          </h3>
         </div>
         <div style={{ display: 'flex', gap: '6px' }}>
           {images.map((_, i) => (
@@ -193,12 +193,35 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
       {/* Upload Buttons (Visible if less than 3 images attached) */}
       {!streamActive && images.length < 3 && (
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '16px' }}>
-          <button type="button" onClick={startCamera} className="btn btn-primary" style={{ flex: 1 }}>
+          <button 
+            type="button" 
+            onClick={startCamera} 
+            className="btn btn-primary" 
+            style={{ 
+              flex: 1, 
+              background: 'linear-gradient(135deg, #0284C7 0%, #38BDF8 100%)',
+              border: 'none',
+              color: '#ffffff',
+              boxShadow: '0 4px 14px rgba(2, 132, 199, 0.25)',
+              fontWeight: 600
+            }}
+          >
             <Camera size={16} />
             <span>Click Real-Time Photo (#{images.length + 1})</span>
           </button>
           
-          <button type="button" onClick={() => fileInputRef.current?.click()} className="btn btn-secondary" style={{ flex: 1 }}>
+          <button 
+            type="button" 
+            onClick={() => fileInputRef.current?.click()} 
+            className="btn btn-secondary" 
+            style={{ 
+              flex: 1, 
+              color: '#0284C7',
+              borderColor: 'var(--color-warm-border)',
+              background: '#ffffff',
+              fontWeight: 600
+            }}
+          >
             <Upload size={16} />
             <span>Upload Photo File (#{images.length + 1})</span>
           </button>
@@ -214,7 +237,7 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
       )}
 
       {uploading && (
-        <div style={{ padding: '12px', background: 'rgba(6, 182, 212, 0.1)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: '8px', color: '#38bdf8', fontSize: '0.85rem', marginBottom: '16px', textAlign: 'center' }}>
+        <div style={{ padding: '12px', background: 'rgba(2, 132, 199, 0.1)', border: '1px solid rgba(2, 132, 199, 0.25)', borderRadius: '8px', color: '#0284C7', fontSize: '0.85rem', marginBottom: '16px', textAlign: 'center', fontWeight: 600 }}>
           Uploading to Cloud Storage...
         </div>
       )}
@@ -230,7 +253,12 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
             style={{ width: '100%', maxHeight: '300px', borderRadius: '12px', background: '#000' }} 
           />
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginTop: '12px' }}>
-            <button type="button" onClick={capturePhoto} className="btn btn-accent">
+            <button 
+              type="button" 
+              onClick={capturePhoto} 
+              className="btn btn-primary"
+              style={{ background: 'linear-gradient(135deg, #0284C7 0%, #38BDF8 100%)', border: 'none', color: '#ffffff', fontWeight: 600 }}
+            >
               <Camera size={16} />
               <span>Capture Photo #{images.length + 1} Now</span>
             </button>
@@ -245,9 +273,9 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
       {images.length > 0 && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '16px' }}>
           {images.map((img, idx) => (
-            <div key={idx} style={{ background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', position: 'relative' }}>
+            <div key={idx} style={{ background: 'rgba(235, 243, 254, 0.45)', padding: '12px', borderRadius: '12px', border: '1px solid var(--color-warm-border)', position: 'relative' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#38bdf8' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0284C7' }}>
                   Image #{idx + 1}
                 </span>
                 <button
@@ -260,21 +288,21 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
                 </button>
               </div>
 
-              <div style={{ width: '100%', height: '140px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255, 255, 255, 0.1)', background: '#000', textAlign: 'center', marginBottom: '8px' }}>
+              <div style={{ width: '100%', height: '140px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--color-warm-border)', background: '#FAF6EE', textAlign: 'center', marginBottom: '8px' }}>
                 <img src={img.url} alt={`Captured reference ${idx + 1}`} style={{ height: '140px', maxWidth: '100%', objectFit: 'contain' }} />
               </div>
 
               {img.url && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.72rem', color: '#06b6d4', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.72rem', color: '#0284C7', marginBottom: '8px' }}>
                   <LinkIcon size={12} />
-                  <a href={img.url} target="_blank" rel="noreferrer" style={{ color: '#60a5fa', textDecoration: 'underline', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <a href={img.url} target="_blank" rel="noreferrer" style={{ color: '#0284C7', textDecoration: 'underline', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontWeight: 600 }}>
                     View Cloud Image #{idx + 1}
                   </a>
                 </div>
               )}
 
               <div className="form-group" style={{ marginBottom: 0 }}>
-                <label className="form-label" style={{ fontSize: '0.75rem' }}>
+                <label className="form-label" style={{ fontSize: '0.75rem', color: '#64748B' }}>
                   <ImageIcon size={12} />
                   <span>Notes for Image #{idx + 1}</span>
                 </label>
@@ -293,7 +321,7 @@ export default function CameraCapture({ onImageCaptured, currentImage, disabled 
       )}
 
       {images.length >= 3 && (
-        <div style={{ fontSize: '0.8rem', color: '#10b981', textAlign: 'center', padding: '6px', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '6px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+        <div style={{ fontSize: '0.8rem', color: '#059669', textAlign: 'center', padding: '8px', background: 'rgba(16, 185, 129, 0.08)', borderRadius: '8px', border: '1px solid rgba(16, 185, 129, 0.25)', fontWeight: 600 }}>
           ✓ Maximum 3 reference images attached. Delete any image above to add a new one.
         </div>
       )}

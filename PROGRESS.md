@@ -138,6 +138,19 @@
 - [x] **Report History Card Theming**: Changed owner email indicators from neon green to roasted hazelnut (`#7C5A3E`) and ivory popup dropdowns.
 - [x] **Pixel-Perfect PDF Print Engine**: Added dedicated `@media print` rules in `index.css` preserving clean pure white print background, 4-column parameter alignment, 2-column side-by-side sample tables, and full-width multi-axis graph cards without splitting across pages.
 
+### Phase 18 — Theme Harmonization: Warm Cream Canvas with Standard Light Blue Accents (2026-08-26)
+- [x] **Restored Canvas & Surface Colors**: Warm Cream canvas (`#FAF6EE`) and Ivory card surfaces (`#FFFDF9`) preserved across all wizard steps, report views, and modals.
+- [x] **Harmonized Light Sky/Blue Accents**: All beige/brown elements replaced with harmonious Light Sky/Blue accents (`#0284C7`, `#38BDF8`, `#EBF3FC`).
+- [x] **Updated Components**:
+  - `LoginPage.jsx`: Light Sky/Blue app badge + softened Google Sign-in button.
+  - `Navbar.jsx`: Light Sky/Blue brand badge & user status accents.
+  - `OperatorForm.jsx`: Light Sky/Blue step pills, animated progress bar, Step 6 telemetry fetch CTA & table header.
+  - `CameraCapture.jsx`: Converted dark container to ivory `.glass-panel` with Light Blue photo capture CTA.
+  - `DynamicSampleTable.jsx`: Light Blue GC headers & Soft Emerald Water table styling.
+  - `EditableTable.jsx`: High-contrast typography with Light Blue headers and PDF-ready print engine.
+  - `ReportHistory.jsx` & `App.jsx`: Light Blue action buttons and dashboard hero banner.
+- [x] **Live Production Deployment**: Built with Vite and deployed to Firebase Hosting CDN (`https://grafana-494005.web.app`).
+
 ---
 
 ## 🚀 Current Production Deployment Status
@@ -155,7 +168,7 @@
 
 ## 📋 Known Technical Debt & Notes
 - DeveloperPanel.jsx dynamic import of firebase.js causes Vite warning (cosmetic only, does not break functionality)
-- Bundle size ~645kB / 193kB gzipped — consider lazy-loading DeveloperPanel in future
+- Bundle size ~668kB / 197kB gzipped — consider lazy-loading DeveloperPanel in future
 - multer@1.4.5-lts.2 has known vulnerabilities — plan upgrade to multer@2.x in maintenance window
 
 
