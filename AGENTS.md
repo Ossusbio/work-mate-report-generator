@@ -97,20 +97,20 @@ ossusbio-workmate-reports/
 
 ---
 
-## 🎨 Design System & Color Palette (Beige & Cream)
+## 🎨 Design System & Color Palette (Light Blue on Warm Cream)
 
 | Token / Layer | Color Code | Description |
 |---|---|---|
-| Background Surface | `#FAF6EE` | Warm Cashmere Canvas |
+| Background Canvas | `#FAF6EE` | Warm Cashmere Canvas |
 | Card / Container Glass | `#FFFDF9` | Ivory Glass Card Surface |
-| Sticky Table / Pill Headers | `#EFE8D8` | Warm Sand Latte |
-| Warm Borders | `#D7CAB9` / `rgba(196, 179, 156, 0.35)` | Muted Sandstone Borders |
+| Sticky Table / Header Tint | `#EBF3FC` | Soft Ice Blue Header |
+| Subtle Borders | `rgba(37, 99, 235, 0.18)` | Soft Blue Sandstone Borders |
 | Primary Text | `#2E2219` | Espresso Dark Charcoal / Solid Black |
-| Secondary Text | `#6E5A4B` | Warm Muted Slate |
-| Primary Accent | `#7C5A3E` | Roasted Hazelnut (Owner badges, PT pills, Primary CTAs) |
+| Secondary Text | `#64748B` | Slate Muted Slate |
+| Primary Accent / CTAs | `#0284C7` → `#38BDF8` | Light Sky Blue (CTAs, Badges, PT Pills) |
 | Secondary Accent | `#C4924F` | Caramel Amber (Break window, EPU pills) |
-| Success / Environmental Accent | `#5E7A60` | Sage Olive (Site pills, Production columns, PDF CTAs) |
-| Alert / Warning Accent | `#B56147` | Terracotta Rust (Diagnostic alerts) |
+| Success / Environmental Accent | `#059669` | Emerald Sage (Site pills, Production columns, PDF CTAs) |
+| Alert / Warning Accent | `#DC2626` | Crimson Alert (Diagnostic alerts) |
 
 ### 🖨️ PDF & Print Engine Guardrails (`@media print` in `index.css`)
 - **Print Background**: Always `#FFFFFF` pure white with `#0F172A` high-resolution black text.
