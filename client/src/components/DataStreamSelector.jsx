@@ -2050,9 +2050,9 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
   const siteCatalog = SITE_STREAM_CATALOG[catalogKey];
 
   const categories = [
-    { key: 'PT', label: 'PT (Pressure Transmitter)', icon: Activity, color: '#7C5A3E' },
+    { key: 'PT', label: 'PT (Pressure Transmitter)', icon: Activity, color: '#0284C7' },
     { key: 'EPU', label: 'EPU (Electrical Power Unit)', icon: Zap, color: '#C4924F' },
-    { key: 'Production', label: 'Production Data', icon: Factory, color: '#5E7A60' }
+    { key: 'Production', label: 'Production Data', icon: Factory, color: '#059669' }
   ];
 
   // Dropdown open states and search queries
@@ -2094,9 +2094,9 @@ export default function DataStreamSelector({ site = 'UCS', selectedStreams = { P
 
   return (
     <div>
-      <div style={{ fontSize: '0.8rem', color: '#6E5A4B', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+      <div style={{ fontSize: '0.8rem', color: '#64748B', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
         <span>Selected Table Schema:</span>
-        <strong style={{ color: '#7C5A3E' }}>{siteCatalog.displayName}</strong>
+        <strong style={{ color: '#0284C7' }}>{siteCatalog.displayName}</strong>
       </div>
 
       {/* Global transparent backdrop overlay to dismiss dropdowns on outside clicks */}

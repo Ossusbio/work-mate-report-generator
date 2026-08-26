@@ -33,12 +33,12 @@ export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeT
             width: '42px',
             height: '42px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #7C5A3E 0%, #A37A55 100%)',
+            background: 'linear-gradient(135deg, #0284C7 0%, #38BDF8 100%)',
             border: '1px solid rgba(255, 255, 255, 0.6)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(124, 90, 62, 0.25)'
+            boxShadow: '0 4px 12px rgba(2, 132, 199, 0.25)'
           }}>
             <Briefcase size={22} color="#ffffff" />
           </div>
@@ -46,8 +46,8 @@ export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeT
             <h1 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0, letterSpacing: '-0.02em' }} className="gradient-text">
               WORK MATE
             </h1>
-            <div style={{ fontSize: '0.72rem', color: '#6E5A4B', marginTop: '2px' }}>
-              Operator Report Console &bull; <span style={{ color: '#5E7A60', fontWeight: 600 }}>v3.0</span>
+            <div style={{ fontSize: '0.72rem', color: '#64748B', marginTop: '2px' }}>
+              Operator Report Console &bull; <span style={{ color: '#059669', fontWeight: 600 }}>v3.0</span>
             </div>
           </div>
         </div>
@@ -66,21 +66,21 @@ export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeT
               borderRadius: '9999px',
               cursor: isDeveloper ? 'pointer' : 'not-allowed',
               opacity: isDeveloper ? 1 : 0.6,
-              border: isDev ? '1px solid rgba(196, 146, 79, 0.45)' : '1px solid var(--color-warm-border)',
-              background: isDev ? 'rgba(196, 146, 79, 0.14)' : 'rgba(255, 253, 249, 0.9)',
+              border: isDev ? '1px solid rgba(2, 132, 199, 0.45)' : '1px solid var(--color-warm-border)',
+              background: isDev ? 'rgba(2, 132, 199, 0.12)' : 'rgba(255, 253, 249, 0.9)',
               boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
               transition: 'all 0.3s ease',
               userSelect: 'none'
             }}
             title={isDeveloper ? 'Toggle Developer/User Mode' : 'Developer mode is restricted to authorized accounts'}
           >
-            {isDev ? <Code2 size={14} color="#8C642A" /> : <UserCircle size={14} color="#6E5A4B" />}
-            <span style={{ fontSize: '0.78rem', fontWeight: 600, color: isDev ? '#8C642A' : '#6E5A4B' }}>
+            {isDev ? <Code2 size={14} color="#0284C7" /> : <UserCircle size={14} color="#64748B" />}
+            <span style={{ fontSize: '0.78rem', fontWeight: 600, color: isDev ? '#0284C7' : '#64748B' }}>
               {isDev ? 'Dev Mode' : 'User Mode'}
             </span>
             <div style={{
               width: '36px', height: '20px', borderRadius: '10px',
-              background: isDev ? 'linear-gradient(135deg, #C4924F, #7C5A3E)' : 'rgba(196, 179, 156, 0.4)',
+              background: isDev ? 'linear-gradient(135deg, #38BDF8, #0284C7)' : 'rgba(2, 132, 199, 0.25)',
               position: 'relative', transition: 'all 0.3s ease'
             }}>
               <div style={{
@@ -104,12 +104,12 @@ export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeT
             border: '1px solid var(--color-warm-border)',
             boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
           }}>
-            <User size={15} color="#7C5A3E" />
+            <User size={15} color="#0284C7" />
             <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#2E2219' }}>
               {username}
             </span>
-            <span style={{ color: '#9E8B7C', fontSize: '0.85rem' }}>|</span>
-            <span className="navbar-user-email" style={{ fontSize: '0.8rem', color: '#6E5A4B', fontFamily: 'JetBrains Mono' }}>
+            <span style={{ color: '#CBD5E1', fontSize: '0.85rem' }}>|</span>
+            <span className="navbar-user-email" style={{ fontSize: '0.8rem', color: '#64748B', fontFamily: 'JetBrains Mono' }}>
               {user?.email}
             </span>
           </div>

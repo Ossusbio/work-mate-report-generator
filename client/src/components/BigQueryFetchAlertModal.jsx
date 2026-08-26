@@ -41,8 +41,8 @@ export default function BigQueryFetchAlertModal({
           maxWidth: '540px',
           background: '#FFFDF9',
           border: '1px solid var(--color-warm-border)',
-          borderTop: '5px solid #C4924F',
-          boxShadow: '0 25px 50px -12px rgba(120, 95, 70, 0.35), 0 0 25px rgba(196, 146, 79, 0.15)'
+          borderTop: '5px solid #2563EB',
+          boxShadow: '0 25px 50px -12px rgba(37, 99, 235, 0.2), 0 0 25px rgba(219, 234, 254, 0.25)'
         }}
       >
         {/* Header */}
@@ -51,20 +51,20 @@ export default function BigQueryFetchAlertModal({
             width: '42px',
             height: '42px',
             borderRadius: '12px',
-            background: 'rgba(196, 146, 79, 0.15)',
-            border: '1px solid rgba(196, 146, 79, 0.3)',
+            background: 'rgba(37, 99, 235, 0.12)',
+            border: '1px solid rgba(37, 99, 235, 0.3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0
           }}>
-            <AlertTriangle size={22} color="#C4924F" />
+            <AlertTriangle size={22} color="#2563EB" />
           </div>
           <div>
             <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>
               No BigQuery Telemetry Found
             </h3>
-            <span style={{ fontSize: '0.82rem', color: '#6E5A4B' }}>
+            <span style={{ fontSize: '0.82rem', color: '#64748B' }}>
               BigQuery returned 0 telemetry records for this time window
             </span>
           </div>
@@ -75,7 +75,7 @@ export default function BigQueryFetchAlertModal({
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              color: '#6E5A4B',
+              color: '#64748B',
               padding: '6px',
               borderRadius: '6px',
               display: 'flex',
@@ -90,7 +90,7 @@ export default function BigQueryFetchAlertModal({
 
         {/* Query Context Summary Card */}
         <div style={{
-          background: 'rgba(239, 232, 216, 0.55)',
+          background: 'rgba(235, 243, 254, 0.55)',
           border: '1px solid var(--color-warm-border)',
           borderRadius: '12px',
           padding: '14px 16px',
@@ -100,16 +100,16 @@ export default function BigQueryFetchAlertModal({
           gap: '8px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.82rem' }}>
-            <span style={{ color: '#6E5A4B', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
-              <MapPin size={14} color="#7C5A3E" /> Site Table:
+            <span style={{ color: '#64748B', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
+              <MapPin size={14} color="#2563EB" /> Site Table:
             </span>
-            <span style={{ fontWeight: 700, color: '#7C5A3E', fontFamily: 'JetBrains Mono' }}>
+            <span style={{ fontWeight: 700, color: '#2563EB', fontFamily: 'JetBrains Mono' }}>
               Datas.{site}
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.82rem' }}>
-            <span style={{ color: '#6E5A4B', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
-              <Clock size={14} color="#C4924F" /> Queried Window:
+            <span style={{ color: '#64748B', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
+              <Clock size={14} color="#0284C7" /> Queried Window:
             </span>
             <span style={{ fontWeight: 600, color: '#2E2219', fontFamily: 'JetBrains Mono', fontSize: '0.78rem' }}>
               {timeWindowDisplay}
@@ -117,8 +117,8 @@ export default function BigQueryFetchAlertModal({
           </div>
           {breakStartTime && breakEndTime && (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.82rem' }}>
-              <span style={{ color: '#6E5A4B', fontWeight: 600 }}>Break Excluded:</span>
-              <span style={{ color: '#B56147', fontFamily: 'JetBrains Mono', fontSize: '0.78rem', fontWeight: 600 }}>
+              <span style={{ color: '#64748B', fontWeight: 600 }}>Break Excluded:</span>
+              <span style={{ color: '#B45309', fontFamily: 'JetBrains Mono', fontSize: '0.78rem', fontWeight: 600 }}>
                 {breakStartTime} → {breakEndTime}
               </span>
             </div>
@@ -127,7 +127,7 @@ export default function BigQueryFetchAlertModal({
 
         {/* Potential Reasons & Why It Happened */}
         <div style={{ marginBottom: '20px' }}>
-          <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#7C5A3E', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '10px' }}>
+          <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#2563EB', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '10px' }}>
             Possible Reasons:
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -140,7 +140,7 @@ export default function BigQueryFetchAlertModal({
               color: '#2E2219',
               lineHeight: 1.45
             }}>
-              <strong style={{ color: '#7C5A3E' }}>1. No telemetry recorded during this period:</strong> The reactor or IoT gateway was not active or data was not stored in BigQuery table <code style={{ color: '#2E2219', background: 'rgba(239, 232, 216, 0.6)', padding: '2px 4px', borderRadius: '4px' }}>{site}</code> at this time.
+              <strong style={{ color: '#2563EB' }}>1. No telemetry recorded during this period:</strong> The reactor or IoT gateway was not active or data was not stored in BigQuery table <code style={{ color: '#2E2219', background: 'rgba(235, 243, 254, 0.8)', padding: '2px 4px', borderRadius: '4px' }}>{site}</code> at this time.
             </div>
 
             <div style={{
@@ -152,7 +152,7 @@ export default function BigQueryFetchAlertModal({
               color: '#2E2219',
               lineHeight: 1.45
             }}>
-              <strong style={{ color: '#7C5A3E' }}>2. Date or time range mismatch:</strong> The start/end date or 24-hour time entered in <strong style={{ color: '#2E2219' }}>Step 1</strong> might be before or after the actual physical run.
+              <strong style={{ color: '#2563EB' }}>2. Date or time range mismatch:</strong> The start/end date or 24-hour time entered in <strong style={{ color: '#2E2219' }}>Step 1</strong> might be before or after the actual physical run.
             </div>
 
             <div style={{
@@ -164,7 +164,7 @@ export default function BigQueryFetchAlertModal({
               color: '#2E2219',
               lineHeight: 1.45
             }}>
-              <strong style={{ color: '#7C5A3E' }}>3. Site selection:</strong> Verify if the run occurred on <strong style={{ color: '#2E2219' }}>UCS</strong>, <strong style={{ color: '#2E2219' }}>SMP 3RX Skid</strong>, or <strong style={{ color: '#2E2219' }}>SDR</strong>.
+              <strong style={{ color: '#2563EB' }}>3. Site selection:</strong> Verify if the run occurred on <strong style={{ color: '#2E2219' }}>UCS</strong>, <strong style={{ color: '#2E2219' }}>SMP 3RX Skid</strong>, or <strong style={{ color: '#2E2219' }}>SDR</strong>.
             </div>
           </div>
         </div>
@@ -180,7 +180,7 @@ export default function BigQueryFetchAlertModal({
                 onClose();
               }}
               style={{
-                background: 'linear-gradient(135deg, #7C5A3E 0%, #A37A55 100%)',
+                background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
                 color: '#ffffff',
                 padding: '9px 18px',
                 fontSize: '0.85rem',

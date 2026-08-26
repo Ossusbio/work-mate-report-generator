@@ -10,8 +10,8 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
   const isGC = type === 'gc';
   const title = isGC ? 'Gas Chromatography (GC) Samples' : 'Water Quality Samples';
   const Icon = isGC ? FlaskConical : Droplets;
-  // Beige and Cream accent tones: Warm Roasted Hazelnut for GC, Warm Sage for Water
-  const accentColor = isGC ? '#7C5A3E' : '#5E7A60';
+  // Light Blue for GC, Soft Emerald for Water
+  const accentColor = isGC ? '#0284C7' : '#059669';
 
   // Columns config
   const columns = isGC
@@ -58,7 +58,7 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
       background: '#FFFDF9',
       borderRadius: '14px',
       border: '1px solid var(--color-warm-border)',
-      boxShadow: '0 4px 16px rgba(120, 95, 70, 0.05)',
+      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.03)',
       overflow: 'hidden'
     }}>
       {/* Header */}
@@ -68,13 +68,13 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
         alignItems: 'center',
         justifyContent: 'space-between',
         borderBottom: '1px solid var(--color-warm-border)',
-        background: 'rgba(239, 232, 216, 0.4)'
+        background: isGC ? 'rgba(235, 243, 254, 0.6)' : 'rgba(236, 253, 245, 0.6)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <Icon size={18} color={accentColor} />
           <h4 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>{title}</h4>
           <span className="badge" style={{
-            background: isGC ? 'rgba(124, 90, 62, 0.12)' : 'rgba(94, 122, 96, 0.14)',
+            background: isGC ? 'rgba(2, 132, 199, 0.12)' : 'rgba(5, 150, 105, 0.12)',
             color: accentColor,
             border: `1px solid ${accentColor}40`,
             fontSize: '0.72rem',
@@ -93,7 +93,8 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
             fontSize: '0.8rem',
             color: accentColor,
             borderColor: `${accentColor}50`,
-            background: '#ffffff'
+            background: '#ffffff',
+            fontWeight: 600
           }}
         >
           <Plus size={14} />
@@ -105,7 +106,7 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
       <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
         <table style={{ width: '100%', minWidth: isGC ? '520px' : '640px', borderCollapse: 'collapse', fontSize: '0.88rem' }}>
           <thead>
-            <tr style={{ background: 'rgba(239, 232, 216, 0.65)' }}>
+            <tr style={{ background: isGC ? '#EBF3FC' : 'rgba(236, 253, 245, 0.85)' }}>
               <th style={{
                 padding: '10px 16px',
                 color: accentColor,
@@ -121,7 +122,7 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
               {columns.map(col => (
                 <th key={col.key} style={{
                   padding: '10px 14px',
-                  color: '#6E5A4B',
+                  color: '#64748B',
                   fontSize: '0.75rem',
                   textTransform: 'uppercase',
                   fontWeight: 700,
@@ -139,11 +140,10 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
               <tr
                 key={entry.id || idx}
                 style={{
-                  borderBottom: '1px solid rgba(196, 179, 156, 0.25)',
+                  borderBottom: '1px solid var(--color-warm-border)',
+                  background: idx % 2 === 0 ? (isGC ? 'rgba(235, 243, 254, 0.45)' : 'rgba(236, 253, 245, 0.35)') : '#FFFDF9',
                   transition: 'background 0.15s ease'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(239, 232, 216, 0.25)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
                 {/* T-Label (T1, T2, T3...) */}
                 <td style={{ textAlign: 'center', padding: '8px' }}>
@@ -154,7 +154,7 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
                     width: '36px',
                     height: '36px',
                     borderRadius: '10px',
-                    background: isGC ? 'rgba(124, 90, 62, 0.12)' : 'rgba(94, 122, 96, 0.12)',
+                    background: isGC ? 'rgba(2, 132, 199, 0.12)' : 'rgba(5, 150, 105, 0.12)',
                     color: accentColor,
                     fontWeight: 700,
                     fontSize: '0.85rem',
@@ -195,7 +195,7 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
                       background: 'transparent',
                       border: 'none',
                       cursor: entries.length <= 1 ? 'not-allowed' : 'pointer',
-                      color: entries.length <= 1 ? '#c4b5a3' : '#B56147',
+                      color: entries.length <= 1 ? '#CBD5E1' : '#EF4444',
                       opacity: entries.length <= 1 ? 0.3 : 0.7,
                       padding: '6px',
                       borderRadius: '8px',
@@ -224,12 +224,12 @@ export default function DynamicSampleTable({ type, entries, onChange, disabled =
           <div style={{
             padding: '10px 20px',
             borderTop: '1px solid var(--color-warm-border)',
-            background: 'rgba(239, 232, 216, 0.35)',
+            background: isGC ? 'rgba(235, 243, 254, 0.45)' : 'rgba(236, 253, 245, 0.35)',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
             fontSize: '0.8rem',
-            color: '#6E5A4B'
+            color: '#64748B'
           }}>
             <Eye size={14} color={accentColor} />
             <span style={{ fontWeight: 600, color: accentColor }}>Last entry ({last.label}):</span>
