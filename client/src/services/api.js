@@ -268,3 +268,47 @@ export async function fetchStreamMetadata(site = 'UCS') {
     return {};
   }
 }
+
+/**
+ * Metravi Dual Power Supply API Helpers
+ */
+export async function fetchPowerSupplyTelemetry() {
+  const headers = await getAuthHeaders();
+  const res = await fetch('/api/power-supply/telemetry', { headers });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to fetch power supply telemetry');
+  }
+  return await res.json();
+}
+
+export async function sendPowerSupplyCommand(device, action, value = null) {
+  const headers = await getAuthHeaders({ 'Content-Type': 'application/json' });
+  const res = await fetch('/api/power-supply/command', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ device, action, value })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to send power supply command');
+  }
+  return await res.json();
+}
+
+export async function fetchPowerSupplyHistory({ startDate, endDate, device = 'ALL', limit = 1500 } = {}) {
+  const headers = await getAuthHeaders();
+  const params = new URLSearchParams();
+  if (startDate) params.append('startDate', startDate);
+  if (endDate) params.append('endDate', endDate);
+  if (device) params.append('device', device);
+  if (limit) params.append('limit', limit);
+
+  const res = await fetch(`/api/power-supply/history?${params.toString()}`, { headers });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to fetch power supply history');
+  }
+  return await res.json();
+}
+

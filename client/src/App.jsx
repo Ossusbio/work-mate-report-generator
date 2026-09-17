@@ -4,6 +4,7 @@ import OperatorForm from './components/OperatorForm';
 import EditableTable from './components/EditableTable';
 import ReportHistory from './components/ReportHistory';
 import DeveloperPanel from './components/DeveloperPanel';
+import PowerSupplyControl from './components/PowerSupplyControl';
 import LoginPage from './components/LoginPage';
 import { Plus, Sparkles } from 'lucide-react';
 import { fetchReport, fetchMyRole } from './services/api';
@@ -49,6 +50,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState('user');
   const [mode, setMode] = useState('user');
+  const [activeNav, setActiveNav] = useState('reports'); // 'reports' | 'power-supply'
   const [view, setView] = useState('home'); // 'home' | 'wizard' | 'editor'
   const [currentReport, setCurrentReport] = useState(null);
 
@@ -146,11 +148,19 @@ export default function App() {
       <Navbar
         user={user}
         onLogout={() => { setUser(null); setView('home'); setMode('user'); }}
-        showBack={view !== 'home'}
-        onBack={handleBackToHome}
+        showBack={view !== 'home' || activeNav !== 'reports'}
+        onBack={() => {
+          if (activeNav !== 'reports') {
+            setActiveNav('reports');
+          } else {
+            handleBackToHome();
+          }
+        }}
         mode={mode}
         onModeToggle={handleModeToggle}
         isDeveloper={isDeveloper}
+        activeNav={activeNav}
+        onNavChange={setActiveNav}
       />
 
       <main style={{ padding: '0 12px' }}>
@@ -160,8 +170,13 @@ export default function App() {
             <DeveloperPanel user={user} />
           )}
 
-          {/* User Mode */}
-          {mode === 'user' && (
+          {/* Power Supply Control View */}
+          {activeNav === 'power-supply' && mode === 'user' && (
+            <PowerSupplyControl />
+          )}
+
+          {/* Reports Views */}
+          {activeNav === 'reports' && mode === 'user' && (
             <>
               {/* HOMEPAGE */}
               {view === 'home' && (

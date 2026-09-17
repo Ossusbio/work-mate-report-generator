@@ -1,7 +1,7 @@
 import React from 'react';
-import { LogOut, User, Briefcase, ArrowLeft, Code2, UserCircle } from 'lucide-react';
+import { LogOut, User, Briefcase, ArrowLeft, Code2, UserCircle, FileText, Zap } from 'lucide-react';
 
-export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeToggle, isDeveloper }) {
+export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeToggle, isDeveloper, activeNav = 'reports', onNavChange }) {
   const username = user?.displayName || user?.email?.split('@')[0] || 'Operator';
   const isDev = mode === 'developer';
 
@@ -51,6 +51,55 @@ export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeT
             </div>
           </div>
         </div>
+
+        {/* Center: Module Switcher (Reports vs Power Supply) */}
+        {onNavChange && (
+          <div style={{ display: 'flex', gap: '6px', background: 'rgba(0,0,0,0.04)', padding: '4px', borderRadius: '12px', border: '1px solid var(--color-warm-border)' }}>
+            <button
+              onClick={() => onNavChange('reports')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '8px',
+                border: 'none',
+                background: activeNav === 'reports' ? '#ffffff' : 'transparent',
+                color: activeNav === 'reports' ? '#0284C7' : '#64748B',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                boxShadow: activeNav === 'reports' ? '0 2px 6px rgba(0,0,0,0.06)' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <FileText size={15} />
+              <span>Reports</span>
+            </button>
+
+            <button
+              onClick={() => onNavChange('power-supply')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '8px',
+                border: 'none',
+                background: activeNav === 'power-supply' ? '#ffffff' : 'transparent',
+                color: activeNav === 'power-supply' ? '#0284C7' : '#64748B',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                boxShadow: activeNav === 'power-supply' ? '0 2px 6px rgba(0,0,0,0.06)' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <Zap size={15} color="#0284C7" />
+              <span>Power Supply</span>
+            </button>
+          </div>
+        )}
 
         {/* Right: Mode Toggle + User Info + Logout */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>

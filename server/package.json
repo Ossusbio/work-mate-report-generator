@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.9.0",
+    "@google-cloud/pubsub": "^6.1.0",
     "@google-cloud/storage": "^7.15.0",
     "cors": "^2.8.5",
     "csv-stringify": "^6.5.2",
