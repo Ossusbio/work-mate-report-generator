@@ -31,6 +31,7 @@ import {
 import { fetchPowerSupplyTelemetry, sendPowerSupplyCommand, fetchPowerSupplyHistory } from '../services/api';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
+import './PowerSupplyControl.css';
 
 export default function PowerSupplyControl() {
   const [subTab, setSubTab] = useState('realtime'); // 'realtime' | 'history'
@@ -392,19 +393,12 @@ export default function PowerSupplyControl() {
 
     return (
       <div 
-        className="glass-panel" 
-        style={{ 
-          padding: '28px', 
-          borderRadius: '20px', 
-          borderTop: `4px solid ${borderAccent}`,
-          background: 'linear-gradient(135deg, rgba(255, 253, 249, 0.98) 0%, rgba(243, 248, 255, 0.85) 100%)',
-          boxShadow: '0 10px 30px -8px rgba(0, 0, 0, 0.08)',
-          position: 'relative',
-        }}
+        className="glass-panel psu-card" 
+        style={{ borderTop: `4px solid ${borderAccent}` }}
       >
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', paddingBottom: '14px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div className="psu-card-header">
+          <div className="psu-card-title-group">
             <div style={{
               width: '38px',
               height: '38px',
@@ -413,7 +407,8 @@ export default function PowerSupplyControl() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#fff'
+              color: '#fff',
+              flexShrink: 0
             }}>
               <Zap size={20} />
             </div>
@@ -423,7 +418,7 @@ export default function PowerSupplyControl() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div className="psu-badge-group">
             <span style={{
               fontSize: '0.75rem',
               fontWeight: 700,
@@ -432,6 +427,7 @@ export default function PowerSupplyControl() {
               background: devCtrl.output ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.12)',
               color: devCtrl.output ? '#059669' : '#dc2626',
               border: `1px solid ${devCtrl.output ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.25)'}`,
+              whiteSpace: 'nowrap'
             }}>
               OUTPUT {devCtrl.output ? 'ON' : 'OFF'}
             </span>
@@ -443,6 +439,7 @@ export default function PowerSupplyControl() {
               background: data.mode === 'CV' ? 'rgba(2, 132, 199, 0.12)' : 'rgba(245, 158, 11, 0.15)',
               color: data.mode === 'CV' ? '#0284C7' : '#d97706',
               border: `1px solid ${data.mode === 'CV' ? 'rgba(2, 132, 199, 0.25)' : 'rgba(245, 158, 11, 0.3)'}`,
+              whiteSpace: 'nowrap'
             }}>
               {data.mode || 'CV'}
             </span>
@@ -450,40 +447,40 @@ export default function PowerSupplyControl() {
         </div>
 
         {/* Digital Gauges */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '24px' }}>
-          <div style={{ background: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
-            <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase', marginBottom: '4px' }}>Voltage</div>
-            <div style={{ fontSize: '1.7rem', fontWeight: 800, fontFamily: 'monospace', color: '#0284C7' }}>
-              {Number(data.vout || 0).toFixed(2)}<span style={{ fontSize: '0.9rem', color: '#64748B', marginLeft: '3px' }}>V</span>
+        <div className="psu-gauges-grid">
+          <div className="psu-gauge-box">
+            <div className="psu-gauge-label">Voltage</div>
+            <div className="psu-gauge-value" style={{ color: '#0284C7' }}>
+              {Number(data.vout || 0).toFixed(2)}<span className="psu-gauge-unit">V</span>
             </div>
-            <div style={{ fontSize: '0.72rem', color: '#94A3B8', marginTop: '2px' }}>Set: {devCtrl.voltage} V</div>
+            <div className="psu-gauge-subtext">Set: {devCtrl.voltage} V</div>
           </div>
 
-          <div style={{ background: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
-            <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase', marginBottom: '4px' }}>Current</div>
-            <div style={{ fontSize: '1.7rem', fontWeight: 800, fontFamily: 'monospace', color: '#059669' }}>
-              {Number(data.iout || 0).toFixed(3)}<span style={{ fontSize: '0.9rem', color: '#64748B', marginLeft: '3px' }}>A</span>
+          <div className="psu-gauge-box">
+            <div className="psu-gauge-label">Current</div>
+            <div className="psu-gauge-value" style={{ color: '#059669' }}>
+              {Number(data.iout || 0).toFixed(3)}<span className="psu-gauge-unit">A</span>
             </div>
-            <div style={{ fontSize: '0.72rem', color: '#94A3B8', marginTop: '2px' }}>Limit: {devCtrl.current} A</div>
+            <div className="psu-gauge-subtext">Limit: {devCtrl.current} A</div>
           </div>
 
-          <div style={{ background: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
-            <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase', marginBottom: '4px' }}>Power</div>
-            <div style={{ fontSize: '1.7rem', fontWeight: 800, fontFamily: 'monospace', color: '#7C3AED' }}>
-              {Number(data.power || 0).toFixed(1)}<span style={{ fontSize: '0.9rem', color: '#64748B', marginLeft: '3px' }}>W</span>
+          <div className="psu-gauge-box">
+            <div className="psu-gauge-label">Power</div>
+            <div className="psu-gauge-value" style={{ color: '#7C3AED' }}>
+              {Number(data.power || 0).toFixed(1)}<span className="psu-gauge-unit">W</span>
             </div>
-            <div style={{ fontSize: '0.72rem', color: '#94A3B8', marginTop: '2px' }}>P = V &times; I</div>
+            <div className="psu-gauge-subtext">P = V &times; I</div>
           </div>
         </div>
 
         {/* Voltage Control */}
-        <div style={{ background: 'rgba(255, 255, 255, 0.65)', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '14px', padding: '18px', marginBottom: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+        <div className="psu-control-box">
+          <div className="psu-control-header">
             <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#2E2219' }}>Voltage Setpoint (0 - 30 V)</label>
             <span style={{ fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 700, color: '#0284C7' }}>{devCtrl.voltage} V</span>
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '12px' }}>
+          <div className="psu-slider-row">
             <input 
               type="range" 
               min="0" 
@@ -494,60 +491,41 @@ export default function PowerSupplyControl() {
                 ...prev,
                 [devKey]: { ...prev[devKey], voltage: parseFloat(e.target.value) }
               }))}
-              style={{ flex: 1, accentColor: borderAccent }}
+              className="psu-slider-input"
+              style={{ accentColor: borderAccent }}
             />
             <input 
               type="number" 
               min="0" 
               max="30" 
-              step="0.1"
+              step="0.1" 
               value={devCtrl.voltage}
               onChange={(e) => setControls(prev => ({
                 ...prev,
                 [devKey]: { ...prev[devKey], voltage: parseFloat(e.target.value) || 0 }
               }))}
-              style={{
-                width: '80px',
-                padding: '6px 10px',
-                borderRadius: '8px',
-                border: '1px solid rgba(0,0,0,0.15)',
-                fontFamily: 'monospace',
-                fontSize: '0.9rem',
-                fontWeight: 700,
-                textAlign: 'right'
-              }}
+              className="psu-number-input"
             />
             <button 
-              className="btn btn-primary"
+              className="btn btn-primary psu-apply-btn"
               onClick={() => executeCommand(devKey, 'set_voltage', parseFloat(devCtrl.voltage))}
               disabled={loading}
-              style={{ padding: '6px 16px', fontSize: '0.82rem', borderRadius: '8px' }}
             >
               Apply
             </button>
           </div>
 
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+          <div className="psu-presets-row">
             {[3.3, 5.0, 9.0, 12.0, 24.0].map(v => (
               <button
                 key={v}
+                className="psu-preset-pill"
                 onClick={() => {
                   setControls(prev => ({
                     ...prev,
                     [devKey]: { ...prev[devKey], voltage: v }
                   }));
                   executeCommand(devKey, 'set_voltage', v);
-                }}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  border: '1px solid rgba(0,0,0,0.1)',
-                  borderRadius: '6px',
-                  padding: '4px 10px',
-                  fontSize: '0.74rem',
-                  fontFamily: 'monospace',
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  color: '#475569'
                 }}
               >
                 {v}V
@@ -557,13 +535,13 @@ export default function PowerSupplyControl() {
         </div>
 
         {/* Current Control */}
-        <div style={{ background: 'rgba(255, 255, 255, 0.65)', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '14px', padding: '18px', marginBottom: '20px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+        <div className="psu-control-box" style={{ marginBottom: '20px' }}>
+          <div className="psu-control-header">
             <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#2E2219' }}>Current Limit (0 - 5 A)</label>
             <span style={{ fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 700, color: '#059669' }}>{devCtrl.current} A</span>
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '12px' }}>
+          <div className="psu-slider-row">
             <input 
               type="range" 
               min="0" 
@@ -574,60 +552,41 @@ export default function PowerSupplyControl() {
                 ...prev,
                 [devKey]: { ...prev[devKey], current: parseFloat(e.target.value) }
               }))}
-              style={{ flex: 1, accentColor: '#059669' }}
+              className="psu-slider-input"
+              style={{ accentColor: '#059669' }}
             />
             <input 
               type="number" 
               min="0" 
               max="5" 
-              step="0.05"
+              step="0.05" 
               value={devCtrl.current}
               onChange={(e) => setControls(prev => ({
                 ...prev,
                 [devKey]: { ...prev[devKey], current: parseFloat(e.target.value) || 0 }
               }))}
-              style={{
-                width: '80px',
-                padding: '6px 10px',
-                borderRadius: '8px',
-                border: '1px solid rgba(0,0,0,0.15)',
-                fontFamily: 'monospace',
-                fontSize: '0.9rem',
-                fontWeight: 700,
-                textAlign: 'right'
-              }}
+              className="psu-number-input"
             />
             <button 
-              className="btn btn-primary"
+              className="btn btn-primary psu-apply-btn"
               onClick={() => executeCommand(devKey, 'set_current', parseFloat(devCtrl.current))}
               disabled={loading}
-              style={{ padding: '6px 16px', fontSize: '0.82rem', borderRadius: '8px' }}
             >
               Apply
             </button>
           </div>
 
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+          <div className="psu-presets-row">
             {[0.5, 1.0, 2.0, 3.0, 5.0].map(i => (
               <button
                 key={i}
+                className="psu-preset-pill"
                 onClick={() => {
                   setControls(prev => ({
                     ...prev,
                     [devKey]: { ...prev[devKey], current: i }
                   }));
                   executeCommand(devKey, 'set_current', i);
-                }}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  border: '1px solid rgba(0,0,0,0.1)',
-                  borderRadius: '6px',
-                  padding: '4px 10px',
-                  fontSize: '0.74rem',
-                  fontFamily: 'monospace',
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  color: '#475569'
                 }}
               >
                 {i}A
@@ -637,23 +596,14 @@ export default function PowerSupplyControl() {
         </div>
 
         {/* Output Controls: Dedicated ON, OFF, and Stop buttons */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto', gap: '10px', alignItems: 'center' }}>
+        <div className="psu-actions-grid">
           <button 
+            className="psu-btn-on"
             onClick={() => executeCommand(devKey, 'set_output', 1)}
             disabled={loading}
             style={{
-              padding: '14px',
-              borderRadius: '12px',
-              fontWeight: 700,
-              fontSize: '0.88rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
               border: devCtrl.output ? '2px solid #059669' : '1px solid rgba(0,0,0,0.12)',
-              background: devCtrl.output ? 'linear-gradient(135deg, #059669 0%, #10B981 100%)' : 'rgba(255, 255, 255, 0.9)',
+              background: devCtrl.output ? 'linear-gradient(135deg, #059669 0%, #10B981 100%)' : 'rgba(255, 255, 255, 0.95)',
               color: devCtrl.output ? '#ffffff' : '#059669',
               boxShadow: devCtrl.output ? '0 4px 14px rgba(16, 185, 129, 0.35)' : 'none',
             }}
@@ -663,21 +613,12 @@ export default function PowerSupplyControl() {
           </button>
 
           <button 
+            className="psu-btn-off"
             onClick={() => executeCommand(devKey, 'set_output', 0)}
             disabled={loading}
             style={{
-              padding: '14px',
-              borderRadius: '12px',
-              fontWeight: 700,
-              fontSize: '0.88rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
               border: !devCtrl.output ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.12)',
-              background: !devCtrl.output ? 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' : 'rgba(255, 255, 255, 0.9)',
+              background: !devCtrl.output ? 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' : 'rgba(255, 255, 255, 0.95)',
               color: !devCtrl.output ? '#ffffff' : '#dc2626',
               boxShadow: !devCtrl.output ? '0 4px 14px rgba(220, 38, 38, 0.35)' : 'none',
             }}
@@ -687,18 +628,13 @@ export default function PowerSupplyControl() {
           </button>
 
           <button 
+            className="psu-btn-stop"
             onClick={() => executeCommand(devKey, 'emergency_stop')}
             disabled={loading}
             style={{
-              padding: '14px 18px',
-              borderRadius: '12px',
-              fontWeight: 700,
-              fontSize: '0.82rem',
               border: '1px solid rgba(239, 68, 68, 0.3)',
               background: 'rgba(239, 68, 68, 0.1)',
               color: '#dc2626',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
             }}
           >
             Stop {devKey}
@@ -709,7 +645,7 @@ export default function PowerSupplyControl() {
   };
 
   return (
-    <div className="animate-fade-in" style={{ maxWidth: '1300px', margin: '0 auto', paddingBottom: '50px' }}>
+    <div className="animate-fade-in psu-container">
       
       {/* Toast Notification */}
       {toast && (
@@ -735,30 +671,24 @@ export default function PowerSupplyControl() {
       )}
 
       {/* Main Header */}
-      <div className="glass-panel" style={{ 
-        padding: '28px 32px', 
-        marginBottom: '24px', 
-        borderLeft: '4px solid #0284C7',
-        background: 'linear-gradient(135deg, rgba(255, 253, 249, 0.98) 0%, rgba(235, 243, 254, 0.85) 100%)',
-        boxShadow: '0 10px 30px -8px rgba(2, 132, 199, 0.1)'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
-          <div>
+      <div className="glass-panel psu-header-panel">
+        <div className="psu-header-content">
+          <div className="psu-title-area">
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
               <Zap size={20} color="#0284C7" />
               <span style={{ fontSize: '0.82rem', color: '#0284C7', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Hardware Console & Analytics
               </span>
             </div>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0, letterSpacing: '-0.02em', color: '#2E2219' }}>
+            <h2>
               Metravi Dual Power Supply System
             </h2>
-            <p style={{ color: '#64748B', fontSize: '0.9rem', marginTop: '4px' }}>
+            <p>
               Real-time remote control via Google Cloud Pub/Sub & telemetry analytics via BigQuery.
             </p>
           </div>
 
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div className="psu-header-actions">
             <button 
               onClick={() => loadTelemetry(false)}
               disabled={refreshing}
@@ -773,20 +703,7 @@ export default function PowerSupplyControl() {
             <button 
               onClick={() => executeCommand('ALL', 'emergency_stop')}
               disabled={loading}
-              style={{
-                background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
-                color: '#fff',
-                border: 'none',
-                padding: '12px 22px',
-                borderRadius: '12px',
-                fontSize: '0.88rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                boxShadow: '0 6px 18px rgba(220, 38, 38, 0.35)',
-              }}
+              className="psu-emergency-all-btn"
             >
               <AlertOctagon size={18} />
               <span>EMERGENCY ALL OFF</span>
@@ -795,23 +712,10 @@ export default function PowerSupplyControl() {
         </div>
 
         {/* Primary View Switcher: Real-Time Control vs Historical Analytics */}
-        <div style={{ display: 'flex', gap: '8px', marginTop: '22px', borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '18px' }}>
+        <div className="psu-view-tabs">
           <button
             onClick={() => setSubTab('realtime')}
-            style={{
-              padding: '10px 22px',
-              borderRadius: '12px',
-              border: subTab === 'realtime' ? '1px solid #0284C7' : '1px solid rgba(0,0,0,0.1)',
-              background: subTab === 'realtime' ? 'linear-gradient(135deg, #0284C7 0%, #0369A1 100%)' : 'rgba(255, 255, 255, 0.8)',
-              color: subTab === 'realtime' ? '#ffffff' : '#475569',
-              fontWeight: 700,
-              fontSize: '0.9rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              cursor: 'pointer',
-              boxShadow: subTab === 'realtime' ? '0 4px 12px rgba(2, 132, 199, 0.25)' : 'none',
-            }}
+            className={`psu-view-tab-btn ${subTab === 'realtime' ? 'active' : ''}`}
           >
             <Sliders size={17} />
             <span>Real-Time Control</span>
@@ -819,20 +723,7 @@ export default function PowerSupplyControl() {
 
           <button
             onClick={() => setSubTab('history')}
-            style={{
-              padding: '10px 22px',
-              borderRadius: '12px',
-              border: subTab === 'history' ? '1px solid #0284C7' : '1px solid rgba(0,0,0,0.1)',
-              background: subTab === 'history' ? 'linear-gradient(135deg, #0284C7 0%, #0369A1 100%)' : 'rgba(255, 255, 255, 0.8)',
-              color: subTab === 'history' ? '#ffffff' : '#475569',
-              fontWeight: 700,
-              fontSize: '0.9rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              cursor: 'pointer',
-              boxShadow: subTab === 'history' ? '0 4px 12px rgba(2, 132, 199, 0.25)' : 'none',
-            }}
+            className={`psu-view-tab-btn ${subTab === 'history' ? 'active' : ''}`}
           >
             <ChartIcon size={17} />
             <span>Historical Graphs & Raw Data</span>
@@ -846,7 +737,7 @@ export default function PowerSupplyControl() {
       {subTab === 'realtime' && (
         <div>
           {/* Target device filter in Real-Time */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
+          <div className="psu-device-filter-bar">
             {[
               { id: 'ALL', label: 'Dual View (PSU 1 & 2)' },
               { id: 'PSU1', label: 'Metravi PSU 1 Only' },
@@ -855,15 +746,11 @@ export default function PowerSupplyControl() {
               <button
                 key={tab.id}
                 onClick={() => setActiveDeviceFilter(tab.id)}
+                className="psu-device-filter-btn"
                 style={{
-                  padding: '7px 16px',
-                  borderRadius: '8px',
                   border: activeDeviceFilter === tab.id ? '1px solid #0284C7' : '1px solid rgba(0,0,0,0.1)',
                   background: activeDeviceFilter === tab.id ? '#0284C7' : '#ffffff',
                   color: activeDeviceFilter === tab.id ? '#ffffff' : '#64748B',
-                  fontWeight: 600,
-                  fontSize: '0.82rem',
-                  cursor: 'pointer',
                 }}
               >
                 {tab.label}
@@ -871,11 +758,7 @@ export default function PowerSupplyControl() {
             ))}
           </div>
 
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: activeDeviceFilter === 'ALL' ? 'repeat(auto-fit, minmax(540px, 1fr))' : '1fr', 
-            gap: '24px' 
-          }}>
+          <div className={`psu-cards-grid ${activeDeviceFilter !== 'ALL' ? 'single-column' : ''}`}>
             {(activeDeviceFilter === 'ALL' || activeDeviceFilter === 'PSU1') && renderPsuCard('PSU1', 'Metravi PSU 1', '#0284C7', '#0284C7')}
             {(activeDeviceFilter === 'ALL' || activeDeviceFilter === 'PSU2') && renderPsuCard('PSU2', 'Metravi PSU 2', '#9333EA', '#9333EA')}
           </div>
@@ -889,15 +772,15 @@ export default function PowerSupplyControl() {
         <div className="animate-fade-in">
           
           {/* Filter Bar */}
-          <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px', marginBottom: '24px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '16px' }}>
+          <div className="glass-panel psu-history-filter-panel">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '14px', marginBottom: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Filter size={18} color="#0284C7" />
                 <span style={{ fontWeight: 700, fontSize: '0.95rem', color: '#2E2219' }}>Time & Device Filters</span>
               </div>
 
               {/* Preset Buttons */}
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+              <div className="psu-history-presets">
                 {[
                   { id: '15m', label: 'Last 15m' },
                   { id: '1h', label: 'Last 1h' },
@@ -926,8 +809,8 @@ export default function PowerSupplyControl() {
             </div>
 
             {/* Custom Date Inputs & Device Selector */}
-            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-end' }}>
-              <div style={{ flex: '1 1 200px' }}>
+            <div className="psu-history-inputs-grid">
+              <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#64748B', marginBottom: '6px' }}>
                   Start Date & Time
                 </label>
@@ -941,12 +824,13 @@ export default function PowerSupplyControl() {
                     borderRadius: '8px',
                     border: '1px solid rgba(0,0,0,0.15)',
                     fontSize: '0.85rem',
-                    fontFamily: 'monospace'
+                    fontFamily: 'monospace',
+                    boxSizing: 'border-box'
                   }}
                 />
               </div>
 
-              <div style={{ flex: '1 1 200px' }}>
+              <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#64748B', marginBottom: '6px' }}>
                   End Date & Time
                 </label>
@@ -960,12 +844,13 @@ export default function PowerSupplyControl() {
                     borderRadius: '8px',
                     border: '1px solid rgba(0,0,0,0.15)',
                     fontSize: '0.85rem',
-                    fontFamily: 'monospace'
+                    fontFamily: 'monospace',
+                    boxSizing: 'border-box'
                   }}
                 />
               </div>
 
-              <div style={{ flex: '1 1 160px' }}>
+              <div>
                 <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: '#64748B', marginBottom: '6px' }}>
                   Power Supply Filter
                 </label>
@@ -983,7 +868,8 @@ export default function PowerSupplyControl() {
                     border: '1px solid rgba(0,0,0,0.15)',
                     fontSize: '0.85rem',
                     fontWeight: 600,
-                    background: '#ffffff'
+                    background: '#ffffff',
+                    boxSizing: 'border-box'
                   }}
                 >
                   <option value="ALL">All Power Supplies</option>
@@ -992,12 +878,12 @@ export default function PowerSupplyControl() {
                 </select>
               </div>
 
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div className="psu-history-btn-group">
                 <button
                   onClick={handleCustomQuery}
                   disabled={historyLoading}
                   className="btn btn-primary"
-                  style={{ padding: '9px 18px', fontSize: '0.85rem', borderRadius: '8px', gap: '6px' }}
+                  style={{ padding: '9px 18px', fontSize: '0.85rem', borderRadius: '8px', gap: '6px', minHeight: '38px' }}
                 >
                   <RefreshCw size={15} className={historyLoading ? 'animate-spin' : ''} />
                   <span>Query Data</span>
@@ -1007,7 +893,7 @@ export default function PowerSupplyControl() {
                   onClick={handleDownloadCSV}
                   disabled={historyRecords.length === 0}
                   className="btn btn-secondary"
-                  style={{ padding: '9px 16px', fontSize: '0.85rem', borderRadius: '8px', gap: '6px' }}
+                  style={{ padding: '9px 16px', fontSize: '0.85rem', borderRadius: '8px', gap: '6px', minHeight: '38px' }}
                   title="Export raw data to CSV file"
                 >
                   <Download size={15} />
@@ -1018,8 +904,8 @@ export default function PowerSupplyControl() {
           </div>
 
           {/* Graph Card */}
-          <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px', marginBottom: '24px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div className="glass-panel psu-chart-card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <ChartIcon size={20} color="#0284C7" />
                 <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>
@@ -1031,7 +917,7 @@ export default function PowerSupplyControl() {
               </div>
             </div>
 
-            <div style={{ height: '380px', position: 'relative' }}>
+            <div className="psu-chart-canvas-container">
               {historyLoading ? (
                 <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748B' }}>
                   <RefreshCw size={24} className="animate-spin" style={{ marginRight: '8px' }} />
@@ -1048,8 +934,8 @@ export default function PowerSupplyControl() {
           </div>
 
           {/* Raw Data Table Card */}
-          <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div className="glass-panel psu-table-card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <TableIcon size={20} color="#0284C7" />
                 <h3 style={{ fontSize: '1.1rem', fontWeight: 700, margin: 0, color: '#2E2219' }}>
@@ -1061,7 +947,7 @@ export default function PowerSupplyControl() {
               </span>
             </div>
 
-            <div style={{ overflowX: 'auto', border: '1px solid rgba(0,0,0,0.08)', borderRadius: '12px' }}>
+            <div className="psu-table-scroll">
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem' }}>
                 <thead>
                   <tr style={{ background: 'rgba(0,0,0,0.03)', textAlign: 'left', borderBottom: '1px solid rgba(0,0,0,0.08)' }}>

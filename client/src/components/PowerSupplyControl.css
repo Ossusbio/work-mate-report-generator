@@ -1,0 +1,627 @@
+/* ==========================================================================
+   PowerSupplyControl.css - Mobile-Responsive Styles
+   Scoped exclusively to Metravi Dual Power Supply Component
+   ========================================================================== */
+
+.psu-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 16px 60px;
+  box-sizing: border-box;
+}
+
+/* Header Panel */
+.psu-header-panel {
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  border-left: 4px solid #0284c7;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 253, 249, 0.98) 0%, rgba(235, 243, 254, 0.88) 100%);
+  box-shadow: 0 10px 30px -8px rgba(2, 132, 199, 0.1);
+  box-sizing: border-box;
+}
+
+.psu-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.psu-title-area h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+  color: #2e2219;
+}
+
+.psu-title-area p {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 4px 0 0;
+}
+
+.psu-header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.psu-emergency-all-btn {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+
+.psu-emergency-all-btn:active {
+  transform: scale(0.98);
+}
+
+/* View Switcher Tabs (Real-time vs History) */
+.psu-view-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 16px;
+  flex-wrap: wrap;
+}
+
+.psu-view-tab-btn {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 0 0 auto;
+}
+
+.psu-view-tab-btn.active {
+  border: 1px solid #0284c7;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.psu-view-tab-btn:not(.active) {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.8);
+  color: #475569;
+}
+
+/* Filter pill bar for Real-time */
+.psu-device-filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.psu-device-filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.psu-device-filter-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+/* Grid layout for PSU Cards */
+.psu-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  gap: 24px;
+}
+
+.psu-cards-grid.single-column {
+  grid-template-columns: 1fr;
+}
+
+/* Individual PSU Card */
+.psu-card {
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 253, 249, 0.98) 0%, rgba(243, 248, 255, 0.88) 100%);
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.psu-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.psu-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.psu-badge-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Gauges Grid */
+.psu-gauges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.psu-gauge-box {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.psu-gauge-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.psu-gauge-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-family: monospace;
+  line-height: 1.15;
+}
+
+.psu-gauge-unit {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-left: 2px;
+}
+
+.psu-gauge-subtext {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Control Box (Voltage / Current) */
+.psu-control-box {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.psu-control-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.psu-slider-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.psu-slider-input {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.psu-number-input {
+  width: 76px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+  box-sizing: border-box;
+}
+
+.psu-apply-btn {
+  padding: 7px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 36px;
+}
+
+.psu-presets-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.psu-preset-pill {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-family: monospace;
+  cursor: pointer;
+  font-weight: 600;
+  color: #475569;
+  transition: all 0.15s ease;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.psu-preset-pill:active {
+  background: #e2e8f0;
+}
+
+/* Action Controls (ON / OFF / STOP) */
+.psu-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.psu-btn-on,
+.psu-btn-off,
+.psu-btn-stop {
+  padding: 13px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.psu-btn-stop {
+  padding: 13px 18px;
+  font-size: 0.82rem;
+}
+
+/* Historical Tab Layouts */
+.psu-history-filter-panel {
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.psu-history-presets {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.psu-history-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  align-items: flex-end;
+}
+
+.psu-history-btn-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.psu-chart-card {
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.psu-chart-canvas-container {
+  height: 380px;
+  position: relative;
+  width: 100%;
+}
+
+.psu-table-card {
+  padding: 20px;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.psu-table-scroll {
+  overflow-x: auto;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ==========================================================================
+   Mobile Responsive Breakpoints
+   ========================================================================== */
+
+/* Tablet & Mobile Screens (<= 768px) */
+@media (max-width: 768px) {
+  .psu-container {
+    padding: 0 10px 60px;
+  }
+
+  .psu-header-panel {
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    border-radius: 16px;
+  }
+
+  .psu-title-area h2 {
+    font-size: 1.35rem;
+  }
+
+  .psu-title-area p {
+    font-size: 0.82rem;
+  }
+
+  .psu-header-actions {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .psu-header-actions button {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .psu-emergency-all-btn {
+    width: 100%;
+    flex: 1 1 100% !important;
+    padding: 13px 16px;
+    font-size: 0.88rem;
+  }
+
+  /* View switchers become equal 50/50 tabs on mobile */
+  .psu-view-tabs {
+    display: flex;
+    width: 100%;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+  }
+
+  .psu-view-tab-btn {
+    flex: 1 1 calc(50% - 4px);
+    padding: 10px 8px;
+    font-size: 0.82rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Force single column for cards */
+  .psu-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .psu-card {
+    padding: 16px 14px;
+    border-radius: 16px;
+  }
+
+  /* Compact Digital Gauges */
+  .psu-gauges-grid {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .psu-gauge-box {
+    padding: 10px 6px;
+    border-radius: 12px;
+  }
+
+  .psu-gauge-label {
+    font-size: 0.68rem;
+    margin-bottom: 2px;
+  }
+
+  .psu-gauge-value {
+    font-size: 1.3rem;
+  }
+
+  .psu-gauge-unit {
+    font-size: 0.75rem;
+  }
+
+  .psu-gauge-subtext {
+    font-size: 0.65rem;
+  }
+
+  /* Control Box Layout */
+  .psu-control-box {
+    padding: 14px 12px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+  }
+
+  /* Mobile Slider Row: slider spans full row, number + apply on next row */
+  .psu-slider-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .psu-slider-input {
+    width: 100%;
+    flex: 1 1 100%;
+    height: 32px;
+  }
+
+  .psu-number-input {
+    flex: 1;
+    min-width: 0;
+    height: 40px;
+    font-size: 0.95rem;
+  }
+
+  .psu-apply-btn {
+    flex: 1;
+    min-width: 0;
+    height: 40px;
+    font-size: 0.88rem;
+  }
+
+  .psu-presets-row {
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .psu-preset-pill {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    min-height: 32px;
+  }
+
+  /* Action Buttons: 2 top (ON / OFF) + 1 bottom full width (STOP) */
+  .psu-actions-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .psu-btn-stop {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  /* History Filters */
+  .psu-history-filter-panel {
+    padding: 16px 14px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+
+  .psu-history-presets {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+
+  .psu-history-presets button {
+    flex-shrink: 0;
+  }
+
+  .psu-history-inputs-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .psu-history-btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .psu-history-btn-group button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Chart mobile sizing */
+  .psu-chart-card {
+    padding: 16px 12px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+  }
+
+  .psu-chart-canvas-container {
+    height: 270px;
+  }
+
+  /* Table mobile sizing */
+  .psu-table-card {
+    padding: 16px 12px;
+    border-radius: 16px;
+  }
+}
+
+/* Small Smartphone Screens (<= 420px) */
+@media (max-width: 420px) {
+  .psu-header-panel {
+    padding: 14px 12px;
+  }
+
+  .psu-title-area h2 {
+    font-size: 1.2rem;
+  }
+
+  .psu-gauge-value {
+    font-size: 1.15rem;
+  }
+
+  .psu-gauge-box {
+    padding: 8px 4px;
+  }
+
+  .psu-actions-grid button {
+    font-size: 0.82rem;
+    padding: 11px 10px;
+  }
+
+  .psu-btn-stop {
+    font-size: 0.8rem;
+  }
+
+  .psu-chart-canvas-container {
+    height: 240px;
+  }
+}
