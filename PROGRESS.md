@@ -151,15 +151,38 @@
   - `ReportHistory.jsx` & `App.jsx`: Light Blue action buttons and dashboard hero banner.
 - [x] **Live Production Deployment**: Built with Vite and deployed to Firebase Hosting CDN (`https://grafana-494005.web.app`).
 
+### Phase 19 — Dual Metravi 3005P Bench Power Supply Remote Control & Cloud Pub/Sub Pipeline (2026-09-17)
+- [x] **Hardware & Raspberry Pi Daemon**: Connected two Metravi 3005P DC Bench Power Supplies via USB to Raspberry Pi (`192.168.1.150`). Configured deterministic udev symlinks `/dev/metravi_PSU1` and `/dev/metravi_PSU2` via `/etc/udev/rules.d/99-metravi.rules`. Created systemd service `metravi_daemon.service` running dual-channel polling and command execution daemon.
+- [x] **BigQuery Schema & Streaming**: Extended BigQuery table `grafana-494005.Datas.metravi_power_data` with `device STRING` ('PSU1' | 'PSU2') and `output_on BOOLEAN` flags for per-second telemetry streaming.
+- [x] **Cloud Pub/Sub Asynchronous Control**: Established topic `metravi-commands` and subscription `metravi-pi-sub`. Backend publishes JSON command payloads (`SET_VOLTAGE`, `SET_CURRENT`, `TURN_ON`, `TURN_OFF`, `EMERGENCY_STOP`) and Raspberry Pi daemon subscribes with zero public ingress.
+- [x] **Backend API Routes (`/api/power-supply/**`)**:
+  - `GET /api/power-supply/latest`: Returns latest telemetry for PSU1 and PSU2 directly from BigQuery.
+  - `POST /api/power-supply/control`: Validates voltage (0–30V) and current (0–5A) ranges and publishes command payloads to Pub/Sub.
+  - `GET /api/power-supply/history`: Queries time-series data with operator-selected date/time ranges and configurable sampling intervals (1s to 1h).
+- [x] **Cloud Run Production Deployment**: Deployed revision `report-generator-server-00026-54g` serving 100% traffic in `asia-south1`.
+
+### Phase 20 — Historical Telemetry Analytics, Raw Data CSV Export & Mobile-Responsive UX (2026-09-18)
+- [x] **Historical Analytics Dashboard**: Built multi-axis interactive trend graphs using Chart.js inside `PowerSupplyControl.jsx` plotting Voltage (V), Current (A), and Power (W) with synchronized hover tooltips.
+- [x] **Time Filter & Sampling Selector**: Added start/end date-time selectors, quick-presets (15m, 1h, 6h, 24h), and sampling interval downsampling (1s to 1h) to prevent browser memory spikes.
+- [x] **Paginated Raw Telemetry Table & CSV Export**: Implemented 20-row paginated data table displaying timestamps, voltage, current, power, and channel status with instant client-side CSV download.
+- [x] **Dedicated Mobile-Responsive UX Overhaul (`PowerSupplyControl.css`)**:
+  - Collapsed 2-column desktop grid into single-column layout on viewports $\le$ 768px.
+  - Wrapped slider controls and quick-preset voltage/current pills into thumb-accessible multi-row buttons ($\ge$ 44px touch targets).
+  - Compact circular gauges and responsive status bar indicators.
+  - Wrapped raw telemetry table in `.table-scroll-container` with custom sleek scrollbar to eliminate page blowout on mobile devices.
+- [x] **Production Deployment**: Built production bundle (`dist/assets/index-mof5yieT.js` + `dist/assets/index-BJYYkER-.css`) and deployed to Firebase Hosting CDN.
+
 ---
 
 ## 🚀 Current Production Deployment Status
 
 | Layer | URL / Version |
 |---|---|
-| Frontend (Firebase Hosting) | https://grafana-494005.web.app |
-| Backend (Cloud Run asia-south1) | report-generator-server-00025-zpq |
-| Database | Firestore - `/reports` collection & `/user_roles` |
+| Frontend (Firebase Hosting) | https://grafana-494005.web.app (Bundle: `index-mof5yieT.js` / `index-BJYYkER-.css`) |
+| Backend (Cloud Run asia-south1) | `report-generator-server-00026-54g` |
+| Database / Telemetry | Firestore (`/reports`, `/user_roles`) & BigQuery (`Datas.metravi_power_data`, `Datas.UCS`, etc.) |
+| Pub/Sub Control Channel | Topic: `metravi-commands`, Subscription: `metravi-pi-sub` |
+| Hardware Daemon | Raspberry Pi (`192.168.1.150` via `/dev/metravi_PSU1` & `/dev/metravi_PSU2`) |
 
 - **Web App**: https://grafana-494005.web.app
 - **Backend API**: https://report-generator-server-983390035273.asia-south1.run.app
@@ -170,6 +193,3 @@
 - DeveloperPanel.jsx dynamic import of firebase.js causes Vite warning (cosmetic only, does not break functionality)
 - Bundle size ~668kB / 197kB gzipped — consider lazy-loading DeveloperPanel in future
 - multer@1.4.5-lts.2 has known vulnerabilities — plan upgrade to multer@2.x in maintenance window
-
-
-
