@@ -1,0 +1,392 @@
+/* Battery Dashboard CSS */
+
+.ems-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 12px;
+  font-family: inherit;
+}
+
+.ems-header-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 24px 32px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 250, 0.9) 100%);
+  border-left: 4px solid #10B981;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px -8px rgba(16, 185, 129, 0.12), 0 0 20px rgba(209, 250, 229, 0.3);
+}
+
+.ems-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ems-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.ems-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.ems-tag-online {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.ems-tag-offline {
+  background: rgba(239, 68, 68, 0.1);
+  color: #DC2626;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.ems-status-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: ems-pulse 1.8s infinite;
+}
+
+.ems-status-pulse-offline {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #EF4444;
+}
+
+@keyframes ems-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.ems-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ems-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.ems-btn-primary {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.ems-btn-primary:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.ems-btn-secondary {
+  background: #ffffff;
+  color: #475569;
+  border-color: #E2E8F0;
+}
+
+.ems-btn-secondary:hover {
+  background: #F8FAFC;
+  color: #1E293B;
+}
+
+/* Stat Cards Grid */
+.ems-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ems-stat-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.2s ease;
+}
+
+.ems-stat-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.ems-stat-icon-wrapper {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ems-stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ems-stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ems-stat-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #1E293B;
+  font-feature-settings: "tnum";
+}
+
+.ems-stat-subtext {
+  font-size: 0.75rem;
+  color: #94A3B8;
+}
+
+/* 12 Cells Grid */
+.ems-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.ems-section-title h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ems-cells-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.ems-cell-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ems-cell-card-active {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(240, 253, 250, 0.5) 100%);
+}
+
+.ems-cell-card-max {
+  border-color: #38BDF8;
+  box-shadow: 0 0 0 1px #38BDF8;
+}
+
+.ems-cell-card-min {
+  border-color: #F59E0B;
+  box-shadow: 0 0 0 1px #F59E0B;
+}
+
+.ems-cell-card-empty {
+  opacity: 0.75;
+  background: #F8FAFC;
+}
+
+.ems-cell-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.ems-cell-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.ems-cell-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.ems-pill-active {
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+}
+
+.ems-pill-empty {
+  background: #E2E8F0;
+  color: #64748B;
+}
+
+.ems-pill-max {
+  background: rgba(2, 132, 199, 0.15);
+  color: #0284C7;
+}
+
+.ems-pill-min {
+  background: rgba(245, 158, 11, 0.15);
+  color: #D97706;
+}
+
+.ems-cell-voltage {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 8px;
+  font-feature-settings: "tnum";
+}
+
+.ems-cell-bar-bg {
+  height: 6px;
+  background: #E2E8F0;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.ems-cell-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+}
+
+/* Auxiliary Diagnostics Grid */
+.ems-diag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.ems-diag-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid #E2E8F0;
+}
+
+.ems-diag-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748B;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.ems-diag-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1E293B;
+  font-feature-settings: "tnum";
+}
+
+/* History Chart & Table Panels */
+.ems-card-panel {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+}
+
+.ems-chart-container {
+  height: 340px;
+  position: relative;
+}
+
+/* Table styles */
+.ems-table-wrapper {
+  overflow-x: auto;
+  max-height: 440px;
+}
+
+.ems-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  text-align: left;
+}
+
+.ems-table th {
+  position: sticky;
+  top: 0;
+  background: #F8FAFC;
+  padding: 10px 14px;
+  font-weight: 600;
+  color: #475569;
+  border-bottom: 2px solid #E2E8F0;
+  white-space: nowrap;
+}
+
+.ems-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B;
+  white-space: nowrap;
+  font-feature-settings: "tnum";
+}
+
+.ems-table tr:hover {
+  background: #F8FAFC;
+}

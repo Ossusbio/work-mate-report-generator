@@ -5,6 +5,7 @@ import EditableTable from './components/EditableTable';
 import ReportHistory from './components/ReportHistory';
 import DeveloperPanel from './components/DeveloperPanel';
 import PowerSupplyControl from './components/PowerSupplyControl';
+import BatteryDashboard from './components/BatteryDashboard';
 import LoginPage from './components/LoginPage';
 import { Plus, Sparkles } from 'lucide-react';
 import { fetchReport, fetchMyRole } from './services/api';
@@ -173,6 +174,11 @@ export default function App() {
           {/* Power Supply Control View */}
           {activeNav === 'power-supply' && mode === 'user' && (
             <PowerSupplyControl />
+          )}
+
+          {/* EMS Battery Dashboard View */}
+          {activeNav === 'ems-dashboard' && mode === 'user' && (
+            <BatteryDashboard />
           )}
 
           {/* Reports Views */}

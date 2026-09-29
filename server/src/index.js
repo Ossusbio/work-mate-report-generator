@@ -51,6 +51,9 @@ app.use('/api/roles', rolesRouter);
 const powerSupplyRouter = require('./routes/powerSupply');
 app.use('/api/power-supply', powerSupplyRouter);
 
+const emsRouter = require('./routes/ems');
+app.use('/api/ems', emsRouter);
+
 // Basic Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString(), env: process.env.NODE_ENV || 'development' });

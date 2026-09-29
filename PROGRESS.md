@@ -172,17 +172,35 @@
   - Wrapped raw telemetry table in `.table-scroll-container` with custom sleek scrollbar to eliminate page blowout on mobile devices.
 - [x] **Production Deployment**: Built production bundle (`dist/assets/index-mof5yieT.js` + `dist/assets/index-BJYYkER-.css`) and deployed to Firebase Hosting CDN.
 
+### Phase 21 — Real-Time EMS Battery Monitor Dashboard & LTC6811 BigQuery Pipeline (2026-09-29)
+- [x] **Hardware & Raspberry Pi Telemetry Daemon**: Connected STM32F411 + LTC6811 evaluation board via USB CDC (`/dev/ttyACM0`) to Raspberry Pi (`192.168.1.123`). Created `/home/pi/ems_bigquery_uploader.py` running in dedicated virtualenv `/home/pi/ems_venv` as persistent `ems_uploader.service` systemd daemon streaming telemetry every 5 seconds.
+- [x] **BigQuery Schema & Streaming Table**: Created partitioned table `grafana-494005.Datas.ems_battery_data` storing timestamp, device ID, 12 individual cell voltages (`cell_1`..`cell_12`), stack voltage, sum of cells, LTC6811 die temperature, NTC temp, analog supply (VREG), digital supply (VD), REF2 reference, and GPIO1/auxiliary sensor.
+- [x] **Backend API Routes (`/api/ems/**`)**:
+  - `GET /api/ems/telemetry`: Queries latest reading from BigQuery, computes active cell count, min/max cells, $\Delta V$ imbalance (mV), and returns a 30-reading rolling buffer.
+  - `GET /api/ems/history`: Queries historical records with custom date ranges, time presets, and row limits for analytics.
+- [x] **React Battery Dashboard Component (`BatteryDashboard.jsx` & `BatteryDashboard.css`)**:
+  - **Live Header**: Real-time pulsing badge (**LIVE STREAMING** / **OFFLINE**), device tag (`EMS_01`), last update timestamp, auto-refresh toggle (5s interval), and manual refresh button.
+  - **Key Metrics Grid**: Stack Voltage, Active cell count, Max Cell ($V$), Cell Imbalance ($\Delta V$ in mV), and LTC6811 Die Temperature.
+  - **12 Cell Voltage Cards**: Individual cards with 4-decimal voltage readouts, dynamic battery level progress bars, and status pills (`ACTIVE`, `MAX`, `MIN`, `0V`).
+  - **Diagnostics & Supplies Panel**: Monitored rails for Analog Supply (5V VREG), Digital Supply (3.3V VD), REF2 Voltage (3V), and GPIO1/NTC sensor.
+  - **Recent Trend Sparkline**: Interactive 30-reading line chart tracking voltage stability.
+  - **History & Analytics Tab**: Date/time preset filters (`15m`, `1h`, `3h`, `6h`, `24h`, `Custom`), historical Chart.js trend chart, detailed tabular data log, and a **Download CSV** export button.
+- [x] **Navigation & App Integration**: Added "EMS Dashboard" tab with BatteryCharging icon to `Navbar.jsx` switcher and wired route view in `App.jsx`.
+- [x] **Cloud Run & Firebase Hosting Production Deployment**:
+  - Backend deployed to Cloud Run revision `report-generator-server-00027-xbg` in `asia-south1`.
+  - Frontend built and deployed to Firebase Hosting CDN (`https://grafana-494005.web.app`).
+
 ---
 
 ## 🚀 Current Production Deployment Status
 
 | Layer | URL / Version |
 |---|---|
-| Frontend (Firebase Hosting) | https://grafana-494005.web.app (Bundle: `index-mof5yieT.js` / `index-BJYYkER-.css`) |
-| Backend (Cloud Run asia-south1) | `report-generator-server-00026-54g` |
-| Database / Telemetry | Firestore (`/reports`, `/user_roles`) & BigQuery (`Datas.metravi_power_data`, `Datas.UCS`, etc.) |
+| Frontend (Firebase Hosting) | https://grafana-494005.web.app |
+| Backend (Cloud Run asia-south1) | `report-generator-server-00027-xbg` |
+| Database / Telemetry | Firestore (`/reports`, `/user_roles`) & BigQuery (`Datas.ems_battery_data`, `Datas.metravi_power_data`, `Datas.UCS`, etc.) |
 | Pub/Sub Control Channel | Topic: `metravi-commands`, Subscription: `metravi-pi-sub` |
-| Hardware Daemon | Raspberry Pi (`192.168.1.150` via `/dev/metravi_PSU1` & `/dev/metravi_PSU2`) |
+| Hardware Daemons | 1. Raspberry Pi Metravi PSU (`192.168.1.150` via `/dev/metravi_PSU1` & `/dev/metravi_PSU2`)<br/>2. Raspberry Pi EMS BMS (`192.168.1.123` via `/dev/ttyACM0` -> `ems_uploader.service`) |
 
 - **Web App**: https://grafana-494005.web.app
 - **Backend API**: https://report-generator-server-983390035273.asia-south1.run.app

@@ -32,13 +32,16 @@
      │  Firestore │       │     BigQuery      │
      │  (reports) │       │  (Datas dataset)  │
      │(user_roles)│       │  UCS/SDR/SMP_3RX  │
-     └────────────┘       └───────────────────┘
-           │
-     ┌─────▼────────────────┐
-     │ Google Cloud Storage │
-     │  (ossusbio-workmate- │
-     │   reports bucket)    │
-     └──────────────────────┘
+     │            │       │ metravi_power_data│
+     │            │       │  ems_battery_data │
+     └────────────┘       └─────────▲─────────┘
+           │                        │
+     ┌─────▼────────────────┐       │ Streaming Telemetry (5s)
+     │ Google Cloud Storage │       │
+     │  (ossusbio-workmate- │ ┌─────┴────────────────┐
+     │   reports bucket)    │ │   Raspberry Pi Edge  │
+     └──────────────────────┘ │  STM32/LTC6811 (BMS) │
+                              └──────────────────────┘
 ```
 
 ---

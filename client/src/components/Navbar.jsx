@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogOut, User, Briefcase, ArrowLeft, Code2, UserCircle, FileText, Zap } from 'lucide-react';
+import { LogOut, User, Briefcase, ArrowLeft, Code2, UserCircle, FileText, Zap, BatteryCharging } from 'lucide-react';
 
 export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeToggle, isDeveloper, activeNav = 'reports', onNavChange }) {
   const username = user?.displayName || user?.email?.split('@')[0] || 'Operator';
@@ -97,6 +97,28 @@ export default function Navbar({ user, onLogout, showBack, onBack, mode, onModeT
             >
               <Zap size={15} color="#0284C7" />
               <span>Power Supply</span>
+            </button>
+
+            <button
+              onClick={() => onNavChange('ems-dashboard')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '6px 14px',
+                borderRadius: '8px',
+                border: 'none',
+                background: activeNav === 'ems-dashboard' ? '#ffffff' : 'transparent',
+                color: activeNav === 'ems-dashboard' ? '#059669' : '#64748B',
+                fontWeight: 600,
+                fontSize: '0.82rem',
+                cursor: 'pointer',
+                boxShadow: activeNav === 'ems-dashboard' ? '0 2px 6px rgba(0,0,0,0.06)' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <BatteryCharging size={15} color="#059669" />
+              <span>EMS Dashboard</span>
             </button>
           </div>
         )}

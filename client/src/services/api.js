@@ -312,3 +312,31 @@ export async function fetchPowerSupplyHistory({ startDate, endDate, device = 'AL
   return await res.json();
 }
 
+/**
+ * EMS Battery Telemetry API Helpers
+ */
+export async function fetchEmsTelemetry() {
+  const headers = await getAuthHeaders();
+  const res = await fetch('/api/ems/telemetry', { headers });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to fetch EMS telemetry');
+  }
+  return await res.json();
+}
+
+export async function fetchEmsHistory({ startDate, endDate, limit = 500 } = {}) {
+  const headers = await getAuthHeaders();
+  const params = new URLSearchParams();
+  if (startDate) params.append('startDate', startDate);
+  if (endDate) params.append('endDate', endDate);
+  if (limit) params.append('limit', limit);
+
+  const res = await fetch(`/api/ems/history?${params.toString()}`, { headers });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || 'Failed to fetch EMS history');
+  }
+  return await res.json();
+}
+

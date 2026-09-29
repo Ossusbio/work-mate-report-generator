@@ -66,10 +66,10 @@ work-mate-report-generator/
 
 | Layer | URL / Revision |
 |---|---|
-| Frontend (Firebase Hosting) | https://grafana-494005.web.app (Bundle: `index-mof5yieT.js` / `index-BJYYkER-.css`) |
-| Backend API (Cloud Run asia-south1) | https://report-generator-server-983390035273.asia-south1.run.app (`report-generator-server-00026-54g`) |
+| Frontend (Firebase Hosting) | https://grafana-494005.web.app |
+| Backend API (Cloud Run asia-south1) | https://report-generator-server-983390035273.asia-south1.run.app (`report-generator-server-00027-xbg`) |
 | Pub/Sub Control Channel | Topic: `metravi-commands`, Subscription: `metravi-pi-sub` |
-| BigQuery Telemetry Table | `grafana-494005.Datas.metravi_power_data` |
+| BigQuery Telemetry Tables | `grafana-494005.Datas.metravi_power_data`, `grafana-494005.Datas.ems_battery_data` |
 
 ---
 
@@ -79,12 +79,17 @@ work-mate-report-generator/
 - **Auth flow**: Firebase Auth (Google OAuth / Email+Password) on the client → JWT verified by `firebase-admin` on the server.
 - **Databases**:
   - **Firestore**: Report documents (`/reports/{reportId}`) and user roles (`/user_roles/{email}`).
-  - **BigQuery**: Time-series telemetry (`grafana-494005.Datas` — UCS, SDR, SMP_3RX_SKID, metravi_power_data tables).
+  - **BigQuery**: Time-series telemetry (`grafana-494005.Datas` — UCS, SDR, SMP_3RX_SKID, metravi_power_data, ems_battery_data tables).
   - **GCS**: File storage (`ossusbio-workmate-reports` bucket).
 - **Metravi Dual Power Supply Hardware & Cloud Pub/Sub Pipeline**:
   - **Edge Hardware**: Two Metravi 3005P DC bench power supplies connected via USB to Raspberry Pi (`192.168.1.150`). Fixed udev symlinks `/dev/metravi_PSU1` and `/dev/metravi_PSU2`.
   - **Pi Daemon**: `metravi_daemon.service` (`metravi_dual_daemon.py`) streams live voltage, current, and power telemetry to BigQuery table `grafana-494005.Datas.metravi_power_data` every second.
   - **Asynchronous Cloud Control**: Raspberry Pi daemon listens to Cloud Pub/Sub subscription `metravi-pi-sub`. Cloud Run backend (`/api/power-supply/control`) publishes control actions (`SET_VOLTAGE`, `SET_CURRENT`, `TURN_ON`, `TURN_OFF`, `EMERGENCY_STOP`) directly to topic `metravi-commands` with no firewall or public IP required on the Pi.
+- **EMS Battery Management System (BMS) Hardware & Telemetry Pipeline**:
+  - **Edge Hardware**: STM32F411 + LTC6811 12-cell BMS board connected via USB CDC (`/dev/ttyACM0`) to Raspberry Pi (`192.168.1.123`).
+  - **Pi Daemon**: `ems_uploader.service` (`ems_bigquery_uploader.py`) streams live 12-cell voltages, stack voltage, die temp, NTC temp, and supply rails to BigQuery table `grafana-494005.Datas.ems_battery_data` every 5 seconds.
+  - **Cloud Run Backend**: `/api/ems/telemetry` & `/api/ems/history` endpoints query BigQuery, calculate $\Delta V$ imbalance and active cell counts, and serve live data to the frontend.
+  - **Frontend Dashboard**: Real-time 12-cell cards, live gauges, LTC6811 diagnostics, and historical Chart.js trends with CSV export.
 
 ---
 
