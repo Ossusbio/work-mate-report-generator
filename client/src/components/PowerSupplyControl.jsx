@@ -33,14 +33,17 @@ import { fetchPowerSupplyTelemetry, sendPowerSupplyCommand, fetchPowerSupplyHist
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 import './PowerSupplyControl.css';
 
+// Flag to temporarily disable remote control commands to the power supplies
+const IS_CONTROL_DISABLED = false;
+
 export default function PowerSupplyControl() {
   const [subTab, setSubTab] = useState('realtime'); // 'realtime' | 'history'
   const [activeDeviceFilter, setActiveDeviceFilter] = useState('ALL'); // 'ALL' | 'PSU1' | 'PSU2'
   
   // Real-time telemetry state
   const [telemetry, setTelemetry] = useState({
-    PSU1: { device: 'PSU1', vout: 0, iout: 0, power: 0, mode: 'CV', output_on: false, isOnline: true },
-    PSU2: { device: 'PSU2', vout: 0, iout: 0, power: 0, mode: 'CV', output_on: false, isOnline: true }
+    PSU1: { device: 'PSU1', vout: 0, iout: 0, power: 0, mode: 'CV', output_on: false, isOnline: false },
+    PSU2: { device: 'PSU2', vout: 0, iout: 0, power: 0, mode: '--', output_on: false, isOnline: false }
   });
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -76,6 +79,7 @@ export default function PowerSupplyControl() {
   const rowsPerPage = 15;
 
   const toastTimeoutRef = useRef(null);
+  const lastCommandTimeRef = useRef({ PSU1: 0, PSU2: 0 });
 
   const showToast = (message, isError = false) => {
     if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
@@ -92,15 +96,20 @@ export default function PowerSupplyControl() {
         setTelemetry(res.devices);
         setLastUpdated(new Date().toLocaleTimeString());
 
-        // Sync local output state with real hardware output_on
+        // Sync local output state with real hardware output_on (with 6s grace window for live commands)
+        const nowMs = Date.now();
         setControls(prev => ({
           PSU1: {
             ...prev.PSU1,
-            output: Boolean(res.devices.PSU1?.output_on),
+            output: (nowMs - (lastCommandTimeRef.current.PSU1 || 0) < 6000)
+              ? prev.PSU1.output
+              : Boolean(res.devices.PSU1?.output_on),
           },
           PSU2: {
             ...prev.PSU2,
-            output: Boolean(res.devices.PSU2?.output_on),
+            output: (nowMs - (lastCommandTimeRef.current.PSU2 || 0) < 6000)
+              ? prev.PSU2.output
+              : Boolean(res.devices.PSU2?.output_on),
           }
         }));
       }
@@ -127,7 +136,7 @@ export default function PowerSupplyControl() {
         startDate: start,
         endDate: end,
         device: dev,
-        limit: 2000
+        limit: 10000
       });
       if (res && res.records) {
         setHistoryRecords(res.records);
@@ -173,17 +182,27 @@ export default function PowerSupplyControl() {
 
   // Handle command execution
   const executeCommand = async (device, action, value = null) => {
+    if (IS_CONTROL_DISABLED) {
+      showToast('Power supply control is temporarily disabled.', true);
+      return;
+    }
     setLoading(true);
+    const nowMs = Date.now();
 
     // Optimistic UI update
     if (action === 'set_output') {
       const isEnable = Boolean(value);
       if (device === 'ALL') {
+        lastCommandTimeRef.current.PSU1 = nowMs;
+        lastCommandTimeRef.current.PSU2 = nowMs;
         setControls(prev => ({
-          PSU1: { ...prev.PSU1, output: false },
-          PSU2: { ...prev.PSU2, output: false }
+          PSU1: { ...prev.PSU1, output: isEnable },
+          PSU2: { ...prev.PSU2, output: isEnable }
         }));
       } else {
+        if (lastCommandTimeRef.current[device] !== undefined) {
+          lastCommandTimeRef.current[device] = nowMs;
+        }
         setControls(prev => ({
           ...prev,
           [device]: { ...prev[device], output: isEnable }
@@ -191,11 +210,16 @@ export default function PowerSupplyControl() {
       }
     } else if (action === 'emergency_stop') {
       if (device === 'ALL') {
+        lastCommandTimeRef.current.PSU1 = nowMs;
+        lastCommandTimeRef.current.PSU2 = nowMs;
         setControls(prev => ({
           PSU1: { ...prev.PSU1, output: false },
           PSU2: { ...prev.PSU2, output: false }
         }));
       } else {
+        if (lastCommandTimeRef.current[device] !== undefined) {
+          lastCommandTimeRef.current[device] = nowMs;
+        }
         setControls(prev => ({
           ...prev,
           [device]: { ...prev[device], output: false }
@@ -211,7 +235,7 @@ export default function PowerSupplyControl() {
         const valLabel = action === 'set_output' ? (value ? 'ON' : 'OFF') : (value !== null ? `: ${value}` : '');
         showToast(`✓ [${devLabel}] ${actionLabel} ${valLabel} executed`);
 
-        setTimeout(() => loadTelemetry(true), 1000);
+        setTimeout(() => loadTelemetry(true), 1500);
       }
     } catch (err) {
       showToast(`Error: ${err.message}`, true);
@@ -241,7 +265,7 @@ export default function PowerSupplyControl() {
     if (activeDeviceFilter === 'ALL' || activeDeviceFilter === 'PSU1') {
       datasets.push({
         label: 'PSU 1 Voltage (V)',
-        data: sampled.map(r => (r.device === 'PSU1' ? r.vout : null)),
+        data: sampled.map(r => (r.device === 'PSU1' ? (r.output_on ? r.vout : 0) : null)),
         borderColor: '#0284C7',
         backgroundColor: 'rgba(2, 132, 199, 0.05)',
         borderWidth: 2,
@@ -252,7 +276,7 @@ export default function PowerSupplyControl() {
       });
       datasets.push({
         label: 'PSU 1 Current (A)',
-        data: sampled.map(r => (r.device === 'PSU1' ? r.iout : null)),
+        data: sampled.map(r => (r.device === 'PSU1' ? (r.output_on ? r.iout : 0) : null)),
         borderColor: '#10B981',
         backgroundColor: 'transparent',
         borderWidth: 1.8,
@@ -268,7 +292,7 @@ export default function PowerSupplyControl() {
     if (activeDeviceFilter === 'ALL' || activeDeviceFilter === 'PSU2') {
       datasets.push({
         label: 'PSU 2 Voltage (V)',
-        data: sampled.map(r => (r.device === 'PSU2' ? r.vout : null)),
+        data: sampled.map(r => (r.device === 'PSU2' ? (r.output_on ? r.vout : 0) : null)),
         borderColor: '#9333EA',
         backgroundColor: 'rgba(147, 51, 234, 0.05)',
         borderWidth: 2,
@@ -279,7 +303,7 @@ export default function PowerSupplyControl() {
       });
       datasets.push({
         label: 'PSU 2 Current (A)',
-        data: sampled.map(r => (r.device === 'PSU2' ? r.iout : null)),
+        data: sampled.map(r => (r.device === 'PSU2' ? (r.output_on ? r.iout : 0) : null)),
         borderColor: '#F59E0B',
         backgroundColor: 'transparent',
         borderWidth: 1.8,
@@ -355,15 +379,16 @@ export default function PowerSupplyControl() {
     const headers = ['Timestamp_UTC', 'Timestamp_Local', 'Device', 'Voltage_V', 'Current_A', 'Power_W', 'Mode', 'Output_State'];
     const rows = historyRecords.map(r => {
       const d = new Date(r.timestamp);
+      const isOutOn = Boolean(r.output_on);
       return [
         r.timestamp,
         d.toLocaleString(),
         r.device,
-        r.vout,
-        r.iout,
-        r.power,
-        r.mode,
-        r.output_on ? 'ON' : 'OFF'
+        isOutOn ? r.vout : 0,
+        isOutOn ? r.iout : 0,
+        isOutOn ? r.power : 0,
+        isOutOn ? r.mode : 'OFF',
+        isOutOn ? 'ON' : 'OFF'
       ];
     });
 
@@ -388,13 +413,17 @@ export default function PowerSupplyControl() {
 
   // Real-time PSU Card Renderer
   const renderPsuCard = (devKey, title, themeColor, borderAccent) => {
-    const data = telemetry[devKey] || { vout: 0, iout: 0, power: 0, mode: 'CV', output_on: false };
+    const data = telemetry[devKey] || { vout: 0, iout: 0, power: 0, mode: '--', output_on: false, isOnline: false };
     const devCtrl = controls[devKey];
+    const isOnline = Boolean(data.isOnline);
 
     return (
       <div 
         className="glass-panel psu-card" 
-        style={{ borderTop: `4px solid ${borderAccent}` }}
+        style={{ 
+          borderTop: `4px solid ${isOnline ? borderAccent : '#94A3B8'}`,
+          opacity: isOnline ? 1 : 0.88 
+        }}
       >
         {/* Header */}
         <div className="psu-card-header">
@@ -403,7 +432,7 @@ export default function PowerSupplyControl() {
               width: '38px',
               height: '38px',
               borderRadius: '10px',
-              background: `linear-gradient(135deg, ${borderAccent}, ${themeColor})`,
+              background: isOnline ? `linear-gradient(135deg, ${borderAccent}, ${themeColor})` : '#94A3B8',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -424,27 +453,46 @@ export default function PowerSupplyControl() {
               fontWeight: 700,
               padding: '4px 10px',
               borderRadius: '6px',
-              background: devCtrl.output ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.12)',
-              color: devCtrl.output ? '#059669' : '#dc2626',
-              border: `1px solid ${devCtrl.output ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.25)'}`,
+              background: !isOnline ? 'rgba(100, 116, 139, 0.12)' : (devCtrl.output ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.12)'),
+              color: !isOnline ? '#64748B' : (devCtrl.output ? '#059669' : '#dc2626'),
+              border: `1px solid ${!isOnline ? 'rgba(100, 116, 139, 0.3)' : (devCtrl.output ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.25)')}`,
               whiteSpace: 'nowrap'
             }}>
-              OUTPUT {devCtrl.output ? 'ON' : 'OFF'}
+              {!isOnline ? 'DISCONNECTED' : `OUTPUT ${devCtrl.output ? 'ON' : 'OFF'}`}
             </span>
             <span style={{
               fontSize: '0.75rem',
               fontWeight: 700,
               padding: '4px 10px',
               borderRadius: '6px',
-              background: data.mode === 'CV' ? 'rgba(2, 132, 199, 0.12)' : 'rgba(245, 158, 11, 0.15)',
-              color: data.mode === 'CV' ? '#0284C7' : '#d97706',
-              border: `1px solid ${data.mode === 'CV' ? 'rgba(2, 132, 199, 0.25)' : 'rgba(245, 158, 11, 0.3)'}`,
+              background: !isOnline ? 'rgba(100, 116, 139, 0.08)' : (data.mode === 'CV' ? 'rgba(2, 132, 199, 0.12)' : 'rgba(245, 158, 11, 0.15)'),
+              color: !isOnline ? '#94A3B8' : (data.mode === 'CV' ? '#0284C7' : '#d97706'),
+              border: `1px solid ${!isOnline ? 'rgba(100, 116, 139, 0.2)' : (data.mode === 'CV' ? 'rgba(2, 132, 199, 0.25)' : 'rgba(245, 158, 11, 0.3)')}`,
               whiteSpace: 'nowrap'
             }}>
-              {data.mode || 'CV'}
+              {!isOnline ? '--' : (data.mode || 'CV')}
             </span>
           </div>
         </div>
+
+        {/* Offline notice when physical hardware is not plugged into USB */}
+        {!isOnline && (
+          <div style={{
+            background: 'rgba(241, 245, 249, 0.95)',
+            border: '1px dashed #cbd5e1',
+            borderRadius: '8px',
+            padding: '8px 12px',
+            marginBottom: '16px',
+            fontSize: '0.8rem',
+            color: '#64748B',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <span style={{ fontSize: '1.1rem' }}>🔌</span>
+            <span><strong>{title}</strong> is not physically connected to USB. Controls are isolated to prevent interfering with other devices.</span>
+          </div>
+        )}
 
         {/* Digital Gauges */}
         <div className="psu-gauges-grid">
@@ -487,12 +535,13 @@ export default function PowerSupplyControl() {
               max="30" 
               step="0.1" 
               value={devCtrl.voltage}
+              disabled={!isOnline || IS_CONTROL_DISABLED}
               onChange={(e) => setControls(prev => ({
                 ...prev,
                 [devKey]: { ...prev[devKey], voltage: parseFloat(e.target.value) }
               }))}
               className="psu-slider-input"
-              style={{ accentColor: borderAccent }}
+              style={{ accentColor: (isOnline && !IS_CONTROL_DISABLED) ? borderAccent : '#94A3B8' }}
             />
             <input 
               type="number" 
@@ -500,6 +549,7 @@ export default function PowerSupplyControl() {
               max="30" 
               step="0.1" 
               value={devCtrl.voltage}
+              disabled={!isOnline || IS_CONTROL_DISABLED}
               onChange={(e) => setControls(prev => ({
                 ...prev,
                 [devKey]: { ...prev[devKey], voltage: parseFloat(e.target.value) || 0 }
@@ -509,7 +559,9 @@ export default function PowerSupplyControl() {
             <button 
               className="btn btn-primary psu-apply-btn"
               onClick={() => executeCommand(devKey, 'set_voltage', parseFloat(devCtrl.voltage))}
-              disabled={loading}
+              disabled={loading || !isOnline || IS_CONTROL_DISABLED}
+              style={{ opacity: (!isOnline || IS_CONTROL_DISABLED) ? 0.5 : 1, cursor: IS_CONTROL_DISABLED ? 'not-allowed' : 'pointer' }}
+              title={IS_CONTROL_DISABLED ? 'Power supply control is temporarily disabled' : 'Apply Voltage'}
             >
               Apply
             </button>
@@ -520,6 +572,9 @@ export default function PowerSupplyControl() {
               <button
                 key={v}
                 className="psu-preset-pill"
+                disabled={loading || !isOnline || IS_CONTROL_DISABLED}
+                style={{ opacity: (!isOnline || IS_CONTROL_DISABLED) ? 0.45 : 1, cursor: IS_CONTROL_DISABLED ? 'not-allowed' : 'pointer' }}
+                title={IS_CONTROL_DISABLED ? 'Power supply control is temporarily disabled' : `Set ${v}V`}
                 onClick={() => {
                   setControls(prev => ({
                     ...prev,
@@ -538,7 +593,7 @@ export default function PowerSupplyControl() {
         <div className="psu-control-box" style={{ marginBottom: '20px' }}>
           <div className="psu-control-header">
             <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#2E2219' }}>Current Limit (0 - 5 A)</label>
-            <span style={{ fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 700, color: '#059669' }}>{devCtrl.current} A</span>
+            <span style={{ fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: 700, color: isOnline ? '#059669' : '#94A3B8' }}>{devCtrl.current} A</span>
           </div>
 
           <div className="psu-slider-row">
@@ -548,12 +603,13 @@ export default function PowerSupplyControl() {
               max="5" 
               step="0.05" 
               value={devCtrl.current}
+              disabled={!isOnline || IS_CONTROL_DISABLED}
               onChange={(e) => setControls(prev => ({
                 ...prev,
                 [devKey]: { ...prev[devKey], current: parseFloat(e.target.value) }
               }))}
               className="psu-slider-input"
-              style={{ accentColor: '#059669' }}
+              style={{ accentColor: (isOnline && !IS_CONTROL_DISABLED) ? '#059669' : '#94A3B8' }}
             />
             <input 
               type="number" 
@@ -561,6 +617,7 @@ export default function PowerSupplyControl() {
               max="5" 
               step="0.05" 
               value={devCtrl.current}
+              disabled={!isOnline || IS_CONTROL_DISABLED}
               onChange={(e) => setControls(prev => ({
                 ...prev,
                 [devKey]: { ...prev[devKey], current: parseFloat(e.target.value) || 0 }
@@ -570,7 +627,9 @@ export default function PowerSupplyControl() {
             <button 
               className="btn btn-primary psu-apply-btn"
               onClick={() => executeCommand(devKey, 'set_current', parseFloat(devCtrl.current))}
-              disabled={loading}
+              disabled={loading || !isOnline || IS_CONTROL_DISABLED}
+              style={{ opacity: (!isOnline || IS_CONTROL_DISABLED) ? 0.5 : 1, cursor: IS_CONTROL_DISABLED ? 'not-allowed' : 'pointer' }}
+              title={IS_CONTROL_DISABLED ? 'Power supply control is temporarily disabled' : 'Apply Current'}
             >
               Apply
             </button>
@@ -581,6 +640,9 @@ export default function PowerSupplyControl() {
               <button
                 key={i}
                 className="psu-preset-pill"
+                disabled={loading || !isOnline || IS_CONTROL_DISABLED}
+                style={{ opacity: (!isOnline || IS_CONTROL_DISABLED) ? 0.45 : 1, cursor: IS_CONTROL_DISABLED ? 'not-allowed' : 'pointer' }}
+                title={IS_CONTROL_DISABLED ? 'Power supply control is temporarily disabled' : `Set ${i}A`}
                 onClick={() => {
                   setControls(prev => ({
                     ...prev,
@@ -600,13 +662,16 @@ export default function PowerSupplyControl() {
           <button 
             className="psu-btn-on"
             onClick={() => executeCommand(devKey, 'set_output', 1)}
-            disabled={loading}
+            disabled={loading || !isOnline || IS_CONTROL_DISABLED}
             style={{
-              border: devCtrl.output ? '2px solid #059669' : '1px solid rgba(0,0,0,0.12)',
-              background: devCtrl.output ? 'linear-gradient(135deg, #059669 0%, #10B981 100%)' : 'rgba(255, 255, 255, 0.95)',
-              color: devCtrl.output ? '#ffffff' : '#059669',
-              boxShadow: devCtrl.output ? '0 4px 14px rgba(16, 185, 129, 0.35)' : 'none',
+              border: (isOnline && !IS_CONTROL_DISABLED && devCtrl.output) ? '2px solid #059669' : '1px solid rgba(0,0,0,0.12)',
+              background: (isOnline && !IS_CONTROL_DISABLED && devCtrl.output) ? 'linear-gradient(135deg, #059669 0%, #10B981 100%)' : 'rgba(255, 255, 255, 0.95)',
+              color: (isOnline && !IS_CONTROL_DISABLED && devCtrl.output) ? '#ffffff' : (isOnline && !IS_CONTROL_DISABLED ? '#059669' : '#94A3B8'),
+              boxShadow: (isOnline && !IS_CONTROL_DISABLED && devCtrl.output) ? '0 4px 14px rgba(16, 185, 129, 0.35)' : 'none',
+              opacity: (!isOnline || IS_CONTROL_DISABLED) ? 0.45 : 1,
+              cursor: (!isOnline || IS_CONTROL_DISABLED) ? 'not-allowed' : 'pointer',
             }}
+            title={IS_CONTROL_DISABLED ? 'Power supply control is temporarily disabled' : 'Turn ON'}
           >
             <Power size={18} />
             <span>Turn ON</span>
@@ -615,13 +680,16 @@ export default function PowerSupplyControl() {
           <button 
             className="psu-btn-off"
             onClick={() => executeCommand(devKey, 'set_output', 0)}
-            disabled={loading}
+            disabled={loading || !isOnline || IS_CONTROL_DISABLED}
             style={{
-              border: !devCtrl.output ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.12)',
-              background: !devCtrl.output ? 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' : 'rgba(255, 255, 255, 0.95)',
-              color: !devCtrl.output ? '#ffffff' : '#dc2626',
-              boxShadow: !devCtrl.output ? '0 4px 14px rgba(220, 38, 38, 0.35)' : 'none',
+              border: (isOnline && !IS_CONTROL_DISABLED && !devCtrl.output) ? '2px solid #dc2626' : '1px solid rgba(0,0,0,0.12)',
+              background: (isOnline && !IS_CONTROL_DISABLED && !devCtrl.output) ? 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' : 'rgba(255, 255, 255, 0.95)',
+              color: (isOnline && !IS_CONTROL_DISABLED && !devCtrl.output) ? '#ffffff' : (isOnline && !IS_CONTROL_DISABLED ? '#dc2626' : '#94A3B8'),
+              boxShadow: (isOnline && !IS_CONTROL_DISABLED && !devCtrl.output) ? '0 4px 14px rgba(220, 38, 38, 0.35)' : 'none',
+              opacity: (!isOnline || IS_CONTROL_DISABLED) ? 0.45 : 1,
+              cursor: (!isOnline || IS_CONTROL_DISABLED) ? 'not-allowed' : 'pointer',
             }}
+            title={IS_CONTROL_DISABLED ? 'Power supply control is temporarily disabled' : 'Turn OFF'}
           >
             <Power size={18} />
             <span>Turn OFF</span>
@@ -630,12 +698,15 @@ export default function PowerSupplyControl() {
           <button 
             className="psu-btn-stop"
             onClick={() => executeCommand(devKey, 'emergency_stop')}
-            disabled={loading}
+            disabled={loading || !isOnline || IS_CONTROL_DISABLED}
             style={{
               border: '1px solid rgba(239, 68, 68, 0.3)',
               background: 'rgba(239, 68, 68, 0.1)',
-              color: '#dc2626',
+              color: (isOnline && !IS_CONTROL_DISABLED) ? '#dc2626' : '#94A3B8',
+              opacity: (!isOnline || IS_CONTROL_DISABLED) ? 0.45 : 1,
+              cursor: (!isOnline || IS_CONTROL_DISABLED) ? 'not-allowed' : 'pointer',
             }}
+            title={IS_CONTROL_DISABLED ? 'Power supply control is temporarily disabled' : `Stop ${devKey}`}
           >
             Stop {devKey}
           </button>
@@ -702,8 +773,13 @@ export default function PowerSupplyControl() {
 
             <button 
               onClick={() => executeCommand('ALL', 'emergency_stop')}
-              disabled={loading}
+              disabled={loading || IS_CONTROL_DISABLED}
               className="psu-emergency-all-btn"
+              style={{
+                opacity: IS_CONTROL_DISABLED ? 0.45 : 1,
+                cursor: IS_CONTROL_DISABLED ? 'not-allowed' : 'pointer'
+              }}
+              title={IS_CONTROL_DISABLED ? 'Power supply control is temporarily disabled' : 'Emergency Stop All'}
             >
               <AlertOctagon size={18} />
               <span>EMERGENCY ALL OFF</span>
@@ -736,6 +812,31 @@ export default function PowerSupplyControl() {
       {/* ========================================================================= */}
       {subTab === 'realtime' && (
         <div>
+          {/* Temporary Control Disabled Banner */}
+          {IS_CONTROL_DISABLED && (
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.08)',
+              border: '1px solid rgba(239, 68, 68, 0.25)',
+              borderRadius: '10px',
+              padding: '12px 18px',
+              marginBottom: '18px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              color: '#dc2626'
+            }}>
+              <AlertTriangle size={20} style={{ flexShrink: 0, color: '#dc2626' }} />
+              <div>
+                <strong style={{ display: 'block', fontSize: '0.9rem', color: '#b91c1c' }}>
+                  Power Supply Control is Temporarily Disabled
+                </strong>
+                <span style={{ fontSize: '0.82rem', color: '#7f1d1d' }}>
+                  Remote hardware commands (voltage, current, and power output controls) are temporarily locked. Real-time telemetry monitoring and historical graphs remain active.
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* Target device filter in Real-Time */}
           <div className="psu-device-filter-bar">
             {[
@@ -993,14 +1094,14 @@ export default function PowerSupplyControl() {
                               {r.device}
                             </span>
                           </td>
-                          <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontWeight: 700, color: '#0284C7' }}>
-                            {r.vout.toFixed(2)} V
+                          <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontWeight: 700, color: r.output_on ? '#0284C7' : '#94A3B8' }}>
+                            {(r.output_on ? r.vout : 0).toFixed(2)} V
                           </td>
-                          <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontWeight: 700, color: '#059669' }}>
-                            {r.iout.toFixed(3)} A
+                          <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontWeight: 700, color: r.output_on ? '#059669' : '#94A3B8' }}>
+                            {(r.output_on ? r.iout : 0).toFixed(3)} A
                           </td>
-                          <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontWeight: 700, color: '#7C3AED' }}>
-                            {r.power.toFixed(1)} W
+                          <td style={{ padding: '10px 16px', fontFamily: 'monospace', fontWeight: 700, color: r.output_on ? '#7C3AED' : '#94A3B8' }}>
+                            {(r.output_on ? r.power : 0).toFixed(1)} W
                           </td>
                           <td style={{ padding: '10px 16px' }}>
                             <span style={{
@@ -1008,10 +1109,10 @@ export default function PowerSupplyControl() {
                               fontWeight: 700,
                               padding: '2px 6px',
                               borderRadius: '4px',
-                              background: r.mode === 'CV' ? 'rgba(2, 132, 199, 0.1)' : 'rgba(245, 158, 11, 0.15)',
-                              color: r.mode === 'CV' ? '#0284C7' : '#d97706',
+                              background: !r.output_on ? 'rgba(148, 163, 184, 0.15)' : (r.mode === 'CV' ? 'rgba(2, 132, 199, 0.1)' : 'rgba(245, 158, 11, 0.15)'),
+                              color: !r.output_on ? '#64748B' : (r.mode === 'CV' ? '#0284C7' : '#d97706'),
                             }}>
-                              {r.mode}
+                              {r.output_on ? r.mode : 'OFF'}
                             </span>
                           </td>
                           <td style={{ padding: '10px 16px' }}>

@@ -23,7 +23,7 @@ router.get('/telemetry', async (req, res) => {
  */
 router.get('/history', async (req, res) => {
   try {
-    const { startDate, endDate, device = 'ALL', limit = 1500 } = req.query;
+    const { startDate, endDate, device = 'ALL', limit = 10000 } = req.query;
     const records = await getPowerSupplyHistory(startDate, endDate, device, limit);
     res.json({ success: true, count: records.length, records });
   } catch (err) {
